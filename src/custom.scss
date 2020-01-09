@@ -1,0 +1,7 @@
+@import '_vars';
+
+$theme-colors: (
+    "primary": $cyan,
+);
+
+@import '~bootstrap/scss/bootstrap.scss';

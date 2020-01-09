@@ -1,0 +1,30 @@
+@import '_vars';
+@import url('https://rsms.me/inter/inter.css');
+
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: $gray;
+}
+
+@supports (font-variation-settings: normal) {
+    body {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+
+::selection {
+    background-color: $cyan;
+    color: white;
+}
+
+
+a {
+    color: $cyan;
+
+    &:hover {
+        color: $cyan;
+        text-decoration: underline;
+    }
+}

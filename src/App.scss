@@ -1,0 +1,70 @@
+@import '_vars';
+
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.row {
+    margin: 0;
+}
+
+.col {
+    padding: 0;
+}
+
+#logo {
+    height: 4rem;
+    position: absolute;
+
+    img {
+        height: 2rem;
+        margin-top: 1rem;
+        margin-left: 1rem;
+    }
+
+    h1 {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-top: 1rem;
+        margin-left: 10px;
+    }
+}
+
+.nav-tabs {
+    height: 4rem;
+    margin-left: 220px;
+    border-bottom: 0;
+
+    .nav-item {
+        margin-bottom: 0;
+    }
+
+    .nav-link {
+        border: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        padding: 1.25rem;
+
+        &.active {
+            box-shadow: 0 6px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+        }
+
+        &:hover:not(.active) {
+            text-decoration: underline;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#app-container > .tab-content {
+    height: calc(100vh - 4rem);
+    background-color: white;
+    box-shadow: $card;
+}
