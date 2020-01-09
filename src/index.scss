@@ -3,13 +3,13 @@
 
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', var(--font-family-sans-serif);
     background-color: $gray;
 }
 
 @supports (font-variation-settings: normal) {
     body {
-        font-family: 'Inter var', sans-serif;
+        font-family: 'Inter var', var(--font-family-sans-serif);
     }
 }
 
