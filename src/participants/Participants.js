@@ -1,6 +1,10 @@
 import React from 'react';
 import './Participants.scss';
 
+import Speakers from './Speakers';
+import Teams from './Teams';
+import Ranking from './Ranking';
+
 import Tab from 'react-bootstrap/Tab';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -27,13 +31,13 @@ class Participants extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
-                                {this.props.bracket}
+                                <Speakers />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
-                                O!
+                                <Teams />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
-                                A!
+                                <Ranking />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
