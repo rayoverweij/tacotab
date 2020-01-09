@@ -37,9 +37,13 @@ class App extends React.Component {
             if(numKeys === 0) {
                 localforage.setItem("tournament-name", "New Tournament");
                 localforage.setItem("speakers-middle", []);
+                localforage.setItem("speakers-middle-id-count", 0);
                 localforage.setItem("speakers-high", []);
+                localforage.setItem("speakers-high-id-count", 0);
                 localforage.setItem("teams-middle", []);
+                localforage.setItem("teams-middle-id-count", 0);
                 localforage.setItem("teams-high", []);
+                localforage.setItem("teams-high-id-count", 0);
                 localforage.setItem("judges", []);
 
                 this.setState({tournament_name: "New Tournament"});
@@ -80,7 +84,7 @@ class App extends React.Component {
                             <h1>TacoTab</h1>
                         </div>
 
-                        <Tabs defaultActiveKey="home" id="app-nav">
+                        <Tabs defaultActiveKey="middleschool" id="app-nav">
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
                                 <Home />
                             </Tab>

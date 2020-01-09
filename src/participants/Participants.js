@@ -31,7 +31,7 @@ class Participants extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
-                                <Speakers />
+                                <Speakers bracket={this.props.bracket} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
                                 <Teams />
