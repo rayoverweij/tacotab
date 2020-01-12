@@ -1,0 +1,28 @@
+table {
+    th, td {
+        padding: 10px 5px;
+
+        &.editable {
+            padding: 5px 0 0;
+        }
+    }
+
+    .row-total {
+        font-style: italic;
+    }
+}
+
+.icon-trash {
+    &::before {
+        content: url(../images/icon-trash.svg);
+        display: inline-block;
+    }
+
+    &:hover {
+        cursor: pointer;
+        
+        &::before {
+            content: url(../images/icon-trash-fill.svg);
+        }
+    }
+}

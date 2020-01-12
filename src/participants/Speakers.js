@@ -1,8 +1,6 @@
 import React from 'react';
 import './Speakers.scss';
 
-import localforage from 'localforage';
-
 import Debater from '../structures/debater';
 
 import Row from 'react-bootstrap/Row';
@@ -17,11 +15,11 @@ class Speakers extends React.Component {
         super(props);
 
         this.state = {
+            speakers: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("speakers_middle")) : JSON.parse(localStorage.getItem("speakers_high")),
             speakerForm: {
                 name: "",
                 school: ""
-            },
-            speakers: []
+            }
         }
 
         this.handleSpeakerFormChange = this.handleSpeakerFormChange.bind(this);
@@ -41,76 +39,56 @@ class Speakers extends React.Component {
     handleSpeakerFormSubmit(event) {
         event.preventDefault();
 
+        let speakers = this.state.speakers;
+        let counter = this.props.bracket === "middle" ? localStorage.getItem("speakers_middle_counter") : localStorage.getItem("speakers_high_counter");
+
+        const newSpeaker = new Debater(counter++, this.state.speakerForm.name, this.state.speakerForm.school);
+        speakers.push(newSpeaker);
+
         if(this.props.bracket === "middle") {
-            localforage.getItem("speakers-middle").then(curr_speakers => {
-                localforage.getItem("speakers-middle-id-count").then(curr_id => {
-                    const newDebater = new Debater(curr_id++, this.state.speakerForm.name, this.state.speakerForm.school);
-                    curr_speakers.push(newDebater);
-                    localforage.setItem("speakers-middle", curr_speakers).then(() => {
-                        localforage.setItem("speakers-middle-id-count", curr_id).then(() => {
-                            this.forceUpdate();
-                        });
-                    });
-                });
-            });
-        } else if(this.props.bracket === "high") {
-            localforage.getItem("speakers-high").then(curr_speakers => {
-                localforage.getItem("speakers-high-id-count").then(curr_id => {
-                    const newDebater = new Debater(curr_id++, this.state.speakerForm.name, this.state.speakerForm.school);
-                    curr_speakers.push(newDebater);
-                    localforage.setItem("speakers-high", curr_speakers).then(() => {
-                        localforage.setItem("speakers-high-id-count", curr_id).then(() => {
-                            this.forceUpdate();
-                        });
-                    });
-                });
-            });
+            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+            localStorage.setItem("speakers_middle_counter", counter);
+        } else {
+            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+            localStorage.setItem("speakers_high_counter", counter);
         }
+
+        this.setState({speakers: speakers});
     }
 
     handleSpeakerDelete(speaker) {
         const conf = window.confirm(`Are you sure you want to delete speaker ${speaker.name}?`);
 
         if(conf) {
+            let speakers = this.state.speakers;
+
+            const index = speakers.indexOf(speaker);
+            speakers.splice(index, 1);
+
             if(this.props.bracket === "middle") {
-                localforage.getItem("speakers-middle").then(curr_speakers => {
-                    const index = curr_speakers.findIndex(el => el.debaterID === speaker.debaterID);
-                    curr_speakers.splice(index, 1);
-                    localforage.setItem("speakers-middle", curr_speakers).then(() => {
-                        this.forceUpdate();
-                    })
-                })
+                localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+            } else {
+                localStorage.setItem("speakers_high", JSON.stringify(speakers));
             }
 
+            this.setState({speakers: speakers});
         }
     }
 
 
     render() {
-        if(this.props.bracket === "middle") {
-            localforage.getItem("speakers-middle").then(value => {
-                this.setState({speakers: value});
-            });
-        } else if (this.props.bracket === "high") {
-            localforage.getItem("speakers-high").then(value => {
-                this.setState({speakers: value});
-            });
-        }
-
         let tableEntries;
-        if(this.state.speakers !== null) {
-            tableEntries = this.state.speakers.map(speaker => {
-                return (
-                    <tr key={`speaker-row-${speaker.debaterID}`}>
-                        <td>{speaker.name}</td>
-                        <td>{speaker.school}</td>
-                        <td>
-                            <div onClick={() => this.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
-                        </td>
-                    </tr>
-                );
-            });
-        }
+        tableEntries = this.state.speakers.map(speaker => {
+            return (
+                <tr key={`speaker-row-${speaker.debaterID}`}>
+                    <td>{speaker.name}</td>
+                    <td>{speaker.school}</td>
+                    <td>
+                        <div onClick={() => this.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
+                    </td>
+                </tr>
+            );
+        });
 
         return (
             <div>

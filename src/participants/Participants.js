@@ -34,10 +34,10 @@ class Participants extends React.Component {
                                 <Speakers bracket={this.props.bracket} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
-                                <Teams />
+                                <Teams bracket={this.props.bracket} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
-                                <Ranking />
+                                <Ranking bracket={this.props.bracket} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

@@ -2,8 +2,6 @@ import React from 'react';
 import './App.scss';
 import logo from './images/logo.svg';
 
-import localforage from 'localforage';
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,62 +14,47 @@ import Judges from './judges/Judges';
 import Draw from './draw/Draw';
 
 
-console.log("localforage is", localforage);
+const s = JSON.stringify;
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            tournament_name: "",
-            speakers_middle: [],
-            speakers_high: [],
-            teams_middle: [],
-            teams_high: [],
-            judges: []
+        if(!localStorage.getItem("tournament_name")) {
+            localStorage.setItem("tournament_name", "New tournament");
+        }
+        if(!localStorage.getItem("speakers_middle")) {
+            localStorage.setItem("speakers_middle", s([]));
+        }
+        if(!localStorage.getItem("speakers_middle_counter")) {
+            localStorage.setItem("speakers_middle_counter", 0);
+        }
+        if(!localStorage.getItem("teams_middle")) {
+            localStorage.setItem("teams_middle", s([]));
+        }
+        if(!localStorage.getItem("teams_middle_counter")) {
+            localStorage.setItem("teams_middle_counter", 0);
+        }
+        if(!localStorage.getItem("speakers_high")) {
+            localStorage.setItem("speakers_high", s([]));
+        }
+        if(!localStorage.getItem("speakers_high_counter")) {
+            localStorage.setItem("speakers_high_counter", 0);
+        }
+        if(!localStorage.getItem("teams_high")) {
+            localStorage.setItem("teams_high", s([]));
+        }
+        if(!localStorage.getItem("teams_high_counter")) {
+            localStorage.setItem("teams_high_counter", 0);
+        }
+        if(!localStorage.getItem("judges")) {
+            localStorage.setItem("judges", s([]));
+        }
+        if(!localStorage.getItem("judges_counter")) {
+            localStorage.setItem("judges_counter", 0);
         }
 
-        // Initializing the database
-        localforage.length().then(numKeys => {
-            // First-time user
-            if(numKeys === 0) {
-                localforage.setItem("tournament-name", "New Tournament");
-                localforage.setItem("speakers-middle", []);
-                localforage.setItem("speakers-middle-id-count", 0);
-                localforage.setItem("speakers-high", []);
-                localforage.setItem("speakers-high-id-count", 0);
-                localforage.setItem("teams-middle", []);
-                localforage.setItem("teams-middle-id-count", 0);
-                localforage.setItem("teams-high", []);
-                localforage.setItem("teams-high-id-count", 0);
-                localforage.setItem("judges", []);
-
-                this.setState({tournament_name: "New Tournament"});
-            
-            // Returning user 
-            } else {
-                localforage.getItem("tournament-name").then(value => {
-                    this.setState({tournament_name: value});
-                });
-                localforage.getItem("speakers-middle").then(value => {
-                    this.setState({speakers_middle: value});
-                });
-                localforage.getItem("speakers-high").then(value => {
-                    this.setState({speakers_high: value});
-                });
-                localforage.getItem("teams-middle").then(value => {
-                    this.setState({teams_middle: value});
-                });
-                localforage.getItem("teams-high").then(value => {
-                    this.setState({teams_high: value});
-                });
-                localforage.getItem("judges").then(value => {
-                    this.setState({judges: value});
-                });
-            }            
-        }).catch(err => {
-            alert("Can't connect to the database. Please refresh. Error: ", err);
-        });
+        document.title = `${localStorage.getItem("tournament_name")} - TacoTab`;
     }
 
     render() {
