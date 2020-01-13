@@ -188,6 +188,7 @@ class Teams extends React.Component {
                                     value={this.state.addTeamForm.speaker3}
                                     onChange={this.handleAddTeamFormChange}>
                                         <option>-- pick a speaker --</option>
+                                        <option value="avg">[no third speaker]</option>
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>

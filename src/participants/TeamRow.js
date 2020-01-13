@@ -103,13 +103,41 @@ class TeamRow extends React.Component {
     render() {
         const team = this.props.team;
         const speakers = this.state.speakers.map(sp => {
-            return this.props.speakers.find(el => {
-                return el.debaterID.toString() === sp;
-            });
+            if(sp === "avg") {
+                return "avg";
+            } else {
+                return this.props.speakers.find(el => {
+                    return el.debaterID.toString() === sp;
+                });
+            }
         });
+
+        // Calculate averages
+        if(speakers.includes("avg")) {
+            const index = speakers.indexOf("avg");
+            
+            speakers[index] = {
+                debaterID: "avg",
+                name: "[averaged third speaker]",
+                scores: [
+                    (speakers[0].scores[0] + speakers[1].scores[0]) / 2,
+                    (speakers[0].scores[1] + speakers[1].scores[1]) / 2,
+                    (speakers[0].scores[2] + speakers[1].scores[2]) / 2
+                ],
+                ranks: [
+                    (speakers[0].ranks[0] + speakers[1].ranks[0]) / 2,
+                    (speakers[0].ranks[1] + speakers[1].ranks[1]) / 2,
+                    (speakers[0].ranks[2] + speakers[1].ranks[2]) / 2
+                ]
+            }
+        }
 
         // Generate the table rows
         const speakerRows = speakers.map(speaker => {
+            if(speaker.debaterID === "avg") {
+                return <tr key={`${team.teamID}-average-third`} className="invisible-third"></tr>;
+            }
+
             const isInR1 = this.props.team.round1.includes(speaker.debaterID.toString());
             const isInR2 = this.props.team.round2.includes(speaker.debaterID.toString());
             const isInR3 = this.props.team.round3.includes(speaker.debaterID.toString());
