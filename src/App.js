@@ -54,7 +54,7 @@ class App extends React.Component {
             localStorage.setItem("judges_counter", 0);
         }
 
-        document.title = `${localStorage.getItem("tournament_name")} - TacoTab`;
+        document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
 
     render() {
