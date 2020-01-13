@@ -49,9 +49,10 @@
         border-top-right-radius: 0;
         padding: 1.25rem;
         transition: $transition;
+        z-index: 20;
 
         &.active {
-            box-shadow: 0 6px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
         }
 
         &:hover:not(.active) {
@@ -63,7 +64,7 @@
             box-shadow: inset $focus;
 
             &.active {
-                box-shadow: inset $focus, 0 6px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+                box-shadow: inset $focus, 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
             }
         }
     }
@@ -73,4 +74,11 @@
     height: calc(100vh - 4rem);
     background-color: white;
     box-shadow: $card;
+    overflow-y: scroll;
+    border-top: 5px solid white;
+
+    .nav-pills {
+        position: fixed;
+        width: calc(16.66667% - 30px);
+    }
 }

@@ -21,8 +21,6 @@ class Teams extends React.Component {
                 speaker2: "",
                 speaker3: ""
             },
-            teams: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("teams_middle")) : JSON.parse(localStorage.getItem("teams_high")),
-            speakers: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("speakers_middle")) : JSON.parse(localStorage.getItem("speakers_high")),
             showModal: false
         }
 
@@ -30,6 +28,7 @@ class Teams extends React.Component {
         this.modalHide = this.modalHide.bind(this);
         this.handleAddTeamFormChange = this.handleAddTeamFormChange.bind(this);
         this.handleAddTeamFormSubmit = this.handleAddTeamFormSubmit.bind(this);
+        this.updateTeam = this.updateTeam.bind(this);
         this.deleteTeam = this.deleteTeam.bind(this);
     }
 
@@ -53,7 +52,7 @@ class Teams extends React.Component {
     handleAddTeamFormSubmit(event) {
         event.preventDefault();
 
-        let teams = this.state.teams;
+        let teams = this.props.teams;
         let counter = this.props.bracket === "middle" ? localStorage.getItem("teams_middle_counter") : localStorage.getItem("teams_high_counter");
 
         const newTeam = new Team(counter++, this.state.addTeamForm.teamName, this.state.addTeamForm.speaker1, this.state.addTeamForm.speaker2, this.state.addTeamForm.speaker3);
@@ -67,15 +66,33 @@ class Teams extends React.Component {
             localStorage.setItem("teams_high_counter", counter);
         }
 
-        this.setState({teams: teams});
+        this.props.updateTeams(teams);
         this.modalHide();
+    }
+
+    updateTeam(team) {
+        let teams = this.props.teams;
+
+        const index = teams.indexOf(el => {
+            return el.teamID === team.teamID;
+        });
+
+        teams[index] = team;
+
+        if(this.props.bracket === "middle") {
+            localStorage.setItem("teams_middle", JSON.stringify(teams));
+        } else {
+            localStorage.setItem("teams_high", JSON.stringify(teams));
+        }
+
+        this.props.updateTeams(teams);
     }
 
     deleteTeam(team) {
         const conf = window.confirm(`Are you sure you want to delete team ${team.teamName}?`);
         
         if(conf) {
-            let teams = this.state.teams;
+            let teams = this.props.teams;
 
             teams = teams.filter(el => {
                 return el.teamID !== team.teamID;
@@ -87,27 +104,29 @@ class Teams extends React.Component {
                 localStorage.setItem("teams_high", JSON.stringify(teams));
             }
 
-            this.setState({teams: teams});
+            this.props.updateTeams(teams);
         }
     }
 
     
     render() {
-        let speakerPicker = this.state.speakers.map(speaker => {
+        let speakerPicker = this.props.speakers.map(speaker => {
             return (
                 <option value={speaker.debaterID} key={`option-${speaker.debaterID}`}>{speaker.name}</option>
             );
         });
 
         let teamTable;
-        if(this.state.teams.length === 0) {
+        if(this.props.teams.length === 0) {
             teamTable = <p id="no-teams">No teams yet!</p>;
         } else {
             teamTable = <TeamTable
-                            speakers={this.state.speakers}
-                            teams={this.state.teams}
+                            speakers={this.props.speakers}
+                            teams={this.props.teams}
                             bracket={this.props.bracket}
-                            deleteTeam={this.deleteTeam} />
+                            updateTeam={this.updateTeam}
+                            deleteTeam={this.deleteTeam}
+                            speakerPicker={speakerPicker} />
         }
 
         return (
@@ -172,7 +191,7 @@ class Teams extends React.Component {
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>
-                            <Button variant="primary" type="submit" className="add-team-button">Add</Button>
+                            <Button variant="primary" type="submit" className="form-button">Add</Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

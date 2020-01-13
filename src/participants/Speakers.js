@@ -39,7 +39,7 @@ class Speakers extends React.Component {
     handleSpeakerFormSubmit(event) {
         event.preventDefault();
 
-        let speakers = this.state.speakers;
+        let speakers = this.props.speakers;
         let counter = this.props.bracket === "middle" ? localStorage.getItem("speakers_middle_counter") : localStorage.getItem("speakers_high_counter");
 
         const newSpeaker = new Debater(counter++, this.state.speakerForm.name, this.state.speakerForm.school);
@@ -53,7 +53,7 @@ class Speakers extends React.Component {
             localStorage.setItem("speakers_high_counter", counter);
         }
 
-        this.setState({speakers: speakers});
+        this.props.updateSpeakers(speakers);
     }
 
     handleSpeakerDelete(speaker) {
@@ -71,14 +71,14 @@ class Speakers extends React.Component {
                 localStorage.setItem("speakers_high", JSON.stringify(speakers));
             }
 
-            this.setState({speakers: speakers});
+            this.props.updateSpeakers(speakers);
         }
     }
 
 
     render() {
         let tableEntries;
-        tableEntries = this.state.speakers.map(speaker => {
+        tableEntries = this.props.speakers.map(speaker => {
             return (
                 <tr key={`speaker-row-${speaker.debaterID}`}>
                     <td>{speaker.name}</td>

@@ -1,115 +1,232 @@
 import React from 'react';
 import TeamCell from './TeamCell';
+import TeamSpeakerSelect from './TeamSpeakerSelect';
+
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 
 class TeamRow extends React.Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
-            speakers: [
-                this.props.speakers.find(el => el.debaterID.toString() === this.props.team.round1[0]),
-                this.props.speakers.find(el => el.debaterID.toString() === this.props.team.round1[1]),
-                this.props.speakers.find(el => el.debaterID.toString() === this.props.team.round1[2])
-            ]
+            speakers: this.getDistinctSpeakers(),
+            updateTeamForm: [
+                [this.props.team.round1[0], this.props.team.round2[0], this.props.team.round3[0]],
+                [this.props.team.round1[1], this.props.team.round2[1], this.props.team.round3[1]],
+                [this.props.team.round1[2], this.props.team.round2[2], this.props.team.round3[2]]
+            ],
+            showModal: false
         }
 
         this.setScore = this.setScore.bind(this);
         this.setRank = this.setRank.bind(this);
+        this.modalShow = this.modalShow.bind(this);
+        this.modalHide = this.modalHide.bind(this);
+        this.handleUpdateTeamFormChange = this.handleUpdateTeamFormChange.bind(this);
+        this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
     }
 
 
+    getDistinctSpeakers() {
+        let sp = []
+        for(let s = 0; s < 3; s++) {
+            sp.push(this.props.team.round1[s]);
+            sp.push(this.props.team.round2[s]);
+            sp.push(this.props.team.round3[s]);
+        }
+        return [...new Set(sp)];
+    }
+    
+    modalShow() {
+        this.setState({showModal: true});
+    }
+
+    modalHide() {
+        this.setState({showModal: false});
+    }
+    
     setScore(speaker, no, value) {
-        // Update local storage
-        let globalSpeakers = this.props.speakers;
+        let speakers = this.props.speakers;
         
-        globalSpeakers
+        speakers
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .scores[no] = parseInt(value);
 
         if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(globalSpeakers));
+            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(globalSpeakers));
+            localStorage.setItem("speakers_high", JSON.stringify(speakers));
         }
 
-        // Update component state
-        let localState = this.state.speakers;
-
-        localState
-            .find(el => el.debaterID.toString() === speaker.debaterID.toString())
-            .scores[no] = parseInt(value);    
-        
-        this.setState({speakers: localState});
+        this.forceUpdate();
     }
 
     setRank(speaker, no, value) {
-        // Update local storage
-        let globalSpeakers = this.props.speakers;
+        let speakers = this.props.speakers;
 
-        globalSpeakers
+        speakers
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .ranks[no] = parseInt(value);
         
         if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(globalSpeakers));
+            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(globalSpeakers));
+            localStorage.setItem("speakers_high", JSON.stringify(speakers));
         }
 
-        // Update component state
-        let localState = this.state.speakers;
+        this.forceUpdate();
+    }
 
-        localState
-            .find(el => el.debaterID.toString() === speaker.debaterID.toString())
-            .ranks[no] = parseInt(value);
+    handleUpdateTeamFormChange(value, speaker, round) {
+        let updateTeamFormState = this.state.updateTeamForm;
+        updateTeamFormState[speaker][round - 1] = value;
+        this.setState({updateTeamForm: updateTeamFormState});
+    }
 
-        this.setState({speakers: localState});
+    handleTeamUpdate(event) {
+        event.preventDefault();
+
+        let team = this.props.team;
+        team.round1 = [this.state.updateTeamForm[0][0], this.state.updateTeamForm[1][0], this.state.updateTeamForm[2][0]];
+        team.round2 = [this.state.updateTeamForm[0][1], this.state.updateTeamForm[1][1], this.state.updateTeamForm[2][1]];
+        team.round3 = [this.state.updateTeamForm[0][2], this.state.updateTeamForm[1][2], this.state.updateTeamForm[2][2]];
+
+        this.props.updateTeam(team);
+        this.setState({speakers: this.getDistinctSpeakers()});
+        this.modalHide();
     }
 
 
     render() {
         const team = this.props.team;
-        const d1 = this.state.speakers[0];
-        const d2 = this.state.speakers[1];
-        const d3 = this.state.speakers[2];
-        
-        const speakerRows = this.state.speakers.map(speaker => {
+        const speakers = this.state.speakers.map(sp => {
+            return this.props.speakers.find(el => {
+                return el.debaterID.toString() === sp;
+            });
+        });
+
+        // Generate the table rows
+        const speakerRows = speakers.map(speaker => {
+            const isInR1 = this.props.team.round1.includes(speaker.debaterID.toString());
+            const isInR2 = this.props.team.round2.includes(speaker.debaterID.toString());
+            const isInR3 = this.props.team.round3.includes(speaker.debaterID.toString());
+
+            let totalScores = 0;
+            if (isInR1) totalScores += speaker.scores[0];
+            if (isInR2) totalScores += speaker.scores[1];
+            if (isInR3) totalScores += speaker.scores[2];
+
             return (
                 <tr key={`${speaker.name}_row`}>
                     <td>{speaker.name}</td>
-                    <td className="editable"><TeamCell type="score" speaker={speaker} no={0} fn={this.setScore} /></td>
-                    <td className="editable"><TeamCell type="rank" speaker={speaker} no={0} fn={this.setRank} /></td>
-                    <td className="editable"><TeamCell type="score" speaker={speaker} no={1} fn={this.setScore} /></td>
-                    <td className="editable"><TeamCell type="rank" speaker={speaker} no={1} fn={this.setRank} /></td>
-                    <td className="editable"><TeamCell type="score" speaker={speaker} no={2} fn={this.setScore} /></td>
-                    <td className="editable"><TeamCell type="rank" speaker={speaker} no={2} fn={this.setRank} /></td>
-                    <td>{parseInt(speaker.scores[0]) + parseInt(speaker.scores[1]) + parseInt(speaker.scores[2])}</td>
+                    <td className={isInR1 ? "editable" : "disabled"}>
+                        <TeamCell type="score" speaker={speaker} no={0} fn={this.setScore} />
+                    </td>
+                    <td className={isInR1 ? "editable" : "disabled"}>
+                        <TeamCell type="rank" speaker={speaker} no={0} fn={this.setRank} />
+                    </td>
+                    <td className={isInR2 ? "editable" : "disabled"}>
+                        <TeamCell type="score" speaker={speaker} no={1} fn={this.setScore} />
+                    </td>
+                    <td className={isInR2 ? "editable" : "disabled"}>
+                        <TeamCell type="rank" speaker={speaker} no={1} fn={this.setRank} />
+                    </td>
+                    <td className={isInR3 ? "editable" : "disabled"}>
+                        <TeamCell type="score" speaker={speaker} no={2} fn={this.setScore} />
+                    </td>
+                    <td className={isInR3 ? "editable" : "disabled"}>
+                        <TeamCell type="rank" speaker={speaker} no={2} fn={this.setRank} />
+                    </td>
+                    <td>{totalScores}</td>
                     <td></td>
                 </tr>
             );
         });
 
+        // Calculate scores
+        let scores1 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round1.includes(speaker.debaterID.toString())) {
+                return scores1 += speaker.scores[0]
+            }
+        });
+        let scores2 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round2.includes(speaker.debaterID.toString())) {
+                scores2 += speaker.scores[1]
+            }
+        });
+        let scores3 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round3.includes(speaker.debaterID.toString())) {
+                scores3 += speaker.scores[2]
+            }
+        });
+
+        // Update the people selection picker
+        const teamSpeakerSelects = [0, 1, 2].map(sp => {
+            return (
+                <div key={`teamSpeakerSelectRow-team-${team.teamID}-speaker-${sp}`} className="form-update-team-speaker">
+                    <p>Speaker {sp + 1}</p>
+                    <Form.Row>
+                        {
+                            [1, 2, 3].map(round => {
+                                return (
+                                    <TeamSpeakerSelect
+                                        key={`teamSpeakerSelect-team-${team.teamID}-speaker-${sp}-round-${round}`}
+                                        team={team}
+                                        speaker={sp}
+                                        round={round}
+                                        value={this.state.updateTeamForm}
+                                        handleUpdateTeamFormChange={this.handleUpdateTeamFormChange}
+                                        speakerPicker={this.props.speakerPicker} />
+                                );
+                            })
+                        }
+                    </Form.Row>
+                </div>
+            );
+        });
+
+
         return (
             <tbody>
                 <tr>
-                    <th rowSpan="5">
+                    <th rowSpan={this.state.speakers.length + 2} className="cell-teamname">
                         {team.teamName}
                         <br />
+                        <div className="icon-people" onClick={this.modalShow}></div>
                         <div className="icon-trash" onClick={() => this.props.deleteTeam(team)}></div>
                     </th>
                 </tr>
                 {speakerRows}
                 <tr className="row-total">
                     <td>Team total</td>
-                    <td>{d1.scores[0] + d2.scores[0] + d3.scores[0]}</td>
+                    <td>{scores1}</td>
                     <td></td>
-                    <td>{d1.scores[1] + d2.scores[1] + d3.scores[1]}</td>
+                    <td>{scores2}</td>
                     <td></td>
-                    <td>{d1.scores[2] + d2.scores[2] + d3.scores[2]}</td>
+                    <td>{scores3}</td>
                     <td></td>
-                    <td>{d1.scores[0] + d2.scores[0] + d3.scores[0] + d1.scores[1] + d2.scores[1] + d3.scores[1] + d1.scores[2] + d2.scores[2] + d3.scores[2]}</td>
+                    <td>{scores1 + scores2 + scores3}</td>
                     <td></td>
                 </tr>
+
+                <Modal show={this.state.showModal} size="lg" onHide={this.modalHide}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Specify team members per round</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <Form onSubmit={this.handleTeamUpdate}>
+                            {teamSpeakerSelects}
+                            <Button variant="primary" type="submit" className="form-button">Save</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
             </tbody>
         );
     }

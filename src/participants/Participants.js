@@ -11,6 +11,28 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 
 class Participants extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            teams: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("teams_middle")) : JSON.parse(localStorage.getItem("teams_high")),
+            speakers: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("speakers_middle")) : JSON.parse(localStorage.getItem("speakers_high"))
+        }
+
+        this.updateSpeakers = this.updateSpeakers.bind(this);
+        this.updateTeams = this.updateTeams.bind(this);
+    }
+
+
+    updateSpeakers(speakers) {
+        this.setState({speakers: speakers});
+    }
+
+    updateTeams(teams) {
+        this.setState({teams: teams});
+    }
+
+
     render() {
         return (
             <Tab.Container id={`part-view-${this.props.bracket}`} defaultActiveKey="speakers">
@@ -31,13 +53,13 @@ class Participants extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
-                                <Speakers bracket={this.props.bracket} />
+                                <Speakers speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
-                                <Teams bracket={this.props.bracket} />
+                                <Teams speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
-                                <Ranking bracket={this.props.bracket} />
+                                <Ranking speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

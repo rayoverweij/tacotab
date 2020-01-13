@@ -1,9 +1,15 @@
-table {
+.table {
     th, td {
         padding: 10px 5px;
 
         &.editable {
             padding: 5px 0 0;
+        }
+
+        &.disabled {
+            textarea {
+                display: none;
+            }
         }
     }
 
@@ -12,17 +18,54 @@ table {
     }
 }
 
-.icon-trash {
-    &::before {
-        content: url(../images/icon-trash.svg);
-        display: inline-block;
+.cell-teamname {
+    .icon-people {
+        display: none;
+        margin-right: 5px;
+
+        &::before {
+            content: url(../images/icon-people.svg);
+        }
+    
+        &:hover {
+            cursor: pointer;
+            
+            &::before {
+                content: url(../images/icon-people-filled.svg);
+            }
+        }
+    }
+    
+    .icon-trash {
+        display: none;
+
+        &::before {
+            content: url(../images/icon-trash.svg);
+        }
+    
+        &:hover {
+            cursor: pointer;
+            
+            &::before {
+                content: url(../images/icon-trash-fill.svg);
+            }
+        }
+    }
+    
+    &:hover {
+        .icon-people, .icon-trash {
+            display: inline-block;
+            width: 1.3rem;
+        }
+    }
+}
+
+.form-update-team-speaker {
+    &:not(:first-of-type) {
+        margin-top: 20px;
     }
 
-    &:hover {
-        cursor: pointer;
-        
-        &::before {
-            content: url(../images/icon-trash-fill.svg);
-        }
+    p {
+        font-weight: 600;
     }
 }
