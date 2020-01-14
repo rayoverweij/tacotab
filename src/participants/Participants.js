@@ -1,5 +1,4 @@
 import React from 'react';
-import './Participants.scss';
 
 import Speakers from './Speakers';
 import Teams from './Teams';
@@ -40,13 +39,13 @@ class Participants extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="speakers" className="part-nav-link">Speakers</Nav.Link>
+                                <Nav.Link eventKey="speakers" className="sub-nav-link">Speakers</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="teams" className="part-nav-link">Teams</Nav.Link>
+                                <Nav.Link eventKey="teams" className="sub-nav-link">Teams</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="ranking" className="part-nav-link">Ranking</Nav.Link>
+                                <Nav.Link eventKey="ranking" className="sub-nav-link">Ranking</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Judges.scss';
 
+import JudgeRow from './JudgeRow';
 import Judge from '../structures/judge';
 
 import Tab from 'react-bootstrap/Tab';
@@ -23,6 +24,7 @@ class Judges extends React.Component {
 
         this.handleJudgeFormChange = this.handleJudgeFormChange.bind(this);
         this.handleJudgeFormSubmit = this.handleJudgeFormSubmit.bind(this);
+        this.handleJudgeUpdate = this.handleJudgeUpdate.bind(this);
         this.handleJudgeDelete = this.handleJudgeDelete.bind(this);
     }
 
@@ -41,6 +43,16 @@ class Judges extends React.Component {
         localStorage.setItem("judges", JSON.stringify(judges));
     }
 
+    handleJudgeUpdate(judge) {
+        let judges = this.state.judges;
+
+        const index = judges.indexOf(judge);
+        judges[index] = judge;
+
+        localStorage.setItem("judges", JSON.stringify(judges));
+        this.setState({judges: judges});
+    }
+
     handleJudgeDelete(judge) {
         const conf = window.confirm(`Are you sure you want to delete judge ${judge.name}?`);
 
@@ -57,22 +69,36 @@ class Judges extends React.Component {
 
 
     render() {
-        const tableEntries = this.state.judges.map(judge => {
-            return (
-                <tr key={`judge-row-${judge.name}`}>
-                    <td>{judge.name}</td>
-                    <td>
-                        <Form.Check type="checkbox" checked={judge.canChair} />
-                    </td>
-                    <td>{judge.r1}</td>
-                    <td>{judge.r2}</td>
-                    <td>{judge.r3}</td>
-                    <td>
-                        <div onClick={() => this.handleJudgeDelete(judge)} className="icon icon-trash"></div>
-                    </td>
-                </tr>
+        let table;
+        if(this.state.judges.length === 0) {
+            table = <p className="none-yet">No judges yet!</p>;
+        } else {
+            table = (
+                <Table className="judge-table" hover bordered>
+                    <thead>
+                        <tr>
+                            <th className="judge-table-name">Name</th>
+                            <th>Chair?</th>
+                            <th>Round 1?</th>
+                            <th>Round 2?</th>
+                            <th>Round 3?</th>
+                            <th className="table-delete"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.judges.map(judge => {
+                            return (
+                                <JudgeRow
+                                    key={`judge-row-${judge.name}`}
+                                    judge={judge}
+                                    updateJudge={this.handleJudgeUpdate}
+                                    deleteJudge = {this.handleJudgeDelete} />
+                            );
+                        })}
+                    </tbody>
+                </Table>
             );
-        });
+        }
 
 
         return (
@@ -81,7 +107,7 @@ class Judges extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="judges" className="part-nav-link">Judges</Nav.Link>
+                                <Nav.Link eventKey="judges" className="sub-nav-link">Judges</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
@@ -106,21 +132,7 @@ class Judges extends React.Component {
 
                                 <Row>
                                     <Col md={8} className="judge-table-col">
-                                        <Table className="judge-table" hover bordered>
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Chair?</th>
-                                                    <th>Round 1?</th>
-                                                    <th>Round 2?</th>
-                                                    <th>Round 3?</th>
-                                                    <th className="judge-table-delete"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {tableEntries}
-                                            </tbody>
-                                        </Table>
+                                        {table}
                                     </Col>
                                 </Row>
                             </Tab.Pane>

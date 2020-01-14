@@ -70,6 +70,7 @@
     }
 }
 
+
 #app-container > .tab-content {
     height: calc(100vh - 4rem);
     background-color: white;
@@ -85,4 +86,17 @@
 
 .app-nav-tab {
     padding-top: 20px;
+}
+
+.sub-nav-link {
+    transition: $transition;
+
+    &:hover:not(.active) {
+        text-decoration: underline;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: $focus;
+    }
 }

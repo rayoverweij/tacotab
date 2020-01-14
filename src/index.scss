@@ -29,22 +29,35 @@ a {
     }
 }
 
+.table {
+    margin-top: 30px;
 
-.icon-trash {
-    height: 1rem;
-    width: 1.3rem;
-    padding-top: 3px;
-
-    &::before {
-        content: url(images/icon-trash.svg);
-        display: inline-block;
+    th, td {
+        vertical-align: middle;
+        padding: 10px 5px;
     }
 
+    .table-delete {
+        width: 1.3rem;
+        padding: 0 5px;
+    }
+}
+
+
+.none-yet {
+    margin-top: 30px;
+}
+
+.icon-trash {
+    height: 1.3rem;
+    width: 1.3rem;
+    display: inline-block;
+    margin-top: 6px;
+    background-image: url(images/icon-trash.svg);
+    cursor: pointer;
+    transition: $transition;
+
     &:hover {
-        cursor: pointer;
-        
-        &::before {
-            content: url(images/icon-trash-fill.svg);
-        }
+        background-image: url(images/icon-trash-fill.svg);
     }
 }

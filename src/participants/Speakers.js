@@ -15,7 +15,6 @@ class Speakers extends React.Component {
         super(props);
 
         this.state = {
-            speakers: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("speakers_middle")) : JSON.parse(localStorage.getItem("speakers_high")),
             speakerForm: {
                 name: "",
                 school: ""
@@ -60,7 +59,7 @@ class Speakers extends React.Component {
         const conf = window.confirm(`Are you sure you want to delete speaker ${speaker.name}?`);
 
         if(conf) {
-            let speakers = this.state.speakers;
+            let speakers = this.props.speakers;
 
             const index = speakers.indexOf(speaker);
             speakers.splice(index, 1);
@@ -77,18 +76,37 @@ class Speakers extends React.Component {
 
 
     render() {
-        let tableEntries;
-        tableEntries = this.props.speakers.map(speaker => {
-            return (
-                <tr key={`speaker-row-${speaker.debaterID}`}>
-                    <td>{speaker.name}</td>
-                    <td>{speaker.school}</td>
-                    <td>
-                        <div onClick={() => this.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
-                    </td>
-                </tr>
+        let table;
+        if(this.props.speakers.length === 0) {
+            table = <p className="none-yet">No speakers yet!</p>;
+        } else {
+            table = (
+                <Table className="speaker-table" hover bordered>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>School</th>
+                            <th className="table-delete"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.speakers.map(speaker => {
+                            return (
+                                <tr key={`speaker-row-${speaker.debaterID}`}>
+                                    <td>{speaker.name}</td>
+                                    <td>{speaker.school}</td>
+                                    <td className="table-delete">
+                                        <div onClick={() => this.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
             );
-        });
+            
+            
+        }
 
         return (
             <div>
@@ -114,18 +132,7 @@ class Speakers extends React.Component {
 
                 <Row>
                     <Col md={8} className="speaker-table-col">
-                        <Table className="speaker-table" hover bordered>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>School</th>
-                                    <th className="speaker-table-delete"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableEntries}
-                            </tbody>
-                        </Table>
+                        {table}
                     </Col>
                 </Row>
             </div>

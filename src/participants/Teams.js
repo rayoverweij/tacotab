@@ -118,7 +118,7 @@ class Teams extends React.Component {
 
         let teamTable;
         if(this.props.teams.length === 0) {
-            teamTable = <p id="no-teams">No teams yet!</p>;
+            teamTable = <p className="none-yet">No teams yet!</p>;
         } else {
             teamTable = <TeamTable
                             speakers={this.props.speakers}

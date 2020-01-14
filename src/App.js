@@ -21,7 +21,7 @@ class App extends React.Component {
         super(props);
 
         if(!localStorage.getItem("tournament_name")) {
-            localStorage.setItem("tournament_name", "New tournament");
+            localStorage.setItem("tournament_name", s("New tournament"));
         }
         if(!localStorage.getItem("speakers_middle")) {
             localStorage.setItem("speakers_middle", s([]));

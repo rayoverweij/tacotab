@@ -25,10 +25,10 @@ class Home extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="welcome" className="part-nav-link">Welcome</Nav.Link>
+                                <Nav.Link eventKey="welcome" className="sub-nav-link">Welcome</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="settings" className="part-nav-link">Settings</Nav.Link>
+                                <Nav.Link eventKey="settings" className="sub-nav-link">Settings</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
