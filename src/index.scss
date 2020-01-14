@@ -28,3 +28,23 @@ a {
         text-decoration: underline;
     }
 }
+
+
+.icon-trash {
+    height: 1rem;
+    width: 1.3rem;
+    padding-top: 3px;
+
+    &::before {
+        content: url(images/icon-trash.svg);
+        display: inline-block;
+    }
+
+    &:hover {
+        cursor: pointer;
+        
+        &::before {
+            content: url(images/icon-trash-fill.svg);
+        }
+    }
+}

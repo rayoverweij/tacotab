@@ -1,11 +1,133 @@
 import React from 'react';
+import './Judges.scss';
+
+import Judge from '../structures/judge';
+
+import Tab from 'react-bootstrap/Tab';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 
 class Judges extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            judges: JSON.parse(localStorage.getItem("judges")),
+            addJudgeForm: ""
+        }
+
+        this.handleJudgeFormChange = this.handleJudgeFormChange.bind(this);
+        this.handleJudgeFormSubmit = this.handleJudgeFormSubmit.bind(this);
+        this.handleJudgeDelete = this.handleJudgeDelete.bind(this);
+    }
+
+
+    handleJudgeFormChange(event) {
+        this.setState({addJudgeForm: event.target.value});
+    }
+
+    handleJudgeFormSubmit(event) {
+        event.preventDefault();
+
+        let judges = this.state.judges;
+        judges.push(new Judge(this.state.addJudgeForm));
+
+        this.setState({judges: judges});
+        localStorage.setItem("judges", JSON.stringify(judges));
+    }
+
+    handleJudgeDelete(judge) {
+        const conf = window.confirm(`Are you sure you want to delete judge ${judge.name}?`);
+
+        if(conf) {
+            let judges = this.state.judges;
+
+            const index = judges.indexOf(judge);
+            judges.splice(index, 1);
+
+            localStorage.setItem("judges", JSON.stringify(judges));
+            this.setState({judges: judges});
+        }
+    }
+
+
     render() {
+        const tableEntries = this.state.judges.map(judge => {
+            return (
+                <tr key={`judge-row-${judge.name}`}>
+                    <td>{judge.name}</td>
+                    <td>
+                        <Form.Check type="checkbox" checked={judge.canChair} />
+                    </td>
+                    <td>{judge.r1}</td>
+                    <td>{judge.r2}</td>
+                    <td>{judge.r3}</td>
+                    <td>
+                        <div onClick={() => this.handleJudgeDelete(judge)} className="icon icon-trash"></div>
+                    </td>
+                </tr>
+            );
+        });
+
+
         return (
-            <div>
-                <p>Judges!</p>
-            </div>
+            <Tab.Container id={`judges-view`} defaultActiveKey="judges">
+                <Row>
+                    <Col sm={2}>
+                        <Nav variant="pills" className="flex-column">
+                            <Nav.Item>
+                                <Nav.Link eventKey="judges" className="part-nav-link">Judges</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                    <Col sm={10}>
+                        <Tab.Content>
+                            <Tab.Pane eventKey="judges">
+                                <Row>
+                                    <Col>
+                                        <h2>Judges</h2>
+                                        <Form onSubmit={this.handleJudgeFormSubmit}>
+                                            <Form.Row>
+                                                <Col md={4}>
+                                                    <Form.Control name="judgeName" type="text" placeholder="Name" onChange={this.handleJudgeFormChange} />
+                                                </Col>
+                                                <Col>
+                                                    <Button variant="primary" type="submit">Add judge</Button>
+                                                </Col>
+                                            </Form.Row>
+                                        </Form>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col md={8} className="judge-table-col">
+                                        <Table className="judge-table" hover bordered>
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Chair?</th>
+                                                    <th>Round 1?</th>
+                                                    <th>Round 2?</th>
+                                                    <th>Round 3?</th>
+                                                    <th className="judge-table-delete"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {tableEntries}
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Col>
+                </Row>
+            </Tab.Container>
         );
     }
 }
