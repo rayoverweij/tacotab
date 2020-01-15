@@ -131,7 +131,7 @@ class Judges extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Col md={8} className="judge-table-col">
+                                    <Col md={8} className="table-col">
                                         {table}
                                     </Col>
                                 </Row>

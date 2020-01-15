@@ -53,6 +53,16 @@ class App extends React.Component {
         if(!localStorage.getItem("judges_counter")) {
             localStorage.setItem("judges_counter", 0);
         }
+        if(!localStorage.getItem("draws_generated")) {
+            localStorage.setItem("draws_generated", s([false, false, false]));
+        }
+        if(!localStorage.getItem("draws")) {
+            localStorage.setItem("draws", s([
+                {pairings_middle: [], pairings_high: []},
+                {pairings_middle: [], pairings_high: []},
+                {pairings_middle: [], pairings_high: []}
+            ]));
+        }
 
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
@@ -67,7 +77,7 @@ class App extends React.Component {
                             <h1>TacoTab</h1>
                         </div>
 
-                        <Tabs defaultActiveKey="home" id="app-nav">
+                        <Tabs defaultActiveKey="draw" id="app-nav">
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
                                 <Home />
                             </Tab>

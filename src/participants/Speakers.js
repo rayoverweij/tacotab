@@ -131,7 +131,7 @@ class Speakers extends React.Component {
                 </Row>
 
                 <Row>
-                    <Col md={8} className="speaker-table-col">
+                    <Col md={8} className="table-col">
                         {table}
                     </Col>
                 </Row>
