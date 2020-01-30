@@ -49,7 +49,7 @@ class Round extends React.Component {
             if(!confMix) {
                 return;
             } else {
-                alert("This scenario hasn't been implemented yet, sorry.")
+                alert("This scenario hasn't been implemented yet, sorry.");
                 return;
             }
         } else if(teams_middle.length % 2 !== 0) {
