@@ -1,4 +1,5 @@
 class Judge {
+    judgeID;
     name;
     canChair;
     r1;
@@ -6,7 +7,8 @@ class Judge {
     r3;
     hasJudged;
 
-    constructor(name) {
+    constructor(ID, name) {
+        this.judgeID = ID;
         this.name = name;
         this.canChair = false;
         this.r1 = true;

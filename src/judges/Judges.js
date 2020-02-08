@@ -37,10 +37,13 @@ class Judges extends React.Component {
         event.preventDefault();
 
         let judges = this.state.judges;
-        judges.push(new Judge(this.state.addJudgeForm));
+        let counter = localStorage.getItem("judges_counter");
+
+        judges.push(new Judge(counter++, this.state.addJudgeForm));
 
         this.setState({judges: judges});
         localStorage.setItem("judges", JSON.stringify(judges));
+        localStorage.setItem("judges_counter", counter);
     }
 
     handleJudgeUpdate(judge) {
