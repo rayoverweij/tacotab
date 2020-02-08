@@ -30,6 +30,9 @@ class Round extends React.Component {
         const teams_high = JSON.parse(localStorage.getItem("teams_high"));
         let judges = JSON.parse(localStorage.getItem("judges"));
 
+        const lenM = teams_middle.length;
+        const lenH = teams_high.length;
+
         // Select only the judges that are available this round
         if(this.props.r === "1") {
             judges = judges.filter(el => el.r1 === true);
@@ -40,11 +43,11 @@ class Round extends React.Component {
         }
 
         // Split chairs and wings
-        const chairs = judges.filter(el => el.canChair === true);
-        let wings = judges.filter(el => el.canChair === false);
+        const chairs = judges.filter(el => el.canChair === true).map(el => el.judgeID);
+        let wings = judges.filter(el => el.canChair === false).map(el => el.judgeID);
 
         // Check for an even number of teams
-        if(teams_middle.length % 2 !== 0 && teams_high.length % 2 !== 0) {
+        if(lenM % 2 !== 0 && lenH % 2 !== 0) {
             const confMix = window.confirm("Both brackets have an odd number of teams. This means that one middle school team would debate one high school team. Do you want to continue under these circumstances?");
             if(!confMix) {
                 return;
@@ -52,10 +55,10 @@ class Round extends React.Component {
                 alert("This scenario hasn't been implemented yet, sorry.");
                 return;
             }
-        } else if(teams_middle.length % 2 !== 0) {
+        } else if(lenM % 2 !== 0) {
             alert("There is an odd number of middle school teams\u2014add or remove a team to generate the draw.");
             return;
-        } else if(teams_high.length % 2 !== 0) {
+        } else if(lenH % 2 !== 0) {
             alert("There is an odd number of high school teams\u2014add or remove a team to generate the draw.");
             return;
         }
@@ -74,7 +77,7 @@ class Round extends React.Component {
         }
 
         // Check whether there are enough chairs
-        const totalTeams = teams_middle.length + teams_high.length;
+        const totalTeams = lenM + lenH;
         if(chairs.length < totalTeams / 2) {
             alert("There are not enough chairs to adjudicate every room. Please add some more.");
             return;
@@ -96,25 +99,51 @@ class Round extends React.Component {
         let pairings_high = [];
 
         if(this.props.r === "1") {
-            // Distribute teams and chairs
-            for (let i = 0; i < teams_middle.length; i += 2) {
-                pairings_middle[i / 2] = {
-                    prop: teams_middle[i],
-                    opp: teams_middle[i + 1],
-                    chair: chairs[i / 2],
-                    wings: []
-                }
-                chairs[i / 2].hasJudged.push(teams_middle[i], teams_middle[i + 1]);
+            // Generate lists of team IDs in random order
+            let tm = teams_middle.map(el => el.teamID);
+            for (let i = lenM - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tm[i], tm[j]] = [tm[j], tm[i]];
             }
-            for (let i = 0; i < teams_high.length; i += 2) {
-                const chairPosition = teams_middle.length / 2 + i / 2;
-                pairings_high[i / 2] = {
-                    prop: teams_high[i],
-                    opp: teams_high[i + 1],
-                    chair: chairs[chairPosition],
+            let th = teams_high.map(el => el.teamID);
+            for (let i = lenH - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [th[i], th[j]] = [th[j], th[i]];
+            }
+
+            // Distribute teams and chairs
+            let currProp, currOpp, chIndex;
+            for (let i = 0; i < lenM; i += 2) {
+                currProp = tm[i];
+                currOpp = tm[i + 1];
+                let currChair = chairs.pop();
+                pairings_middle[i / 2] = {
+                    prop: currProp,
+                    opp: currOpp,
+                    chair: currChair,
                     wings: []
                 }
-                chairs[chairPosition].hasJudged.push(teams_high[i], teams_high[i + 1]);
+
+                chIndex = judges.findIndex(el => {
+                    return el.judgeID.toString() === currChair.toString()
+                });
+                judges[chIndex].hasChaired.push(currProp, currOpp);
+            }
+            for (let i = 0; i < lenH; i += 2) {
+                currProp = th[i];
+                currOpp = th[i + 1];
+                let currChair = chairs.pop();
+                pairings_high[i / 2] = {
+                    prop: currProp,
+                    opp: currOpp,
+                    chair: currChair,
+                    wings: []
+                }
+
+                chIndex = judges.findIndex(el => {
+                    return el.judgeID.toString() === currChair.toString()
+                });
+                judges[chIndex].hasChaired.push(currProp, currOpp);
             }
 
             // Add wings
@@ -182,9 +211,9 @@ class Round extends React.Component {
                                 this.state.pairings_middle.map((pair, index) => {
                                     return (
                                         <tr key={`middle-pair-${index}`}>
-                                            <td className="draw-table-team-cell">{pair.prop.teamName}</td>
-                                            <td className="draw-table-team-cell">{pair.opp.teamName}</td>
-                                            <td>{pair.chair.name}&copy;{pair.wings.map(el => ", " + el.name)}</td>
+                                            <td className="draw-table-team-cell">{pair.prop}</td>
+                                            <td className="draw-table-team-cell">{pair.opp}</td>
+                                            <td>{pair.chair}&copy;{pair.wings.map(el => ", " + el)}</td>
                                         </tr>
                                     );
                                 })
@@ -206,9 +235,9 @@ class Round extends React.Component {
                                 this.state.pairings_high.map((pair, index) => {
                                     return (
                                         <tr key={`high-pair-${index}`}>
-                                            <td className="draw-table-team-cell">{pair.prop.teamName}</td>
-                                            <td className="draw-table-team-cell">{pair.opp.teamName}</td>
-                                            <td>{pair.chair.name}&copy;{pair.wings.map(el => ", " + el.name)}</td>
+                                            <td className="draw-table-team-cell">{pair.prop}</td>
+                                            <td className="draw-table-team-cell">{pair.opp}</td>
+                                            <td>{pair.chair}&copy;{pair.wings.map(el => ", " + el)}</td>
                                         </tr>
                                     );
                                 })

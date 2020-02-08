@@ -5,7 +5,7 @@ class Judge {
     r1;
     r2;
     r3;
-    hasJudged;
+    hasChaired;
 
     constructor(ID, name) {
         this.judgeID = ID;
@@ -14,7 +14,7 @@ class Judge {
         this.r1 = true;
         this.r2 = true;
         this.r3 = true;
-        this.hasJudged = [];
+        this.hasChaired = [];
     }
 }
 
