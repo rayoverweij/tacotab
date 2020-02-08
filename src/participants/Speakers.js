@@ -39,18 +39,17 @@ class Speakers extends React.Component {
         event.preventDefault();
 
         let speakers = this.props.speakers;
-        let counter = this.props.bracket === "middle" ? localStorage.getItem("speakers_middle_counter") : localStorage.getItem("speakers_high_counter");
+        let counter = localStorage.getItem("speakers_counter");
 
         const newSpeaker = new Debater(counter++, this.state.speakerForm.name, this.state.speakerForm.school);
         speakers.push(newSpeaker);
 
         if(this.props.bracket === "middle") {
             localStorage.setItem("speakers_middle", JSON.stringify(speakers));
-            localStorage.setItem("speakers_middle_counter", counter);
         } else {
             localStorage.setItem("speakers_high", JSON.stringify(speakers));
-            localStorage.setItem("speakers_high_counter", counter);
         }
+        localStorage.setItem("speakers_counter", counter);
 
         this.props.updateSpeakers(speakers);
     }

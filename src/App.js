@@ -26,26 +26,20 @@ class App extends React.Component {
         if(!localStorage.getItem("speakers_middle")) {
             localStorage.setItem("speakers_middle", s([]));
         }
-        if(!localStorage.getItem("speakers_middle_counter")) {
-            localStorage.setItem("speakers_middle_counter", 0);
-        }
         if(!localStorage.getItem("teams_middle")) {
             localStorage.setItem("teams_middle", s([]));
-        }
-        if(!localStorage.getItem("teams_middle_counter")) {
-            localStorage.setItem("teams_middle_counter", 0);
         }
         if(!localStorage.getItem("speakers_high")) {
             localStorage.setItem("speakers_high", s([]));
         }
-        if(!localStorage.getItem("speakers_high_counter")) {
-            localStorage.setItem("speakers_high_counter", 0);
-        }
         if(!localStorage.getItem("teams_high")) {
             localStorage.setItem("teams_high", s([]));
         }
-        if(!localStorage.getItem("teams_high_counter")) {
-            localStorage.setItem("teams_high_counter", 0);
+        if(!localStorage.getItem("speakers_counter")) {
+            localStorage.setItem("speakers_counter", 0);
+        }
+        if(!localStorage.getItem("teams_counter")) {
+            localStorage.setItem("teams_counter", 0);
         }
         if(!localStorage.getItem("judges")) {
             localStorage.setItem("judges", s([]));

@@ -53,18 +53,17 @@ class Teams extends React.Component {
         event.preventDefault();
 
         let teams = this.props.teams;
-        let counter = this.props.bracket === "middle" ? localStorage.getItem("teams_middle_counter") : localStorage.getItem("teams_high_counter");
+        let counter = localStorage.getItem("teams_counter");
 
         const newTeam = new Team(counter++, this.state.addTeamForm.teamName, this.state.addTeamForm.speaker1, this.state.addTeamForm.speaker2, this.state.addTeamForm.speaker3);
         teams.push(newTeam);
 
         if(this.props.bracket === "middle") {
             localStorage.setItem("teams_middle", JSON.stringify(teams));
-            localStorage.setItem("teams_middle_counter", counter);
         } else {
             localStorage.setItem("teams_high", JSON.stringify(teams));
-            localStorage.setItem("teams_high_counter", counter);
         }
+        localStorage.setItem("teams_counter", counter);
 
         this.props.updateTeams(teams);
         this.modalHide();
