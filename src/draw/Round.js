@@ -24,6 +24,15 @@ class Round extends React.Component {
 
 
     generateDraw() {
+        // Check if regenerating
+        if(this.state.generated) {
+            const confGen = window.confirm("Do you really want to regenerate the draw?");
+            if(!confGen) {
+                return;
+            }
+        }
+
+        // Initialize values
         let draws_generated = JSON.parse(localStorage.getItem("draws_generated"));
         let draws = JSON.parse(localStorage.getItem("draws"));
         const teams_middle = JSON.parse(localStorage.getItem("teams_middle"));
@@ -250,13 +259,19 @@ class Round extends React.Component {
 
         return (
             <div>
-                <Row>
+                <Row className="draw-header">
                     <Col>
                         <h2>Round {this.props.r}</h2>
                         <Button
                             onClick={this.generateDraw}
                             className={this.state.generated && "hidden"}>
                             Generate draw
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            onClick={this.generateDraw}
+                            className={!this.state.generated && "hidden"}>
+                            Regenerate draw
                         </Button>
                     </Col>
                 </Row>
