@@ -34,7 +34,7 @@ class Participants extends React.Component {
 
     render() {
         return (
-            <Tab.Container id={`part-view-${this.props.bracket}`} defaultActiveKey="ranking">
+            <Tab.Container id={`part-view-${this.props.bracket}`} defaultActiveKey="speakers">
                 <Row className="part-view">
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">

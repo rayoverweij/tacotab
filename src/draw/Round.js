@@ -181,6 +181,9 @@ class Round extends React.Component {
             }
             draws[0] = draw1;
             localStorage.setItem("draws", JSON.stringify(draws));
+        } else {
+            // Generate lists of team IDs in order of maximum points
+
         }
 
         // Update chair values
@@ -200,6 +203,10 @@ class Round extends React.Component {
 
 
     render() {
+        const teams_middle = JSON.parse(localStorage.getItem("teams_middle"));
+        const teams_high = JSON.parse(localStorage.getItem("teams_high"));
+        const judges = JSON.parse(localStorage.getItem("judges"));
+
         let tables;
         if(!this.state.generated) {
             tables = <div></div>;
@@ -220,9 +227,17 @@ class Round extends React.Component {
                                 this.state.pairings_middle.map((pair, index) => {
                                     return (
                                         <tr key={`middle-pair-${index}`}>
-                                            <td className="draw-table-team-cell">{pair.prop}</td>
-                                            <td className="draw-table-team-cell">{pair.opp}</td>
-                                            <td>{pair.chair}&copy;{pair.wings.map(el => ", " + el)}</td>
+                                            <td className="draw-table-team-cell">
+                                                {teams_middle.find(el => el.teamID === pair.prop).teamName}
+                                            </td>
+                                            <td className="draw-table-team-cell">
+                                                {teams_middle.find(el => el.teamID === pair.opp).teamName}
+                                            </td>
+                                            <td>
+                                                {judges.find(el => el.judgeID === pair.chair).name}&copy;{pair.wings.map(el => {
+                                                    return ", " + judges.find(j => j.judgeID === el).name
+                                                })}
+                                            </td>
                                         </tr>
                                     );
                                 })
@@ -244,9 +259,17 @@ class Round extends React.Component {
                                 this.state.pairings_high.map((pair, index) => {
                                     return (
                                         <tr key={`high-pair-${index}`}>
-                                            <td className="draw-table-team-cell">{pair.prop}</td>
-                                            <td className="draw-table-team-cell">{pair.opp}</td>
-                                            <td>{pair.chair}&copy;{pair.wings.map(el => ", " + el)}</td>
+                                            <td className="draw-table-team-cell">
+                                                {teams_high.find(el => el.teamID === pair.prop).teamName}
+                                            </td>
+                                            <td className="draw-table-team-cell">
+                                                {teams_high.find(el => el.teamID === pair.opp).teamName}
+                                            </td>
+                                            <td>
+                                                {judges.find(el => el.judgeID === pair.chair).name}&copy;{pair.wings.map(el => {
+                                                    return ", " + judges.find(j => j.judgeID === el).name
+                                                })}
+                                            </td>
                                         </tr>
                                     );
                                 })
