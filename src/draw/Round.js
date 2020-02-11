@@ -106,86 +106,99 @@ class Round extends React.Component {
         // Generate pairings
         let pairings_middle = [];
         let pairings_high = [];
+        let tm = [];
+        let th = [];
 
         if(this.props.r === "1") {
             // Generate lists of team IDs in random order
-            let tm = teams_middle.map(el => el.teamID);
+            tm = teams_middle.map(el => el.teamID);
             for (let i = lenM - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [tm[i], tm[j]] = [tm[j], tm[i]];
             }
-            let th = teams_high.map(el => el.teamID);
+            th = teams_high.map(el => el.teamID);
             for (let i = lenH - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [th[i], th[j]] = [th[j], th[i]];
             }
+        } else {
+            // Generate lists of team IDs in order of total team points
+            tm = teams_middle
+                .sort((a, b) => (a.totalPoints < b.totalPoints) ? 1 : -1)
+                .map(el => el.teamID);
+            th = teams_high
+                .sort((a, b) => (a.totalPoints < b.totalPoints) ? 1 : -1)
+                .map(el => el.teamID);
+        }
 
-            // Distribute teams and chairs
-            let currProp, currOpp, chIndex;
-            for (let i = 0; i < lenM; i += 2) {
-                currProp = tm[i];
-                currOpp = tm[i + 1];
-                let currChair = chairs.pop();
-                pairings_middle[i / 2] = {
-                    prop: currProp,
-                    opp: currOpp,
-                    chair: currChair,
-                    wings: []
-                }
-
-                chIndex = judges.findIndex(el => {
-                    return el.judgeID.toString() === currChair.toString()
-                });
-                judges[chIndex].hasChaired.push(currProp, currOpp);
-            }
-            for (let i = 0; i < lenH; i += 2) {
-                currProp = th[i];
-                currOpp = th[i + 1];
-                let currChair = chairs.pop();
-                pairings_high[i / 2] = {
-                    prop: currProp,
-                    opp: currOpp,
-                    chair: currChair,
-                    wings: []
-                }
-
-                chIndex = judges.findIndex(el => {
-                    return el.judgeID.toString() === currChair.toString()
-                });
-                judges[chIndex].hasChaired.push(currProp, currOpp);
+        // Distribute teams and chairs
+        let currProp, currOpp, chIndex;
+        for (let i = 0; i < lenM; i += 2) {
+            currProp = tm[i];
+            currOpp = tm[i + 1];
+            let currChair = chairs.pop();
+            pairings_middle[i / 2] = {
+                prop: currProp,
+                opp: currOpp,
+                chair: currChair,
+                wings: []
             }
 
-            // Add wings
-            while(wings.length > 0) {
-                for (let i = 0; i < pairings_middle.length; i++) {
-                    pairings_middle[i].wings.push(wings.pop());
-                    if(wings.length === 0) {
-                        break;
-                    }
-                }
+            chIndex = judges.findIndex(el => {
+                return el.judgeID.toString() === currChair.toString()
+            });
+            judges[chIndex].hasChaired.push(currProp, currOpp);
+        }
+        for (let i = 0; i < lenH; i += 2) {
+            currProp = th[i];
+            currOpp = th[i + 1];
+            let currChair = chairs.pop();
+            pairings_high[i / 2] = {
+                prop: currProp,
+                opp: currOpp,
+                chair: currChair,
+                wings: []
+            }
+
+            chIndex = judges.findIndex(el => {
+                return el.judgeID.toString() === currChair.toString()
+            });
+            judges[chIndex].hasChaired.push(currProp, currOpp);
+        }
+
+        // Add wings
+        while(wings.length > 0) {
+            for (let i = 0; i < pairings_middle.length; i++) {
+                pairings_middle[i].wings.push(wings.pop());
                 if(wings.length === 0) {
                     break;
                 }
-                for (let i = 0; i < pairings_high.length; i++) {
-                    pairings_high[i].wings.push(wings.pop());
-                    if(wings.length === 0) {
-                        break;
-                    }
+            }
+            if(wings.length === 0) {
+                break;
+            }
+            for (let i = 0; i < pairings_high.length; i++) {
+                pairings_high[i].wings.push(wings.pop());
+                if(wings.length === 0) {
+                    break;
                 }
             }
-
-            // Save in storage
-            const draw1 = {
-                pairings_middle: pairings_middle,
-                pairings_high: pairings_high
-            }
-            draws[0] = draw1;
-            localStorage.setItem("draws", JSON.stringify(draws));
-        } else {
-            // Generate lists of team IDs in order of maximum points
-
         }
 
+        // Save in storage
+        const drawr = {
+            pairings_middle: pairings_middle,
+            pairings_high: pairings_high
+        }
+        if(this.props.r === "1") {
+            draws[0] = drawr;
+        } else if(this.props.r === "2") {
+            draws[1] = drawr;
+        } else {
+            draws[2] = drawr;
+        }
+        localStorage.setItem("draws", JSON.stringify(draws));
+        
         // Update chair values
         chairs.forEach(chair => {
             const j = judges.indexOf(chair);
