@@ -194,6 +194,20 @@ class TeamRow extends React.Component {
             }
         });
 
+        // Update team scores
+        team.totalPoints = scores1 + scores2 + scores3;
+        console.log(team.totalPoints);
+        let teams = this.props.teams;
+        const index = teams.indexOf(el => {
+            return el.teamID === team.teamID;
+        });
+        teams[index] = team;
+        if(this.props.bracket === "middle") {
+            localStorage.setItem("teams_middle", JSON.stringify(teams));
+        } else {
+            localStorage.setItem("teams_high", JSON.stringify(teams));
+        }
+
         // Update the people selection picker
         const teamSpeakerSelects = [0, 1, 2].map(sp => {
             return (

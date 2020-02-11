@@ -25,6 +25,7 @@ class TeamTable extends React.Component {
                     return <TeamRow
                                 key={`${team.teamName}-row`}
                                 team={team}
+                                teams={this.props.teams}
                                 speakers={this.props.speakers}
                                 bracket={this.props.bracket}
                                 updateTeam={this.props.updateTeam}
