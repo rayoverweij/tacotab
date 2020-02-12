@@ -3,35 +3,72 @@ import './Ranking.scss';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
 
 
 class Ranking extends React.Component {
     // doesn't automatically update yet
     render() {
-        const speakers_ranked = this.props.speakers.sort((a, b) => {
+        const speakers = this.props.speakers;
+        const teams = this.props.teams;
+
+        const speakers_ranked = speakers.sort((a, b) => {
+            // First sort on total speaker scores
             const a_sum = a.scores.reduce((x, y) => x + y, 0);
             const b_sum = b.scores.reduce((x, y) => x + y, 0);
-            const a_ranks = a.ranks.reduce((x, y) => x + y, 0);
-            const b_ranks = b.ranks.reduce((x, y) => x + y, 0);
 
             if(a_sum > b_sum) {
                 return -1;
             } else if(a_sum < b_sum) {
                 return 1;
             } else {
+                // Secondly sort on speaker ranks
+                const a_ranks = a.ranks.reduce((x, y) => x + y, 0);
+                const b_ranks = b.ranks.reduce((x, y) => x + y, 0);
+
                 if(a_ranks < b_ranks) {
                     return -1;
                 } else if(a_ranks > b_ranks) {
                     return 1;
                 } else {
-                    return 1;
+                    // Thirdly sort on team wins
+                    const a_team = teams.find(el => el.round1.includes(a.debaterID.toString()));
+                    const b_team = teams.find(el => el.round1.includes(b.debaterID.toString()));
+                    const a_wins = a_team.totalWins;
+                    const b_wins = b_team.totalWins;
+
+                    if(a_wins > b_wins) {
+                        return -1;
+                    } else if(a_wins < b_wins) {
+                        return 1;
+                    } else {
+                        // Fourthly sort on team points
+                        const a_tpoints = a_team.totalPoints;
+                        const b_tpoints = b_team.totalPoints;
+
+                        if(a_tpoints > b_tpoints) {
+                            return -1;
+                        } else if(a_tpoints < b_tpoints) {
+                            return 1;
+                        } else {
+                            return 1;
+                        }
+                    }
                 }
             }
         });
 
         const speaker_ranking = speakers_ranked.map((speaker, index) => {
+            const team = teams.find(el => el.round1.includes(speaker.debaterID.toString()));
             return (
-                <li key={`speaker_rank_${index + 1}`}>{speaker.name}</li>
+                <tr key={`speaker_rank_${index + 1}`}>
+                    <td>{index + 1}</td>
+                    <td>{speaker.name}</td>
+                    <td>{speaker.scores.reduce((x, y) => x + y, 0)}</td>
+                    <td>{speaker.ranks.reduce((x, y) => x + y, 0)}</td>
+                    <td>{team.totalWins}</td>
+                    <td>{team.totalPoints}</td>
+                </tr>
             );
         }).splice(0, 20);
         
@@ -46,9 +83,21 @@ class Ranking extends React.Component {
                 <Row>
                     <Col md={6} className="table-col">
                         <h4>Speakers</h4>
-                        <ol>
-                            {speaker_ranking}
-                        </ol>
+                        <Table hover>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th><abbr title="Total speaker points">ΣSP</abbr></th>
+                                    <th><abbr title="Total speaker ranks (lower is better)">ΣSR</abbr></th>
+                                    <th><abbr title="Total team wins">ΣTW</abbr></th>
+                                    <th><abbr title="Total team points">ΣTP</abbr></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {speaker_ranking}
+                            </tbody>
+                        </Table>
                     </Col>
                     <Col md={6} className="table-col">
                         <h4>Teams</h4>

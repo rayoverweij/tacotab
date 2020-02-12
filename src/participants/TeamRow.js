@@ -197,7 +197,6 @@ class TeamRow extends React.Component {
 
         // Update team scores
         team.totalPoints = scores1 + scores2 + scores3;
-        console.log(team.totalPoints);
         let teams = this.props.teams;
         const index = teams.indexOf(el => {
             return el.teamID === team.teamID;
