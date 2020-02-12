@@ -1,6 +1,7 @@
 import React from 'react';
 import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
+import TeamWinSelector from './TeamWinSelector';
 
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -237,7 +238,7 @@ class TeamRow extends React.Component {
         return (
             <tbody>
                 <tr>
-                    <th rowSpan={this.state.speakers.length + 2} className="cell-teamname">
+                    <th rowSpan={this.state.speakers.length + 3} className="cell-teamname">
                         {team.teamName}
                         <br />
                         <div className="icon-people" onClick={this.modalShow}></div>
@@ -255,6 +256,21 @@ class TeamRow extends React.Component {
                     <td></td>
                     <td>{scores1 + scores2 + scores3}</td>
                     <td></td>
+                </tr>
+                <tr className="row-wins">
+                    <td>Team wins</td>
+                    <td colSpan="2">
+                        <TeamWinSelector team={this.props.team} round="1" updateTeam={this.props.updateTeam} />
+                    </td>
+                    <td colSpan="2">
+                        <TeamWinSelector team={this.props.team} round="2" updateTeam={this.props.updateTeam} />
+                    </td>
+                    <td colSpan="2">
+                        <TeamWinSelector team={this.props.team} round="3" updateTeam={this.props.updateTeam} />
+                    </td>
+                    <td colSpan="2" className="cell-totalwins">
+                        Total wins: {team.totalWins}
+                    </td>
                 </tr>
 
                 <Modal show={this.state.showModal} size="lg" onHide={this.modalHide}>

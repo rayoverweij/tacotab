@@ -33,7 +33,7 @@ class Ranking extends React.Component {
             return (
                 <li key={`speaker_rank_${index + 1}`}>{speaker.name}</li>
             );
-        }).splice(0, 10);
+        }).splice(0, 20);
         
 
         return (

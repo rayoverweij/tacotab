@@ -5,6 +5,8 @@ class Team {
     round2;
     round3;
     totalPoints;
+    wins;
+    totalWins;
 
     constructor(teamID, teamName, d1, d2, d3) {
         this.teamID = teamID;
@@ -13,6 +15,8 @@ class Team {
         this.round2 = [d1, d2, d3];
         this.round3 = [d1, d2, d3];
         this.totalPoints = 0;
+        this.wins = [false, false, false];
+        this.totalWins = 0;
     }
 
 }

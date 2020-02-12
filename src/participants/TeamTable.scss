@@ -1,6 +1,10 @@
 @import '../_vars';
 
 .table {
+    tbody + tbody {
+        border-top-width: 3px;
+    }
+
     th, td {
         &.editable {
             padding: 5px 0 0;
@@ -15,6 +19,10 @@
 
     .row-total {
         font-style: italic;
+    }
+
+    .row-wins {
+        border-top: 2px solid #DEE2E6;
     }
 }
 
