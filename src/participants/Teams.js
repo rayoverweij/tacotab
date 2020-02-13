@@ -123,6 +123,7 @@ class Teams extends React.Component {
                             speakers={this.props.speakers}
                             teams={this.props.teams}
                             bracket={this.props.bracket}
+                            updateSpeakers={this.props.updateSpeakers}
                             updateTeam={this.updateTeam}
                             deleteTeam={this.deleteTeam}
                             speakerPicker={speakerPicker} />

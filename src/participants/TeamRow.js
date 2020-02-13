@@ -62,7 +62,7 @@ class TeamRow extends React.Component {
             localStorage.setItem("speakers_high", JSON.stringify(speakers));
         }
 
-        this.forceUpdate();
+        this.props.updateSpeakers(speakers);
     }
 
     setRank(speaker, no, value) {
@@ -78,7 +78,7 @@ class TeamRow extends React.Component {
             localStorage.setItem("speakers_high", JSON.stringify(speakers));
         }
 
-        this.forceUpdate();
+        this.props.updateSpeakers(speakers);
     }
 
     handleUpdateTeamFormChange(value, speaker, round) {
