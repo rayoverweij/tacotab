@@ -259,7 +259,7 @@ class Round extends React.Component {
                     </Table>
                     
                     <h3>High School</h3>
-                    <Table className="draw-table" hover>
+                    <Table className="table-no-top-margin" hover>
                         <thead>
                             <tr>
                                 <th className="draw-table-team-cell">Proposition</th>

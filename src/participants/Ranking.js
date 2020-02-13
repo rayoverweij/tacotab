@@ -12,7 +12,7 @@ class Ranking extends React.Component {
         const speakers = this.props.speakers;
         const teams = this.props.teams;
 
-        const speakers_ranked = speakers.sort((a, b) => {
+        const speakers_ranked = speakers.slice(0).sort((a, b) => {
             // First sort on total speaker scores
             const a_sum = a.scores.reduce((x, y) => x + y, 0);
             const b_sum = b.scores.reduce((x, y) => x + y, 0);
@@ -71,6 +71,42 @@ class Ranking extends React.Component {
                 </tr>
             );
         }).splice(0, 20);
+
+
+        const teams_ranked = teams.slice(0).sort((a, b) => {
+            // First sort on team wins
+            const a_wins = a.totalWins;
+            const b_wins = b.totalWins;
+
+            if(a_wins > b_wins) {
+                return -1;
+            } else if(a_wins < b_wins) {
+                return 1;
+            } else {
+                // Secondlyly sort on team points
+                const a_tpoints = a.totalPoints;
+                const b_tpoints = b.totalPoints;
+
+                if(a_tpoints > b_tpoints) {
+                    return -1;
+                } else if(a_tpoints < b_tpoints) {
+                    return 1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+
+        const team_ranking = teams_ranked.map((team, index) => {
+            return (
+                <tr key={`team_rank_${index + 1}`}>
+                    <td>{index + 1}</td>
+                    <td>{team.teamName}</td>
+                    <td>{team.totalWins}</td>
+                    <td>{team.totalPoints}</td>
+                </tr>
+            );
+        });
         
 
         return (
@@ -83,7 +119,7 @@ class Ranking extends React.Component {
                 <Row>
                     <Col md={6} className="table-col">
                         <h4>Speakers</h4>
-                        <Table hover>
+                        <Table hover className="speaker-ranking-table table-no-top-margin">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -99,8 +135,21 @@ class Ranking extends React.Component {
                             </tbody>
                         </Table>
                     </Col>
-                    <Col md={6} className="table-col">
+                    <Col md={6}>
                         <h4>Teams</h4>
+                        <Table hover className="table-no-top-margin">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th><abbr title="Total team wins">ΣTW</abbr></th>
+                                    <th><abbr title="Total team points">ΣTP</abbr></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {team_ranking}
+                            </tbody>
+                        </Table>
                     </Col>
                 </Row>
             </div>

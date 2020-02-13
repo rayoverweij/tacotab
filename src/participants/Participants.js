@@ -58,7 +58,7 @@ class Participants extends React.Component {
                                 <Teams speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
-                                <Ranking speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
+                                <Ranking speakers={this.state.speakers} teams={this.state.teams} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
