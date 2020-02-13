@@ -6,43 +6,8 @@
         text-align: center;
     }
 
-    td {
-        padding: 0 5px;
-    }
-
     .judge-table-name {
         width: calc(50% - 1.3rem);
         text-align: left;
-    }
-}
-
-.custom-switch {
-    display: inline-block;
-    height: 2rem;
-    width: 2rem;
-    padding-left: 0;
-    margin-top: 6.75px;
-    transition: $transition;
-    
-    input {
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-    }
-
-    &.off {
-        background-image: url(../images/icon-toggle-off.svg);
-
-        &:hover {
-            background-image: url(../images/icon-toggle-off-cyan.svg);
-        }
-    }
-
-    &.on {
-        background-image: url(../images/icon-toggle-on.svg);
-
-        &:hover {
-            background-image: url(../images/icon-toggle-on-cyan.svg);
-        }
     }
 }

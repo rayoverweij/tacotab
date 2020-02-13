@@ -34,35 +34,35 @@ class JudgeRow extends React.Component {
         return (
             <tr>
                 <td className="judge-table-name">{this.props.judge.name}</td>
-                <td>
+                <td className="cell-low-padding">
                     <Form.Switch
                         name="canChair"
                         onChange={this.handleJudgeUpdate}
                         checked={this.state.canChair}
                         className={this.state.canChair ? "on" : "off"} />
                 </td>
-                <td>
+                <td className="cell-low-padding">
                     <Form.Switch
                         name="r1"
                         onChange={this.handleJudgeUpdate}
                         checked={this.state.r1}
                         className={this.state.r1 ? "on" : "off"} />
                 </td>
-                <td>
+                <td className="cell-low-padding">
                     <Form.Switch
                         name="r2"
                         onChange={this.handleJudgeUpdate}
                         checked={this.state.r2}
                         className={this.state.r2 ? "on" : "off"} />
                 </td>
-                <td>
+                <td className="cell-low-padding">
                     <Form.Switch
                         name="r3"
                         onChange={this.handleJudgeUpdate}
                         checked={this.state.r3}
                         className={this.state.r3 ? "on" : "off"} />
                 </td>
-                <td className="table-delete">
+                <td className="table-delete cell-low-padding">
                     <div onClick={() => this.props.deleteJudge(this.props.judge)} className="icon icon-trash"></div>
                 </td>
             </tr>

@@ -33,6 +33,7 @@ h3 {
     font-size: 1.5rem;
 }
 
+
 .table {
     margin-top: 30px;
 
@@ -41,14 +42,51 @@ h3 {
         padding: 10px 5px;
     }
 
+    .cell-low-padding {
+        padding: 0 5px;
+    }
+
     .table-delete {
         width: 1.3rem;
         padding: 0 5px;
+        vertical-align: middle;
     }
 }
 
 .table-no-top-margin {
     margin-top: 0;
+}
+
+
+.custom-switch {
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+    padding-left: 0;
+    margin-top: 6.75px;
+    transition: $transition;
+    
+    input {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    &.off {
+        background-image: url(./images/icon-toggle-off.svg);
+
+        &:hover, &:focus {
+            background-image: url(./images/icon-toggle-off-cyan.svg);
+        }
+    }
+
+    &.on {
+        background-image: url(./images/icon-toggle-on.svg);
+
+        &:hover, &:focus {
+            background-image: url(./images/icon-toggle-on-cyan.svg);
+        }
+    }
 }
 
 
@@ -72,4 +110,10 @@ h3 {
     &:hover {
         background-image: url(images/icon-trash-fill.svg);
     }
+}
+
+.icon-trash-filled {
+    height: 1.3rem;
+    width: 1.3rem;
+    background-image: url(images/icon-trash-fill.svg);
 }

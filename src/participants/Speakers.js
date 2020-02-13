@@ -1,6 +1,7 @@
 import React from 'react';
 import './Speakers.scss';
 
+import SpeakerRow from './SpeakerRow';
 import Debater from '../structures/debater';
 
 import Row from 'react-bootstrap/Row';
@@ -23,6 +24,7 @@ class Speakers extends React.Component {
 
         this.handleSpeakerFormChange = this.handleSpeakerFormChange.bind(this);
         this.handleSpeakerFormSubmit = this.handleSpeakerFormSubmit.bind(this);
+        this.handleSpeakerUpdate = this.handleSpeakerUpdate.bind(this);
         this.handleSpeakerDelete = this.handleSpeakerDelete.bind(this);
     }
 
@@ -50,6 +52,20 @@ class Speakers extends React.Component {
             localStorage.setItem("speakers_high", JSON.stringify(speakers));
         }
         localStorage.setItem("speakers_counter", counter);
+
+        this.props.updateSpeakers(speakers);
+    }
+
+    handleSpeakerUpdate(speaker) {
+        let speakers = this.props.speakers;
+        const index = speakers.indexOf(speaker);
+        speakers[index] = speaker;
+
+        if(this.props.bracket === "middle") {
+            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+        } else {
+            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+        }
 
         this.props.updateSpeakers(speakers);
     }
@@ -85,19 +101,24 @@ class Speakers extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>School</th>
-                            <th className="table-delete"></th>
+                            <th>
+                                <abbr title="Disqualified speakers can still be added to teams and receive scores, but won't be listed in the ranking">
+                                    Disq
+                                </abbr>
+                            </th>
+                            <th className="table-delete">
+                                <div className="icon icon-trash-filled"></div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.speakers.map(speaker => {
                             return (
-                                <tr key={`speaker-row-${speaker.debaterID}`}>
-                                    <td>{speaker.name}</td>
-                                    <td>{speaker.school}</td>
-                                    <td className="table-delete">
-                                        <div onClick={() => this.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
-                                    </td>
-                                </tr>
+                                <SpeakerRow 
+                                    key={`speaker-row-${speaker.debaterID}`}
+                                    speaker={speaker}
+                                    handleSpeakerUpdate={this.handleSpeakerUpdate}
+                                    handleSpeakerDelete={this.handleSpeakerDelete} />
                             );
                         })}
                     </tbody>

@@ -12,7 +12,10 @@ class Ranking extends React.Component {
         const speakers = this.props.speakers;
         const teams = this.props.teams;
 
-        const speakers_ranked = speakers.slice(0).sort((a, b) => {
+        const speakers_ranked = speakers
+                                .slice(0)
+                                .filter(el => el.disqualified === false)
+                                .sort((a, b) => {
             // First sort on total speaker scores
             const a_sum = a.scores.reduce((x, y) => x + y, 0);
             const b_sum = b.scores.reduce((x, y) => x + y, 0);
@@ -59,7 +62,12 @@ class Ranking extends React.Component {
         });
 
         const speaker_ranking = speakers_ranked.map((speaker, index) => {
-            const team = teams.find(el => el.round1.includes(speaker.debaterID.toString()));
+            let team = teams.find(el => el.round1.includes(speaker.debaterID.toString()));
+            if (team === undefined) {
+                team = {}
+                team.totalWins = 0;
+                team.totalPoints = 0;
+            }
             return (
                 <tr key={`speaker_rank_${index + 1}`}>
                     <td>{index + 1}</td>
