@@ -148,6 +148,11 @@ class TeamRow extends React.Component {
             if (isInR2) totalScores += speaker.scores[1];
             if (isInR3) totalScores += speaker.scores[2];
 
+            let totalRanks = 0;
+            if (isInR1) totalRanks += speaker.ranks[0];
+            if (isInR2) totalRanks += speaker.ranks[1];
+            if (isInR3) totalRanks += speaker.ranks[2];
+
             return (
                 <tr key={`${speaker.name}_row`}>
                     <td>{speaker.name}</td>
@@ -170,16 +175,16 @@ class TeamRow extends React.Component {
                         <TeamCell type="rank" speaker={speaker} no={2} fn={this.setRank} />
                     </td>
                     <td>{totalScores}</td>
-                    <td></td>
+                    <td>{totalRanks}</td>
                 </tr>
             );
         });
 
-        // Calculate scores
+        // Calculate total scores
         let scores1 = 0;
         speakers.forEach(speaker => {
             if(this.props.team.round1.includes(speaker.debaterID.toString())) {
-                return scores1 += speaker.scores[0]
+                scores1 += speaker.scores[0]
             }
         });
         let scores2 = 0;
@@ -194,6 +199,27 @@ class TeamRow extends React.Component {
                 scores3 += speaker.scores[2]
             }
         });
+
+        // Calculate total ranks
+        let ranks1 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round1.includes(speaker.debaterID.toString())) {
+                ranks1 += speaker.ranks[0]
+            }
+        });
+        let ranks2 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round2.includes(speaker.debaterID.toString())) {
+                ranks2 += speaker.ranks[1]
+            }
+        });
+        let ranks3 = 0;
+        speakers.forEach(speaker => {
+            if(this.props.team.round3.includes(speaker.debaterID.toString())) {
+                ranks3 += speaker.ranks[2]
+            }
+        });
+
 
         // Update team scores
         team.totalPoints = scores1 + scores2 + scores3;
@@ -248,13 +274,13 @@ class TeamRow extends React.Component {
                 <tr className="row-total">
                     <td>Team total</td>
                     <td>{scores1}</td>
-                    <td></td>
+                    <td>{ranks1}</td>
                     <td>{scores2}</td>
-                    <td></td>
+                    <td>{ranks2}</td>
                     <td>{scores3}</td>
-                    <td></td>
+                    <td>{ranks3}</td>
                     <td>{scores1 + scores2 + scores3}</td>
-                    <td></td>
+                    <td>{ranks1 + ranks2 + ranks3}</td>
                 </tr>
                 <tr className="row-wins">
                     <td>Team wins</td>
