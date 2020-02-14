@@ -71,6 +71,13 @@ class Speakers extends React.Component {
     }
 
     handleSpeakerDelete(speaker) {
+        for(const team of this.props.teams) {
+            if(team.round1.includes(speaker.debaterID.toString()) || team.round2.includes(speaker.debaterID.toString()) || team.round3.includes(speaker.debaterID.toString())) {
+                window.alert(`This speaker is still part of team ${team.teamName}. You need to remove them from the team before you can delete them.`);
+                return;
+            }
+        }
+
         const conf = window.confirm(`Are you sure you want to delete speaker ${speaker.name}?`);
 
         if(conf) {
