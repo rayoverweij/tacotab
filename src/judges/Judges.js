@@ -85,7 +85,9 @@ class Judges extends React.Component {
                             <th>Round 1?</th>
                             <th>Round 2?</th>
                             <th>Round 3?</th>
-                            <th className="table-delete"></th>
+                            <th className="table-delete">
+                                <div className="icon icon-trash-filled"></div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,6 +132,13 @@ class Judges extends React.Component {
                                                 </Col>
                                             </Form.Row>
                                         </Form>
+                                        <div id="total-judges">
+                                            <p>
+                                                Total judges each round: {this.state.judges.filter(el => el.r1).length} &middot; {this.state.judges.filter(el => el.r2).length} &middot; {this.state.judges.filter(el => el.r3).length}
+                                                <br />
+                                                Total chairs each round: {this.state.judges.filter(el => el.canChair && el.r1).length} &middot; {this.state.judges.filter(el => el.canChair && el.r2).length} &middot; {this.state.judges.filter(el => el.canChair && el.r3).length}
+                                            </p>
+                                        </div>
                                     </Col>
                                 </Row>
 
