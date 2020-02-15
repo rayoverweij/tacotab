@@ -88,6 +88,22 @@ class Teams extends React.Component {
     }
 
     deleteTeam(team) {
+        const draws = JSON.parse(localStorage.getItem("draws"));
+        for (const round in draws) {
+            let pairs;
+            if(this.props.bracket === "middle") {
+                pairs = draws[round].pairings_middle;
+            } else {
+                pairs = draws[round].pairings_high;
+            }
+            for (const pair of pairs) {
+                if(pair.prop === team.teamID || pair.opp === team.teamID) {
+                    alert("This team has already started the tournament. You can't delete it anymore. You can still replace its speakers.");
+                    return;
+                }
+            }
+        }
+
         const conf = window.confirm(`Are you sure you want to delete team ${team.teamName}?`);
         
         if(conf) {
