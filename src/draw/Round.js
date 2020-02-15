@@ -161,7 +161,7 @@ class Round extends React.Component {
                     }
                 });
         }
-        
+
         // For round 2, make sure everyone is on another side
         if(this.props.r === "2") {
             tm.forEach((team, index) => {
@@ -264,6 +264,16 @@ class Round extends React.Component {
                     break;
                 }
             }
+        }
+
+        // Randomize rows
+        for (let i = pairings_middle.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pairings_middle[i], pairings_middle[j]] = [pairings_middle[j], pairings_middle[i]];
+        }
+        for (let i = pairings_high.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pairings_high[i], pairings_high[j]] = [pairings_high[j], pairings_high[i]];
         }
 
         // Save in storage
