@@ -38,8 +38,8 @@ class Round extends React.Component {
         // Initialize values
         let draws_generated = JSON.parse(localStorage.getItem("draws_generated"));
         let draws = JSON.parse(localStorage.getItem("draws"));
-        const teams_middle = JSON.parse(localStorage.getItem("teams_middle"));
-        const teams_high = JSON.parse(localStorage.getItem("teams_high"));
+        let teams_middle = JSON.parse(localStorage.getItem("teams_middle"));
+        let teams_high = JSON.parse(localStorage.getItem("teams_high"));
         let judges = JSON.parse(localStorage.getItem("judges"));
 
         const lenM = teams_middle.length;
@@ -113,32 +113,103 @@ class Round extends React.Component {
         let th = [];
 
         if(this.props.r === "1") {
-            // Generate lists of team IDs in random order
-            tm = teams_middle.map(el => el.teamID);
+            // Generate lists of teams in random order
+            tm = teams_middle.slice(0);
             for (let i = lenM - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [tm[i], tm[j]] = [tm[j], tm[i]];
             }
-            th = teams_high.map(el => el.teamID);
+            th = teams_high.slice(0);
             for (let i = lenH - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [th[i], th[j]] = [th[j], th[i]];
             }
         } else {
-            // Generate lists of team IDs in order of total team points
+            // Generate lists of teams in order of team wins, then total team points
             tm = teams_middle
-                .sort((a, b) => (a.totalPoints < b.totalPoints) ? 1 : -1)
-                .map(el => el.teamID);
+                .slice(0)
+                .sort((a, b) => {
+                    if(a.totalWins < b.totalWins) {
+                        return 1;
+                    } else if(a.totalWins > b.totalWins) {
+                        return -1;
+                    } else {
+                        if(a.totalPoints < b.totalPoints) {
+                            return 1;
+                        } else if(a.totalPoints > b.totalPoints) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                });
             th = teams_high
-                .sort((a, b) => (a.totalPoints < b.totalPoints) ? 1 : -1)
-                .map(el => el.teamID);
+                .slice(0)
+                .sort((a, b) => {
+                    if(a.totalWins < b.totalWins) {
+                        return 1;
+                    } else if(a.totalWins > b.totalWins) {
+                        return -1;
+                    } else {
+                        if(a.totalPoints < b.totalPoints) {
+                            return 1;
+                        } else if(a.totalPoints > b.totalPoints) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                });
+        }
+        
+        // For round 2, make sure everyone is on another side
+        if(this.props.r === "2") {
+            tm.forEach((team, index) => {
+                if(index % 2 === 0 && team.sideR1 === "prop") {
+                    for(let i = index + 1; i < lenM; i++) {
+                        if(tm[i].sideR1 === "opp") {
+                            [tm[index], tm[i]] = [tm[i], tm[index]];
+                            break;
+                        }
+                    }
+                } else if(index % 2 === 1 && team.sideR1 === "opp") {
+                    for(let i = index + 1; i < lenM; i++) {
+                        if(tm[i].sideR1 === "prop") {
+                            [tm[index], tm[i]] = [tm[i], tm[index]];
+                            break;
+                        }
+                    }
+                }
+            });
+            th.forEach((team, index) => {
+                if(index % 2 === 0 && team.sideR1 === "prop") {
+                    for(let i = index + 1; i < lenH; i++) {
+                        if(th[i].sideR1 === "opp") {
+                            [th[index], th[i]] = [th[i], th[index]];
+                            break;
+                        }
+                    }
+                } else if(index % 2 === 1 && team.sideR1 === "opp") {
+                    for(let i = index + 1; i < lenH; i++) {
+                        if(th[i].sideR1 === "prop") {
+                            [th[index], th[i]] = [th[i], th[index]];
+                            break;
+                        }
+                    }
+                }
+            });
         }
 
         // Distribute teams and chairs
         let currProp, currOpp, chIndex;
         for (let i = 0; i < lenM; i += 2) {
-            currProp = tm[i];
-            currOpp = tm[i + 1];
+            if(this.props.r === "1") {
+                tm[i].sideR1 = "prop";
+                tm[i + 1].sideR1 = "opp";
+            }
+
+            currProp = tm[i].teamID;
+            currOpp = tm[i + 1].teamID;
             let currChair = chairs.pop();
             pairings_middle[i / 2] = {
                 prop: currProp,
@@ -154,8 +225,13 @@ class Round extends React.Component {
             judges[chIndex].hasChaired.push(currProp, currOpp);
         }
         for (let i = 0; i < lenH; i += 2) {
-            currProp = th[i];
-            currOpp = th[i + 1];
+            if(this.props.r === "1") {
+                th[i].sideR1 = "prop";
+                th[i + 1].sideR1 = "opp";
+            }
+
+            currProp = th[i].teamID;
+            currOpp = th[i + 1].teamID;
             let currChair = chairs.pop();
             pairings_high[i / 2] = {
                 prop: currProp,
@@ -203,7 +279,20 @@ class Round extends React.Component {
             draws[2] = drawr;
         }
         localStorage.setItem("draws", JSON.stringify(draws));
-        
+
+        // Update team values
+        tm.forEach(team => {
+            const i = teams_middle.indexOf(team);
+            teams_middle[i] = team;
+        });
+        localStorage.setItem("teams_middle", JSON.stringify(teams_middle));
+        th.forEach(team => {
+            const i = teams_high.indexOf(team);
+            teams_high[i] = team;
+        });
+        localStorage.setItem("teams_high", JSON.stringify(teams_high));
+
+
         // Update chair values
         chairs.forEach(chair => {
             const j = judges.indexOf(chair);

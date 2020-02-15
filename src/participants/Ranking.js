@@ -36,8 +36,8 @@ class Ranking extends React.Component {
                     // Thirdly sort on team wins
                     const a_team = teams.find(el => el.round1.includes(a.debaterID.toString()));
                     const b_team = teams.find(el => el.round1.includes(b.debaterID.toString()));
-                    const a_wins = a_team.totalWins;
-                    const b_wins = b_team.totalWins;
+                    const a_wins = a_team === undefined ? 0 : a_team.totalWins;
+                    const b_wins = b_team === undefined ? 0 : b_team.totalWins;
 
                     if(a_wins > b_wins) {
                         return -1;
@@ -45,8 +45,8 @@ class Ranking extends React.Component {
                         return 1;
                     } else {
                         // Fourthly sort on team points
-                        const a_tpoints = a_team.totalPoints;
-                        const b_tpoints = b_team.totalPoints;
+                        const a_tpoints = a_team === undefined ? 0 : a_team.totalPoints;
+                        const b_tpoints = b_team === undefined ? 0 : b_team.totalPoints;
 
                         if(a_tpoints > b_tpoints) {
                             return -1;

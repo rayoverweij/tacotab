@@ -7,6 +7,7 @@ class Team {
     totalPoints;
     wins;
     totalWins;
+    sideR1;
 
     constructor(teamID, teamName, d1, d2, d3) {
         this.teamID = teamID;
@@ -17,6 +18,7 @@ class Team {
         this.totalPoints = 0;
         this.wins = [false, false, false];
         this.totalWins = 0;
+        this.sideR1 = "";
     }
 
 }
