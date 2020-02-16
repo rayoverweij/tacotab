@@ -71,7 +71,7 @@ class App extends React.Component {
                             <h1>TacoTab</h1>
                         </div>
 
-                        <Tabs defaultActiveKey="draw" id="app-nav">
+                        <Tabs defaultActiveKey="home" id="app-nav">
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
                                 <Home />
                             </Tab>

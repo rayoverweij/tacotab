@@ -16,6 +16,7 @@ class Settings extends React.Component {
 
         this.handleNameFormChange = this.handleNameFormChange.bind(this);
         this.handleNameFormSubmit = this.handleNameFormSubmit.bind(this);
+        this.exportData = this.exportData.bind(this);
     }
 
 
@@ -29,6 +30,10 @@ class Settings extends React.Component {
         const name = this.state.nameForm;
         localStorage.setItem("tournament_name", JSON.stringify(name));
         document.title = `${name} - TacoTab`;
+    }
+
+    exportData() {
+        
     }
 
 
@@ -60,6 +65,12 @@ class Settings extends React.Component {
                                         </Col>
                                     </Form.Row>
                                 </Form>
+                            </Col>
+                        </Row>
+                        <Row className="row-settings">
+                            <Col>
+                                <h3>Export tournament data</h3>
+                                <Button variant="primary" onClick={this.exportData}>Export data</Button>
                             </Col>
                         </Row>
                     </Col>

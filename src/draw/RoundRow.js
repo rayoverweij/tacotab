@@ -28,7 +28,7 @@ class RoundRow extends React.Component {
             <tr>
                 <td className="editable">
                     <textarea
-                        className="cell-room"
+                        className="cell-valupdate"
                         rows="1"
                         cols="12"
                         autoComplete="off"
