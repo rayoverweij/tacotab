@@ -6,6 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import bsCustomFileInput from 'bs-custom-file-input';
+
+
 class Settings extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +20,11 @@ class Settings extends React.Component {
         this.handleNameFormChange = this.handleNameFormChange.bind(this);
         this.handleNameFormSubmit = this.handleNameFormSubmit.bind(this);
         this.exportData = this.exportData.bind(this);
+        this.importData = this.importData.bind(this);
+    }
+
+    componentDidMount() {
+        bsCustomFileInput.init();
     }
 
 
@@ -41,7 +49,7 @@ class Settings extends React.Component {
         data += encodeURIComponent('"speakers_high": ' + localStorage.getItem("speakers_high") + ",");
         data += encodeURIComponent('"teams_high": ' + localStorage.getItem("teams_high") + ",");
         data += encodeURIComponent('"speakers_counter": ' + localStorage.getItem("speakers_counter") + ",");
-        data += encodeURIComponent('"team_counter": ' + localStorage.getItem("team_counter") + ",");
+        data += encodeURIComponent('"teams_counter": ' + localStorage.getItem("teams_counter") + ",");
         data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
         data += encodeURIComponent('"judges_counter": ' + localStorage.getItem("judges_counter") + ",");
         data += encodeURIComponent('"draws_generated": ' + localStorage.getItem("draws_generated") + ",");
@@ -54,6 +62,33 @@ class Settings extends React.Component {
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
+    }
+
+    importData(event) {
+        event.preventDefault();
+        const files = document.getElementById("import").files;
+        console.log(files);
+
+        if(files.length <= 0) return false;
+
+        const fr = new FileReader();
+        fr.onload = event => {
+            const result = JSON.parse(event.target.result);
+            localStorage.setItem("tournament_name", JSON.stringify(result.tournament_name));
+            localStorage.setItem("speakers_middle", JSON.stringify(result.speakers_middle));
+            localStorage.setItem("teams_middle", JSON.stringify(result.teams_middle));
+            localStorage.setItem("speakers_high", JSON.stringify(result.speakers_high));
+            localStorage.setItem("teams_high", JSON.stringify(result.teams_high));
+            localStorage.setItem("speakers_counter", JSON.stringify(result.speakers_counter));
+            localStorage.setItem("teams_counter", JSON.stringify(result.teams_counter));
+            localStorage.setItem("judges", JSON.stringify(result.judges));
+            localStorage.setItem("judges_counter", JSON.stringify(result.judges_counter));
+            localStorage.setItem("draws_generated", JSON.stringify(result.draws_generated));
+            localStorage.setItem("draws", JSON.stringify(result.draws));
+        }
+        fr.readAsText(files.item(0));
+
+        window.location.reload();
     }
 
 
@@ -71,7 +106,7 @@ class Settings extends React.Component {
                         <Row className="row-settings">
                             <Col>
                                 <h3>Change tournament name</h3>
-                                <Form onSubmit={this.handleNameFormSubmit} className="form-tourname">
+                                <Form onSubmit={this.handleNameFormSubmit} className="form-settings">
                                     <Form.Row>
                                         <Col sm={6}>
                                             <Form.Control
@@ -91,7 +126,35 @@ class Settings extends React.Component {
                             <Col>
                                 <h3>Export tournament data</h3>
                                 <p>Save all tournament data to a file on your PC.</p>
-                                <Button variant="primary" onClick={this.exportData}>Export data</Button>
+                                <Button
+                                    variant="primary"
+                                    className="button-settings"
+                                    onClick={this.exportData}>
+                                        Export data
+                                    </Button>
+                            </Col>
+                        </Row>
+                        <Row className="row-settings">
+                            <Col>
+                                <h3>Import tournament data</h3>
+                                <p>Open files generated with the export function above.</p>
+                                <Form onSubmit={this.importData} className="form-settings">
+                                    <Form.Row>
+                                        <Col>
+                                            <div className="custom-file">
+                                                <Form.Control
+                                                    name="import"
+                                                    id="import"
+                                                    className="custom-file-input"
+                                                    type="file" />
+                                                <label className="custom-file-label" htmlFor="customFile">Choose file</label>
+                                            </div>
+                                        </Col>
+                                        <Col>
+                                            <Button variant="primary" type="submit">Import</Button>
+                                        </Col>
+                                    </Form.Row>
+                                </Form>
                             </Col>
                         </Row>
                     </Col>
