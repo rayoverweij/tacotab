@@ -21,6 +21,7 @@ class Settings extends React.Component {
         this.handleNameFormSubmit = this.handleNameFormSubmit.bind(this);
         this.exportData = this.exportData.bind(this);
         this.importData = this.importData.bind(this);
+        this.clearData = this.clearData.bind(this);
     }
 
     componentDidMount() {
@@ -90,6 +91,17 @@ class Settings extends React.Component {
 
         window.location.reload();
     }
+ 
+    clearData() {
+        const conf = window.confirm("Are you sure you want to delete all data?");
+
+        if(!conf) {
+            return;
+        }
+
+        localStorage.clear();
+        window.location.reload();
+    }
 
 
     render() {
@@ -137,7 +149,7 @@ class Settings extends React.Component {
                         <Row className="row-settings">
                             <Col>
                                 <h3>Import tournament data</h3>
-                                <p>Open files generated with the export function above.</p>
+                                <p>Open files generated with the Export function above. <strong>Note:</strong> this will override all current data.</p>
                                 <Form onSubmit={this.importData} className="form-settings">
                                     <Form.Row>
                                         <Col>
@@ -155,6 +167,18 @@ class Settings extends React.Component {
                                         </Col>
                                     </Form.Row>
                                 </Form>
+                            </Col>
+                        </Row>
+                        <Row className="row-settings">
+                            <Col>
+                                <h3>Clear tournament data</h3>
+                                <p>Warning: this will delete <strong>all</strong> entered data. Save your data using the Export function first.</p>
+                                <Button
+                                    variant="danger"
+                                    className="button-settings"
+                                    onClick={this.clearData}>
+                                        Clear data
+                                    </Button>
                             </Col>
                         </Row>
                     </Col>
