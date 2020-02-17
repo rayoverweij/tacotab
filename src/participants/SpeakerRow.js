@@ -37,7 +37,7 @@ class SpeakerRow extends React.Component {
 
         return (
             <tr key={`speaker-row-${speaker.debaterID}`}>
-                <td>
+                <td className="editable">
                     <textarea
                         className="cell-valupdate"
                         rows="1"

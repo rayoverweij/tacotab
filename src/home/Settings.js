@@ -33,7 +33,27 @@ class Settings extends React.Component {
     }
 
     exportData() {
+        let data = "data:text/json;charset=utf-8,";
+        data += encodeURIComponent("{");
+        data += encodeURIComponent('"tournament_name": ' + localStorage.getItem("tournament_name") + ",");
+        data += encodeURIComponent('"speakers_middle": ' + localStorage.getItem("speakers_middle") + ",");
+        data += encodeURIComponent('"teams_middle": ' + localStorage.getItem("teams_middle") + ",");
+        data += encodeURIComponent('"speakers_high": ' + localStorage.getItem("speakers_high") + ",");
+        data += encodeURIComponent('"teams_high": ' + localStorage.getItem("teams_high") + ",");
+        data += encodeURIComponent('"speakers_counter": ' + localStorage.getItem("speakers_counter") + ",");
+        data += encodeURIComponent('"team_counter": ' + localStorage.getItem("team_counter") + ",");
+        data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
+        data += encodeURIComponent('"judges_counter": ' + localStorage.getItem("judges_counter") + ",");
+        data += encodeURIComponent('"draws_generated": ' + localStorage.getItem("draws_generated") + ",");
+        data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
+        data += encodeURIComponent("}");
         
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", data);
+        downloadAnchorNode.setAttribute("download", "tournament.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
 
 
@@ -51,7 +71,7 @@ class Settings extends React.Component {
                         <Row className="row-settings">
                             <Col>
                                 <h3>Change tournament name</h3>
-                                <Form onSubmit={this.handleNameFormSubmit}>
+                                <Form onSubmit={this.handleNameFormSubmit} className="form-tourname">
                                     <Form.Row>
                                         <Col sm={6}>
                                             <Form.Control
@@ -70,6 +90,7 @@ class Settings extends React.Component {
                         <Row className="row-settings">
                             <Col>
                                 <h3>Export tournament data</h3>
+                                <p>Save all tournament data to a file on your PC.</p>
                                 <Button variant="primary" onClick={this.exportData}>Export data</Button>
                             </Col>
                         </Row>
