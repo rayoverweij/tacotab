@@ -54,6 +54,10 @@ class Speakers extends React.Component {
         localStorage.setItem("speakers_counter", counter);
 
         this.props.updateSpeakers(speakers);
+
+        let blankForm = {...this.state.speakerForm};
+        blankForm.name = "";
+        this.setState({speakerForm: blankForm});
     }
 
     handleSpeakerUpdate(speaker) {
@@ -144,10 +148,20 @@ class Speakers extends React.Component {
                         <Form onSubmit={this.handleSpeakerFormSubmit}>
                             <Form.Row>
                                 <Col>
-                                    <Form.Control name="name" type="text" placeholder="Name" onChange={this.handleSpeakerFormChange} />
+                                    <Form.Control
+                                        name="name"
+                                        type="text"
+                                        placeholder="Name"
+                                        value={this.state.speakerForm.name}
+                                        onChange={this.handleSpeakerFormChange} />
                                 </Col>
                                 <Col>
-                                    <Form.Control name="school" type="text" placeholder="School" onChange={this.handleSpeakerFormChange} />
+                                    <Form.Control
+                                        name="school"
+                                        type="text"
+                                        placeholder="School"
+                                        value={this.state.speakerForm.school}
+                                        onChange={this.handleSpeakerFormChange} />
                                 </Col>
                                 <Col>
                                     <Button variant="primary" type="submit">Add speaker</Button>

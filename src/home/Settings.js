@@ -1,6 +1,8 @@
 import React from 'react';
 import './Settings.scss';
 
+import GitHubLogo from '../images/icon-github.svg';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -19,8 +21,8 @@ class Settings extends React.Component {
 
         this.handleNameFormChange = this.handleNameFormChange.bind(this);
         this.handleNameFormSubmit = this.handleNameFormSubmit.bind(this);
-        this.exportData = this.exportData.bind(this);
         this.importData = this.importData.bind(this);
+        this.exportData = this.exportData.bind(this);
         this.clearData = this.clearData.bind(this);
     }
 
@@ -39,30 +41,7 @@ class Settings extends React.Component {
         const name = this.state.nameForm;
         localStorage.setItem("tournament_name", JSON.stringify(name));
         document.title = `${name} - TacoTab`;
-    }
-
-    exportData() {
-        let data = "data:text/json;charset=utf-8,";
-        data += encodeURIComponent("{");
-        data += encodeURIComponent('"tournament_name": ' + localStorage.getItem("tournament_name") + ",");
-        data += encodeURIComponent('"speakers_middle": ' + localStorage.getItem("speakers_middle") + ",");
-        data += encodeURIComponent('"teams_middle": ' + localStorage.getItem("teams_middle") + ",");
-        data += encodeURIComponent('"speakers_high": ' + localStorage.getItem("speakers_high") + ",");
-        data += encodeURIComponent('"teams_high": ' + localStorage.getItem("teams_high") + ",");
-        data += encodeURIComponent('"speakers_counter": ' + localStorage.getItem("speakers_counter") + ",");
-        data += encodeURIComponent('"teams_counter": ' + localStorage.getItem("teams_counter") + ",");
-        data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
-        data += encodeURIComponent('"judges_counter": ' + localStorage.getItem("judges_counter") + ",");
-        data += encodeURIComponent('"draws_generated": ' + localStorage.getItem("draws_generated") + ",");
-        data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
-        data += encodeURIComponent("}");
-        
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", data);
-        downloadAnchorNode.setAttribute("download", "tournament.json");
-        document.body.appendChild(downloadAnchorNode);
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
+        this.setState({nameForm: ""});
     }
 
     importData(event) {
@@ -90,6 +69,30 @@ class Settings extends React.Component {
         fr.readAsText(files.item(0));
 
         window.location.reload();
+    }
+
+    exportData() {
+        let data = "data:text/json;charset=utf-8,";
+        data += encodeURIComponent("{");
+        data += encodeURIComponent('"tournament_name": ' + localStorage.getItem("tournament_name") + ",");
+        data += encodeURIComponent('"speakers_middle": ' + localStorage.getItem("speakers_middle") + ",");
+        data += encodeURIComponent('"teams_middle": ' + localStorage.getItem("teams_middle") + ",");
+        data += encodeURIComponent('"speakers_high": ' + localStorage.getItem("speakers_high") + ",");
+        data += encodeURIComponent('"teams_high": ' + localStorage.getItem("teams_high") + ",");
+        data += encodeURIComponent('"speakers_counter": ' + localStorage.getItem("speakers_counter") + ",");
+        data += encodeURIComponent('"teams_counter": ' + localStorage.getItem("teams_counter") + ",");
+        data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
+        data += encodeURIComponent('"judges_counter": ' + localStorage.getItem("judges_counter") + ",");
+        data += encodeURIComponent('"draws_generated": ' + localStorage.getItem("draws_generated") + ",");
+        data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
+        data += encodeURIComponent("}");
+        
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", data);
+        downloadAnchorNode.setAttribute("download", "tournament.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
  
     clearData() {
@@ -125,6 +128,7 @@ class Settings extends React.Component {
                                                 name="tournament-name"
                                                 type="text"
                                                 placeholder="New name"
+                                                value={this.state.nameForm}
                                                 onChange={this.handleNameFormChange} />
                                         </Col>
                                         <Col>
@@ -136,20 +140,8 @@ class Settings extends React.Component {
                         </Row>
                         <Row className="row-settings">
                             <Col>
-                                <h3>Export tournament data</h3>
-                                <p>Save all tournament data to a file on your PC.</p>
-                                <Button
-                                    variant="primary"
-                                    className="button-settings"
-                                    onClick={this.exportData}>
-                                        Export data
-                                    </Button>
-                            </Col>
-                        </Row>
-                        <Row className="row-settings">
-                            <Col>
                                 <h3>Import tournament data</h3>
-                                <p>Open files generated with the Export function above. <strong>Note:</strong> this will override all current data.</p>
+                                <p>Open files generated with the Export function below. <strong>Note:</strong> this will override all current data!</p>
                                 <Form onSubmit={this.importData} className="form-settings">
                                     <Form.Row>
                                         <Col>
@@ -171,6 +163,18 @@ class Settings extends React.Component {
                         </Row>
                         <Row className="row-settings">
                             <Col>
+                                <h3>Export tournament data</h3>
+                                <p>Save all tournament data to a file on your PC.</p>
+                                <Button
+                                    variant="primary"
+                                    className="button-settings"
+                                    onClick={this.exportData}>
+                                        Export data
+                                    </Button>
+                            </Col>
+                        </Row>
+                        <Row className="row-settings">
+                            <Col>
                                 <h3>Clear tournament data</h3>
                                 <p>Warning: this will delete <strong>all</strong> entered data. Save your data using the Export function first.</p>
                                 <Button
@@ -187,12 +191,14 @@ class Settings extends React.Component {
                             <Col>
                                 <h3>About</h3>
                                 <p>
-                                    TacoTab alpha version 0.1.0<br />
-                                    <a href="/docs">Documentation</a><br />
-                                    <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">GitHub</a>
+                                    TacoTab β version 0.1.0<br />
+                                    <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
+                                    <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
+                                        GitHub
+                                    </a>
                                 </p>
                                 <p>
-                                    Built by <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Rayo Verweij</a>.
+                                    Built by <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Rayo Verweij</a> for the <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">Bard Debate Union</a>&mdash;Bard's best sports team.
                                 </p>
                             </Col>
                         </Row>

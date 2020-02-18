@@ -44,6 +44,8 @@ class Judges extends React.Component {
         this.setState({judges: judges});
         localStorage.setItem("judges", JSON.stringify(judges));
         localStorage.setItem("judges_counter", counter);
+
+        this.setState({addJudgeForm: ""});
     }
 
     handleJudgeUpdate(judge) {
@@ -137,7 +139,12 @@ class Judges extends React.Component {
                                         <Form onSubmit={this.handleJudgeFormSubmit}>
                                             <Form.Row>
                                                 <Col md={4}>
-                                                    <Form.Control name="judgeName" type="text" placeholder="Name" onChange={this.handleJudgeFormChange} />
+                                                    <Form.Control
+                                                        name="judgeName"
+                                                        type="text"
+                                                        placeholder="Name"
+                                                        value={this.state.addJudgeForm}
+                                                        onChange={this.handleJudgeFormChange} />
                                                 </Col>
                                                 <Col>
                                                     <Button variant="primary" type="submit">Add judge</Button>

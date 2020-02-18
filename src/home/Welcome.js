@@ -8,8 +8,8 @@ class Welcome extends React.Component {
         return (
             <Row>
                 <Col>
-                    <h2>Welcome!</h2>
-                    <p>Make yourself at home.</p>
+                    <h2>Hi David!</h2>
+                    <p>Yay! You made it work!</p>
                 </Col>
             </Row>
         );
