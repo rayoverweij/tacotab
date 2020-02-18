@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/tacotab/static/css/main.b1ea7c75.chunk.css",
+    "main.js": "/tacotab/static/js/main.4086b0a2.chunk.js",
+    "main.js.map": "/tacotab/static/js/main.4086b0a2.chunk.js.map",
+    "runtime-main.js": "/tacotab/static/js/runtime-main.90fdb388.js",
+    "runtime-main.js.map": "/tacotab/static/js/runtime-main.90fdb388.js.map",
+    "static/js/2.df9f28ea.chunk.js": "/tacotab/static/js/2.df9f28ea.chunk.js",
+    "static/js/2.df9f28ea.chunk.js.map": "/tacotab/static/js/2.df9f28ea.chunk.js.map",
+    "index.html": "/tacotab/index.html",
+    "precache-manifest.805f75eb43d49ac1f75b184a0b0f81a1.js": "/tacotab/precache-manifest.805f75eb43d49ac1f75b184a0b0f81a1.js",
+    "service-worker.js": "/tacotab/service-worker.js",
+    "static/css/main.b1ea7c75.chunk.css.map": "/tacotab/static/css/main.b1ea7c75.chunk.css.map",
+    "static/js/2.df9f28ea.chunk.js.LICENSE": "/tacotab/static/js/2.df9f28ea.chunk.js.LICENSE",
+    "static/media/icon-github.svg": "/tacotab/static/media/icon-github.07883e93.svg",
+    "static/media/TeamTable.scss": "/tacotab/static/media/icon-people.85d9f981.svg",
+    "static/media/index.scss": "/tacotab/static/media/icon-trash.92088904.svg",
+    "static/media/logo.svg": "/tacotab/static/media/logo.15863a1a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.90fdb388.js",
+    "static/js/2.df9f28ea.chunk.js",
+    "static/css/main.b1ea7c75.chunk.css",
+    "static/js/main.4086b0a2.chunk.js"
+  ]
+}
