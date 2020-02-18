@@ -8,8 +8,8 @@ class Welcome extends React.Component {
         return (
             <Row>
                 <Col>
-                    <h2>Hi David!</h2>
-                    <p>Yay! You made it work!</p>
+                    <h2>Welcome!</h2>
+                    <p><strong>This is prerelease software, still under active development. Use at your own risk.</strong> For more information, see the <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">GitHub repository</a>.</p>
                 </Col>
             </Row>
         );
