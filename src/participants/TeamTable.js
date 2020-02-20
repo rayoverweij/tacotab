@@ -27,7 +27,7 @@ class TeamTable extends React.Component {
                                 team={team}
                                 teams={this.props.teams}
                                 speakers={this.props.speakers}
-                                bracket={this.props.bracket}
+                                div={this.props.div}
                                 updateSpeakers={this.props.updateSpeakers}
                                 updateTeam={this.props.updateTeam}
                                 deleteTeam = {this.props.deleteTeam}

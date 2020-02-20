@@ -17,8 +17,8 @@ class Round extends React.Component {
 
         this.state = {
             generated: JSON.parse(localStorage.getItem("draws_generated"))[this.props.r - 1],
-            pairings_middle: pairings.pairings_middle,
-            pairings_high: pairings.pairings_high
+            pairings_one: pairings.pairings_one,
+            pairings_two: pairings.pairings_two
         }
 
         this.generateDraw = this.generateDraw.bind(this);
@@ -38,12 +38,12 @@ class Round extends React.Component {
         // Initialize values
         let draws_generated = JSON.parse(localStorage.getItem("draws_generated"));
         let draws = JSON.parse(localStorage.getItem("draws"));
-        let teams_middle = JSON.parse(localStorage.getItem("teams_middle"));
-        let teams_high = JSON.parse(localStorage.getItem("teams_high"));
+        let teams_one = JSON.parse(localStorage.getItem("teams_one"));
+        let teams_two = JSON.parse(localStorage.getItem("teams_two"));
         let judges = JSON.parse(localStorage.getItem("judges"));
 
-        const lenM = teams_middle.length;
-        const lenH = teams_high.length;
+        const lenM = teams_one.length;
+        const lenH = teams_two.length;
 
         // Select only the judges that are available this round
         if(this.props.r === "1") {
@@ -60,7 +60,7 @@ class Round extends React.Component {
 
         // Check for an even number of teams
         if(lenM % 2 !== 0 && lenH % 2 !== 0) {
-            const confMix = window.confirm("Both brackets have an odd number of teams. This means that one middle school team would debate one high school team. Do you want to continue under these circumstances?");
+            const confMix = window.confirm("Both divisions have an odd number of teams. This means that one division one team would debate one division two team. Do you want to continue under these circumstances?");
             if(!confMix) {
                 return;
             } else {
@@ -68,10 +68,10 @@ class Round extends React.Component {
                 return;
             }
         } else if(lenM % 2 !== 0) {
-            alert("There is an odd number of middle school teams\u2014add or remove a team to generate the draw.");
+            alert("There is an odd number of division one teams\u2014add or remove a team to generate the draw.");
             return;
         } else if(lenH % 2 !== 0) {
-            alert("There is an odd number of high school teams\u2014add or remove a team to generate the draw.");
+            alert("There is an odd number of division two teams\u2014add or remove a team to generate the draw.");
             return;
         }
 
@@ -107,26 +107,26 @@ class Round extends React.Component {
         }
 
         // Generate pairings
-        let pairings_middle = [];
-        let pairings_high = [];
+        let pairings_one = [];
+        let pairings_two = [];
         let tm = [];
         let th = [];
 
         if(this.props.r === "1") {
             // Generate lists of teams in random order
-            tm = teams_middle.slice(0);
+            tm = teams_one.slice(0);
             for (let i = lenM - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [tm[i], tm[j]] = [tm[j], tm[i]];
             }
-            th = teams_high.slice(0);
+            th = teams_two.slice(0);
             for (let i = lenH - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [th[i], th[j]] = [th[j], th[i]];
             }
         } else {
             // Generate lists of teams in order of team wins, then total team points
-            tm = teams_middle
+            tm = teams_one
                 .slice(0)
                 .sort((a, b) => {
                     if(a.totalWins < b.totalWins) {
@@ -143,7 +143,7 @@ class Round extends React.Component {
                         }
                     }
                 });
-            th = teams_high
+            th = teams_two
                 .slice(0)
                 .sort((a, b) => {
                     if(a.totalWins < b.totalWins) {
@@ -211,7 +211,7 @@ class Round extends React.Component {
             currProp = tm[i].teamID;
             currOpp = tm[i + 1].teamID;
             let currChair = chairs.pop();
-            pairings_middle[i / 2] = {
+            pairings_one[i / 2] = {
                 prop: currProp,
                 opp: currOpp,
                 chair: currChair,
@@ -233,7 +233,7 @@ class Round extends React.Component {
             currProp = th[i].teamID;
             currOpp = th[i + 1].teamID;
             let currChair = chairs.pop();
-            pairings_high[i / 2] = {
+            pairings_two[i / 2] = {
                 prop: currProp,
                 opp: currOpp,
                 chair: currChair,
@@ -249,8 +249,8 @@ class Round extends React.Component {
 
         // Add wings
         while(wings.length > 0) {
-            for (let i = 0; i < pairings_middle.length; i++) {
-                pairings_middle[i].wings.push(wings.pop());
+            for (let i = 0; i < pairings_one.length; i++) {
+                pairings_one[i].wings.push(wings.pop());
                 if(wings.length === 0) {
                     break;
                 }
@@ -258,8 +258,8 @@ class Round extends React.Component {
             if(wings.length === 0) {
                 break;
             }
-            for (let i = 0; i < pairings_high.length; i++) {
-                pairings_high[i].wings.push(wings.pop());
+            for (let i = 0; i < pairings_two.length; i++) {
+                pairings_two[i].wings.push(wings.pop());
                 if(wings.length === 0) {
                     break;
                 }
@@ -267,19 +267,19 @@ class Round extends React.Component {
         }
 
         // Randomize rows
-        for (let i = pairings_middle.length - 1; i > 0; i--) {
+        for (let i = pairings_one.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [pairings_middle[i], pairings_middle[j]] = [pairings_middle[j], pairings_middle[i]];
+            [pairings_one[i], pairings_one[j]] = [pairings_one[j], pairings_one[i]];
         }
-        for (let i = pairings_high.length - 1; i > 0; i--) {
+        for (let i = pairings_two.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [pairings_high[i], pairings_high[j]] = [pairings_high[j], pairings_high[i]];
+            [pairings_two[i], pairings_two[j]] = [pairings_two[j], pairings_two[i]];
         }
 
         // Save in storage
         const drawr = {
-            pairings_middle: pairings_middle,
-            pairings_high: pairings_high
+            pairings_one: pairings_one,
+            pairings_two: pairings_two
         }
         if(this.props.r === "1") {
             draws[0] = drawr;
@@ -292,15 +292,15 @@ class Round extends React.Component {
 
         // Update team values
         tm.forEach(team => {
-            const i = teams_middle.indexOf(team);
-            teams_middle[i] = team;
+            const i = teams_one.indexOf(team);
+            teams_one[i] = team;
         });
-        localStorage.setItem("teams_middle", JSON.stringify(teams_middle));
+        localStorage.setItem("teams_one", JSON.stringify(teams_one));
         th.forEach(team => {
-            const i = teams_high.indexOf(team);
-            teams_high[i] = team;
+            const i = teams_two.indexOf(team);
+            teams_two[i] = team;
         });
-        localStorage.setItem("teams_high", JSON.stringify(teams_high));
+        localStorage.setItem("teams_two", JSON.stringify(teams_two));
 
 
         // Update chair values
@@ -310,32 +310,32 @@ class Round extends React.Component {
         });
         localStorage.setItem("judges", JSON.stringify(judges));
 
-        this.setState({pairings_middle: pairings_middle});
-        this.setState({pairings_high: pairings_high});
+        this.setState({pairings_one: pairings_one});
+        this.setState({pairings_two: pairings_two});
 
         draws_generated[this.props.r - 1] = true;
         localStorage.setItem("draws_generated", JSON.stringify(draws_generated));
         this.setState({generated: true});
     }
 
-    updatePairings(pair, bracket, round) {
+    updatePairings(pair, div) {
         const draws = JSON.parse(localStorage.getItem("draws"));
         let pairings;
-        if(bracket === "middle") {
-            pairings = this.state.pairings_middle;
+        if(div === "one") {
+            pairings = this.state.pairings_one;
         } else {
-            pairings = this.state.pairings_high;
+            pairings = this.state.pairings_two;
         }
 
         const index = pairings.indexOf(pair);
         pairings[index] = pair;
 
-        if(bracket === "middle") {
-            this.setState({pairings_middle: pairings});
-            draws[this.props.r - 1].pairings_middle = pairings;
+        if(div === "one") {
+            this.setState({pairings_one: pairings});
+            draws[this.props.r - 1].pairings_one = pairings;
         } else {
-            this.setState({pairings_high: pairings});
-            draws[this.props.r - 1].pairings_high = pairings;
+            this.setState({pairings_two: pairings});
+            draws[this.props.r - 1].pairings_two = pairings;
         }
         localStorage.setItem("draws", JSON.stringify(draws));
     }
@@ -348,8 +348,8 @@ class Round extends React.Component {
         } else {
             tables = (
                 <div>
-                    <h3>Middle School</h3>
-                    <Table className="table-no-top-margin draw-table-middle" hover>
+                    <h3>Division One</h3>
+                    <Table className="table-no-top-margin draw-table-one" hover>
                         <thead>
                             <tr>
                                 <th>Room</th>
@@ -360,11 +360,11 @@ class Round extends React.Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.pairings_middle.map((pair, index) => {
+                                this.state.pairings_one.map((pair, index) => {
                                     return <RoundRow 
-                                            key={`middle-pair-${index}`}
+                                            key={`one-pair-${index}`}
                                             pair={pair}
-                                            bracket="middle"
+                                            div="one"
                                             round={this.props.r}
                                             updatePairings={this.updatePairings} />;
                                 })
@@ -372,7 +372,7 @@ class Round extends React.Component {
                         </tbody>
                     </Table>
                     
-                    <h3>High School</h3>
+                    <h3>Division Two</h3>
                     <Table className="table-no-top-margin" hover>
                         <thead>
                             <tr>
@@ -384,11 +384,11 @@ class Round extends React.Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.pairings_high.map((pair, index) => {
+                                this.state.pairings_two.map((pair, index) => {
                                     return <RoundRow 
-                                            key={`high-pair-${index}`}
+                                            key={`two-pair-${index}`}
                                             pair={pair}
-                                            bracket="high" />;
+                                            div="two" />;
                                 })
                             }
                         </tbody>

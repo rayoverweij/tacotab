@@ -58,10 +58,10 @@ class Teams extends React.Component {
         const newTeam = new Team(counter++, this.state.addTeamForm.teamName, this.state.addTeamForm.speaker1, this.state.addTeamForm.speaker2, this.state.addTeamForm.speaker3);
         teams.push(newTeam);
 
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("teams_middle", JSON.stringify(teams));
+        if(this.props.div === "one") {
+            localStorage.setItem("teams_one", JSON.stringify(teams));
         } else {
-            localStorage.setItem("teams_high", JSON.stringify(teams));
+            localStorage.setItem("teams_two", JSON.stringify(teams));
         }
         localStorage.setItem("teams_counter", counter);
 
@@ -78,10 +78,10 @@ class Teams extends React.Component {
 
         teams[index] = team;
 
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("teams_middle", JSON.stringify(teams));
+        if(this.props.div === "one") {
+            localStorage.setItem("teams_one", JSON.stringify(teams));
         } else {
-            localStorage.setItem("teams_high", JSON.stringify(teams));
+            localStorage.setItem("teams_two", JSON.stringify(teams));
         }
 
         this.props.updateTeams(teams);
@@ -91,10 +91,10 @@ class Teams extends React.Component {
         const draws = JSON.parse(localStorage.getItem("draws"));
         for (const round in draws) {
             let pairs;
-            if(this.props.bracket === "middle") {
-                pairs = draws[round].pairings_middle;
+            if(this.props.div === "one") {
+                pairs = draws[round].pairings_one;
             } else {
-                pairs = draws[round].pairings_high;
+                pairs = draws[round].pairings_two;
             }
             for (const pair of pairs) {
                 if(pair.prop === team.teamID || pair.opp === team.teamID) {
@@ -113,10 +113,10 @@ class Teams extends React.Component {
                 return el.teamID !== team.teamID;
             });
             
-            if(this.props.bracket === "middle") {
-                localStorage.setItem("teams_middle", JSON.stringify(teams));
+            if(this.props.div === "one") {
+                localStorage.setItem("teams_one", JSON.stringify(teams));
             } else {
-                localStorage.setItem("teams_high", JSON.stringify(teams));
+                localStorage.setItem("teams_two", JSON.stringify(teams));
             }
 
             this.props.updateTeams(teams);
@@ -138,7 +138,7 @@ class Teams extends React.Component {
             teamTable = <TeamTable
                             speakers={this.props.speakers}
                             teams={this.props.teams}
-                            bracket={this.props.bracket}
+                            div={this.props.div}
                             updateSpeakers={this.props.updateSpeakers}
                             updateTeam={this.updateTeam}
                             deleteTeam={this.deleteTeam}
@@ -166,7 +166,7 @@ class Teams extends React.Component {
 
                     <Modal.Body>
                         <Form onSubmit={this.handleAddTeamFormSubmit}>
-                            <Form.Group controlId={`form-add-team-${this.props.bracket}-name`}>
+                            <Form.Group controlId={`form-add-team-${this.props.div}-name`}>
                                 <Form.Label>Team name</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -174,7 +174,7 @@ class Teams extends React.Component {
                                     value={this.state.addTeamForm.teamName}
                                     onChange={this.handleAddTeamFormChange} />
                             </Form.Group>
-                            <Form.Group controlId={`form-add-team-${this.props.bracket}-speaker-1`}>
+                            <Form.Group controlId={`form-add-team-${this.props.div}-speaker-1`}>
                                 <Form.Label>Speaker 1</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -185,7 +185,7 @@ class Teams extends React.Component {
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId={`form-add-team-${this.props.bracket}-speaker-2`}>
+                            <Form.Group controlId={`form-add-team-${this.props.div}-speaker-2`}>
                                 <Form.Label>Speaker 2</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -196,7 +196,7 @@ class Teams extends React.Component {
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId={`form-add-team-${this.props.bracket}-speaker-3`}>
+                            <Form.Group controlId={`form-add-team-${this.props.div}-speaker-3`}>
                                 <Form.Label>Speaker 3</Form.Label>
                                 <Form.Control
                                     as="select"

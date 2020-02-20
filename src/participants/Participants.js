@@ -14,8 +14,8 @@ class Participants extends React.Component {
         super(props);
 
         this.state = {
-            teams: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("teams_middle")) : JSON.parse(localStorage.getItem("teams_high")),
-            speakers: this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("speakers_middle")) : JSON.parse(localStorage.getItem("speakers_high"))
+            teams: this.props.div === "one" ? JSON.parse(localStorage.getItem("teams_one")) : JSON.parse(localStorage.getItem("teams_two")),
+            speakers: this.props.div === "one" ? JSON.parse(localStorage.getItem("speakers_one")) : JSON.parse(localStorage.getItem("speakers_two"))
         }
 
         this.updateSpeakers = this.updateSpeakers.bind(this);
@@ -34,7 +34,7 @@ class Participants extends React.Component {
 
     render() {
         return (
-            <Tab.Container id={`part-view-${this.props.bracket}`} defaultActiveKey="speakers">
+            <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
                 <Row className="part-view">
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
@@ -52,13 +52,25 @@ class Participants extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
-                                <Speakers speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
+                                <Speakers
+                                    speakers={this.state.speakers}
+                                    teams={this.state.teams}
+                                    div={this.props.div}
+                                    updateSpeakers={this.updateSpeakers}
+                                    updateTeams={this.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
-                                <Teams speakers={this.state.speakers} teams={this.state.teams} bracket={this.props.bracket} updateSpeakers={this.updateSpeakers} updateTeams={this.updateTeams} />
+                                <Teams
+                                    speakers={this.state.speakers}
+                                    teams={this.state.teams}
+                                    div={this.props.div}
+                                    updateSpeakers={this.updateSpeakers}
+                                    updateTeams={this.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
-                                <Ranking speakers={this.state.speakers} teams={this.state.teams} />
+                                <Ranking
+                                    speakers={this.state.speakers}
+                                    teams={this.state.teams} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

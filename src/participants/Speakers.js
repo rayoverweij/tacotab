@@ -46,10 +46,10 @@ class Speakers extends React.Component {
         const newSpeaker = new Debater(counter++, this.state.speakerForm.name, this.state.speakerForm.school);
         speakers.push(newSpeaker);
 
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+        if(this.props.div === "one") {
+            localStorage.setItem("speakers_one", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+            localStorage.setItem("speakers_two", JSON.stringify(speakers));
         }
         localStorage.setItem("speakers_counter", counter);
 
@@ -65,10 +65,10 @@ class Speakers extends React.Component {
         const index = speakers.indexOf(speaker);
         speakers[index] = speaker;
 
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+        if(this.props.div === "one") {
+            localStorage.setItem("speakers_one", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+            localStorage.setItem("speakers_two", JSON.stringify(speakers));
         }
 
         this.props.updateSpeakers(speakers);
@@ -90,10 +90,10 @@ class Speakers extends React.Component {
             const index = speakers.indexOf(speaker);
             speakers.splice(index, 1);
 
-            if(this.props.bracket === "middle") {
-                localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+            if(this.props.div === "one") {
+                localStorage.setItem("speakers_one", JSON.stringify(speakers));
             } else {
-                localStorage.setItem("speakers_high", JSON.stringify(speakers));
+                localStorage.setItem("speakers_two", JSON.stringify(speakers));
             }
 
             this.props.updateSpeakers(speakers);

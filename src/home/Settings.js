@@ -55,10 +55,10 @@ class Settings extends React.Component {
         fr.onload = event => {
             const result = JSON.parse(event.target.result);
             localStorage.setItem("tournament_name", JSON.stringify(result.tournament_name));
-            localStorage.setItem("speakers_middle", JSON.stringify(result.speakers_middle));
-            localStorage.setItem("teams_middle", JSON.stringify(result.teams_middle));
-            localStorage.setItem("speakers_high", JSON.stringify(result.speakers_high));
-            localStorage.setItem("teams_high", JSON.stringify(result.teams_high));
+            localStorage.setItem("speakers_one", JSON.stringify(result.speakers_one));
+            localStorage.setItem("teams_one", JSON.stringify(result.teams_one));
+            localStorage.setItem("speakers_two", JSON.stringify(result.speakers_two));
+            localStorage.setItem("teams_two", JSON.stringify(result.teams_two));
             localStorage.setItem("speakers_counter", JSON.stringify(result.speakers_counter));
             localStorage.setItem("teams_counter", JSON.stringify(result.teams_counter));
             localStorage.setItem("judges", JSON.stringify(result.judges));
@@ -75,10 +75,10 @@ class Settings extends React.Component {
         let data = "data:text/json;charset=utf-8,";
         data += encodeURIComponent("{");
         data += encodeURIComponent('"tournament_name": ' + localStorage.getItem("tournament_name") + ",");
-        data += encodeURIComponent('"speakers_middle": ' + localStorage.getItem("speakers_middle") + ",");
-        data += encodeURIComponent('"teams_middle": ' + localStorage.getItem("teams_middle") + ",");
-        data += encodeURIComponent('"speakers_high": ' + localStorage.getItem("speakers_high") + ",");
-        data += encodeURIComponent('"teams_high": ' + localStorage.getItem("teams_high") + ",");
+        data += encodeURIComponent('"speakers_one": ' + localStorage.getItem("speakers_one") + ",");
+        data += encodeURIComponent('"teams_one": ' + localStorage.getItem("teams_one") + ",");
+        data += encodeURIComponent('"speakers_two": ' + localStorage.getItem("speakers_two") + ",");
+        data += encodeURIComponent('"teams_two": ' + localStorage.getItem("teams_two") + ",");
         data += encodeURIComponent('"speakers_counter": ' + localStorage.getItem("speakers_counter") + ",");
         data += encodeURIComponent('"teams_counter": ' + localStorage.getItem("teams_counter") + ",");
         data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");

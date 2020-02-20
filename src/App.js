@@ -23,17 +23,17 @@ class App extends React.Component {
         if(!localStorage.getItem("tournament_name")) {
             localStorage.setItem("tournament_name", s("New tournament"));
         }
-        if(!localStorage.getItem("speakers_middle")) {
-            localStorage.setItem("speakers_middle", s([]));
+        if(!localStorage.getItem("speakers_one")) {
+            localStorage.setItem("speakers_one", s([]));
         }
-        if(!localStorage.getItem("teams_middle")) {
-            localStorage.setItem("teams_middle", s([]));
+        if(!localStorage.getItem("teams_one")) {
+            localStorage.setItem("teams_one", s([]));
         }
-        if(!localStorage.getItem("speakers_high")) {
-            localStorage.setItem("speakers_high", s([]));
+        if(!localStorage.getItem("speakers_two")) {
+            localStorage.setItem("speakers_two", s([]));
         }
-        if(!localStorage.getItem("teams_high")) {
-            localStorage.setItem("teams_high", s([]));
+        if(!localStorage.getItem("teams_two")) {
+            localStorage.setItem("teams_two", s([]));
         }
         if(!localStorage.getItem("speakers_counter")) {
             localStorage.setItem("speakers_counter", 0);
@@ -75,11 +75,11 @@ class App extends React.Component {
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
                                 <Home />
                             </Tab>
-                            <Tab eventKey="middleschool" className="app-nav-tab" title="Middle School">
-                                <Participants bracket="middle" />
+                            <Tab eventKey="divone" className="app-nav-tab" title="Division One">
+                                <Participants div="one" />
                             </Tab>
-                            <Tab eventKey="highschool" className="app-nav-tab" title="High School">
-                                <Participants bracket="high" />
+                            <Tab eventKey="divtwo" className="app-nav-tab" title="Division Two">
+                                <Participants div="two" />
                             </Tab>
                             <Tab eventKey="judges" className="app-nav-tab" title="Judges">
                                 <Judges />

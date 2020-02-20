@@ -16,11 +16,11 @@ class RoundRow extends React.Component {
         const pair = this.props.pair;
         this.setState({room: newRoom});
         pair.room = newRoom;
-        this.props.updatePairings(pair, this.props.bracket, this.props.round);
+        this.props.updatePairings(pair, this.props.div);
     }
 
     render() {
-        const teams = this.props.bracket === "middle" ? JSON.parse(localStorage.getItem("teams_middle")) : JSON.parse(localStorage.getItem("teams_high"));
+        const teams = this.props.div === "one" ? JSON.parse(localStorage.getItem("teams_one")) : JSON.parse(localStorage.getItem("teams_two"));
         const judges = JSON.parse(localStorage.getItem("judges"));
         const pair = this.props.pair;
 

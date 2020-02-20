@@ -56,10 +56,10 @@ class TeamRow extends React.Component {
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .scores[no] = parseInt(value);
 
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+        if(this.props.div === "one") {
+            localStorage.setItem("speakers_one", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+            localStorage.setItem("speakers_two", JSON.stringify(speakers));
         }
 
         this.props.updateSpeakers(speakers);
@@ -72,10 +72,10 @@ class TeamRow extends React.Component {
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .ranks[no] = parseInt(value);
         
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("speakers_middle", JSON.stringify(speakers));
+        if(this.props.div === "one") {
+            localStorage.setItem("speakers_one", JSON.stringify(speakers));
         } else {
-            localStorage.setItem("speakers_high", JSON.stringify(speakers));
+            localStorage.setItem("speakers_two", JSON.stringify(speakers));
         }
 
         this.props.updateSpeakers(speakers);
@@ -228,10 +228,10 @@ class TeamRow extends React.Component {
             return el.teamID === team.teamID;
         });
         teams[index] = team;
-        if(this.props.bracket === "middle") {
-            localStorage.setItem("teams_middle", JSON.stringify(teams));
+        if(this.props.div === "one") {
+            localStorage.setItem("teams_one", JSON.stringify(teams));
         } else {
-            localStorage.setItem("teams_high", JSON.stringify(teams));
+            localStorage.setItem("teams_two", JSON.stringify(teams));
         }
 
         // Update the people selection picker
