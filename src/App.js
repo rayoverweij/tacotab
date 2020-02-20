@@ -92,6 +92,11 @@ class App extends React.Component {
         this.setState({tournament_name: name});
         document.title = `${name} - TacoTab`;
     }
+
+    updateConfig(config) {
+        localStorage.setItem("config", JSON.stringify(config));
+        this.setState({config: config});
+    }
     
     updateSpeakersOne(speakers) {
         localStorage.setItem("speakers_one", JSON.stringify(speakers));
@@ -134,7 +139,9 @@ class App extends React.Component {
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
                                 <Home
                                     tournamentName={this.state.tournament_name}
-                                    updateTournamentName={this.updateTournamentName} />
+                                    config={this.state.config}
+                                    updateTournamentName={this.updateTournamentName}
+                                    updateConfig={this.updateConfig} />
                             </Tab>
                             <Tab eventKey="divone" className="app-nav-tab" title="Division One">
                                 <Participants

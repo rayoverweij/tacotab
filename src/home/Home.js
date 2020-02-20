@@ -27,11 +27,14 @@ class Home extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="welcome">
-                                <Welcome />
+                                <Welcome
+                                    tournamentName={this.props.tournamentName} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="settings">
                                 <Settings
-                                    updateTournamentName={this.props.updateTournamentName} />
+                                    config={this.props.config}
+                                    updateTournamentName={this.props.updateTournamentName}
+                                    updateConfig={this.props.updateConfig} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
