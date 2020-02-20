@@ -45,6 +45,12 @@ class Round extends React.Component {
         const lenM = teams_one.length;
         const lenH = teams_two.length;
 
+        // Don't run the draw if division one has no teams
+        if(lenM === 0) {
+            alert("Add some teams to generate the draw.");
+            return;
+        }
+
         // Select only the judges that are available this round
         if(this.props.r === "1") {
             judges = judges.filter(el => el.r1 === true);

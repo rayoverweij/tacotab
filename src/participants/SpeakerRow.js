@@ -42,6 +42,7 @@ class SpeakerRow extends React.Component {
                         className="cell-valupdate"
                         rows="1"
                         autoComplete="off"
+                        spellCheck="false"
                         value={this.state.name}
                         onChange={this.handleNameUpdate} />
                 </td>
