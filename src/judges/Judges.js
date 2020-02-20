@@ -18,47 +18,44 @@ class Judges extends React.Component {
         super(props);
 
         this.state = {
-            judges: JSON.parse(localStorage.getItem("judges")),
             addJudgeForm: ""
         }
 
-        this.handleJudgeFormChange = this.handleJudgeFormChange.bind(this);
-        this.handleJudgeFormSubmit = this.handleJudgeFormSubmit.bind(this);
-        this.handleJudgeUpdate = this.handleJudgeUpdate.bind(this);
-        this.handleJudgeDelete = this.handleJudgeDelete.bind(this);
+        this.handleAddJudgeFormChange = this.handleAddJudgeFormChange.bind(this);
+        this.handleAddJudgeFormSubmit = this.handleAddJudgeFormSubmit.bind(this);
+        this.updateJudge = this.updateJudge.bind(this);
+        this.deleteJudge = this.deleteJudge.bind(this);
     }
 
 
-    handleJudgeFormChange(event) {
+    handleAddJudgeFormChange(event) {
         this.setState({addJudgeForm: event.target.value});
     }
 
-    handleJudgeFormSubmit(event) {
+    handleAddJudgeFormSubmit(event) {
         event.preventDefault();
 
-        let judges = this.state.judges;
+        let judges = this.props.judges;
         let counter = localStorage.getItem("judges_counter");
 
         judges.push(new Judge(counter++, this.state.addJudgeForm));
 
-        this.setState({judges: judges});
-        localStorage.setItem("judges", JSON.stringify(judges));
+        this.props.updateJudges(judges);
         localStorage.setItem("judges_counter", counter);
 
         this.setState({addJudgeForm: ""});
     }
 
-    handleJudgeUpdate(judge) {
-        let judges = this.state.judges;
+    updateJudge(judge) {
+        let judges = this.props.judges;
 
         const index = judges.indexOf(judge);
         judges[index] = judge;
 
-        localStorage.setItem("judges", JSON.stringify(judges));
-        this.setState({judges: judges});
+        this.props.updateJudges(judges);
     }
 
-    handleJudgeDelete(judge) {
+    deleteJudge(judge) {
         const draws = JSON.parse(localStorage.getItem("draws"));
         for (const round of draws) {
             for(const pairs of Object.keys(round)) {
@@ -74,20 +71,19 @@ class Judges extends React.Component {
         const conf = window.confirm(`Are you sure you want to delete judge ${judge.name}?`);
 
         if(conf) {
-            let judges = this.state.judges;
+            let judges = this.props.judges;
 
             const index = judges.indexOf(judge);
             judges.splice(index, 1);
 
-            localStorage.setItem("judges", JSON.stringify(judges));
-            this.setState({judges: judges});
+            this.props.updateJudges(judges);
         }
     }
 
 
     render() {
         let table;
-        if(this.state.judges.length === 0) {
+        if(this.props.judges.length === 0) {
             table = <p className="none-yet">No judges yet!</p>;
         } else {
             table = (
@@ -105,13 +101,13 @@ class Judges extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.judges.map(judge => {
+                        {this.props.judges.map(judge => {
                             return (
                                 <JudgeRow
                                     key={`judge-row-${judge.name}`}
                                     judge={judge}
-                                    updateJudge={this.handleJudgeUpdate}
-                                    deleteJudge = {this.handleJudgeDelete} />
+                                    updateJudge={this.updateJudge}
+                                    deleteJudge={this.deleteJudge} />
                             );
                         })}
                     </tbody>
@@ -136,7 +132,7 @@ class Judges extends React.Component {
                                 <Row>
                                     <Col>
                                         <h2>Judges</h2>
-                                        <Form onSubmit={this.handleJudgeFormSubmit}>
+                                        <Form onSubmit={this.handleAddJudgeFormSubmit}>
                                             <Form.Row>
                                                 <Col md={4}>
                                                     <Form.Control
@@ -144,7 +140,7 @@ class Judges extends React.Component {
                                                         type="text"
                                                         placeholder="Name"
                                                         value={this.state.addJudgeForm}
-                                                        onChange={this.handleJudgeFormChange} />
+                                                        onChange={this.handleAddJudgeFormChange} />
                                                 </Col>
                                                 <Col>
                                                     <Button variant="primary" type="submit">Add judge</Button>
@@ -153,9 +149,9 @@ class Judges extends React.Component {
                                         </Form>
                                         <div id="total-judges">
                                             <p>
-                                                Total judges each round: {this.state.judges.filter(el => el.r1).length} &middot; {this.state.judges.filter(el => el.r2).length} &middot; {this.state.judges.filter(el => el.r3).length}
+                                                Total judges each round: {this.props.judges.filter(el => el.r1).length} &middot; {this.props.judges.filter(el => el.r2).length} &middot; {this.props.judges.filter(el => el.r3).length}
                                                 <br />
-                                                Total chairs each round: {this.state.judges.filter(el => el.canChair && el.r1).length} &middot; {this.state.judges.filter(el => el.canChair && el.r2).length} &middot; {this.state.judges.filter(el => el.canChair && el.r3).length}
+                                                Total chairs each round: {this.props.judges.filter(el => el.canChair && el.r1).length} &middot; {this.props.judges.filter(el => el.canChair && el.r2).length} &middot; {this.props.judges.filter(el => el.canChair && el.r3).length}
                                             </p>
                                         </div>
                                     </Col>

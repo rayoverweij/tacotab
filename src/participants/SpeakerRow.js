@@ -21,7 +21,7 @@ class SpeakerRow extends React.Component {
         const speaker = this.props.speaker;
         speaker.name = name;
         this.setState({name: name});
-        this.props.handleSpeakerUpdate(speaker);
+        this.props.updateSpeaker(speaker);
     }
 
     handleDisqUpdate(event) {
@@ -29,7 +29,7 @@ class SpeakerRow extends React.Component {
         const speaker = this.props.speaker;
         speaker.disqualified = checked;
         this.setState({disqualified: checked});
-        this.props.handleSpeakerUpdate(speaker);
+        this.props.updateSpeaker(speaker);
     }
     
     render() {
@@ -57,7 +57,7 @@ class SpeakerRow extends React.Component {
                         className={this.state.disqualified ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    <div onClick={() => this.props.handleSpeakerDelete(speaker)} className="icon icon-trash"></div>
+                    <div onClick={() => this.props.deleteSpeaker(speaker)} className="icon icon-trash"></div>
                 </td>
             </tr>
         );

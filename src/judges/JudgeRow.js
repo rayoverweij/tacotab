@@ -14,11 +14,11 @@ class JudgeRow extends React.Component {
             r3: this.props.judge.r3
         }
 
-        this.handleJudgeUpdate = this.handleJudgeUpdate.bind(this);
+        this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
     }
 
 
-    handleJudgeUpdate(event) {
+    handleJudgeToggle(event) {
         const name = event.target.name;
         const checked = event.target.checked;
         const judge = this.props.judge;
@@ -37,28 +37,28 @@ class JudgeRow extends React.Component {
                 <td className="cell-low-padding">
                     <Form.Switch
                         name="canChair"
-                        onChange={this.handleJudgeUpdate}
+                        onChange={this.handleJudgeToggle}
                         checked={this.state.canChair}
                         className={this.state.canChair ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
                         name="r1"
-                        onChange={this.handleJudgeUpdate}
+                        onChange={this.handleJudgeToggle}
                         checked={this.state.r1}
                         className={this.state.r1 ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
                         name="r2"
-                        onChange={this.handleJudgeUpdate}
+                        onChange={this.handleJudgeToggle}
                         checked={this.state.r2}
                         className={this.state.r2 ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
                         name="r3"
-                        onChange={this.handleJudgeUpdate}
+                        onChange={this.handleJudgeToggle}
                         checked={this.state.r3}
                         className={this.state.r3 ? "on" : "off"} />
                 </td>

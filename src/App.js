@@ -20,8 +20,14 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        if(!localStorage.getItem("init")) {
+            localStorage.setItem("init", false);
+        }
         if(!localStorage.getItem("tournament_name")) {
             localStorage.setItem("tournament_name", s("New tournament"));
+        }
+        if(!localStorage.getItem("config")) {
+            localStorage.setItem("config", s({}));
         }
         if(!localStorage.getItem("speakers_one")) {
             localStorage.setItem("speakers_one", s([]));
@@ -52,14 +58,60 @@ class App extends React.Component {
         }
         if(!localStorage.getItem("draws")) {
             localStorage.setItem("draws", s([
-                {pairings_middle: [], pairings_high: []},
-                {pairings_middle: [], pairings_high: []},
-                {pairings_middle: [], pairings_high: []}
+                {pairings_one: [], pairings_two: []},
+                {pairings_one: [], pairings_two: []},
+                {pairings_one: [], pairings_two: []}
             ]));
         }
 
+        this.state = {
+            init: localStorage.getItem("init"),
+            tournament_name: JSON.parse(localStorage.getItem("tournament_name")),
+            config: JSON.parse(localStorage.getItem("config")),
+            speakers_one: JSON.parse(localStorage.getItem("speakers_one")),
+            speakers_two: JSON.parse(localStorage.getItem("speakers_two")),
+            teams_one: JSON.parse(localStorage.getItem("teams_one")),
+            teams_two: JSON.parse(localStorage.getItem("teams_two")),
+            judges: JSON.parse(localStorage.getItem("judges"))
+        }
+
+        this.updateJudges = this.updateJudges.bind(this);
+        this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
+        this.updateSpeakersTwo = this.updateSpeakersTwo.bind(this);
+        this.updateTeamsOne = this.updateTeamsOne.bind(this);
+        this.updateTeamsTwo = this.updateTeamsTwo.bind(this);
+
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
+
+
+
+    updateSpeakersOne(speakers) {
+        localStorage.setItem("speakers_one", JSON.stringify(speakers));
+        this.setState({speakers_one: speakers});
+    }
+
+    updateSpeakersTwo(speakers) {
+        localStorage.setItem("speakers_two", JSON.stringify(speakers));
+        this.setState({speakers_two: speakers});
+    }
+
+    updateTeamsOne(teams) {
+        localStorage.setItem("teams_one", JSON.stringify(teams));
+        this.setState({teams_one: teams});
+    }
+
+    updateTeamsTwo(teams) {
+        localStorage.setItem("teams_two", JSON.stringify(teams));
+        this.setState({teams_two: teams});
+    }
+    
+    updateJudges(judges) {
+        localStorage.setItem("judges", JSON.stringify(judges));
+        this.setState({judges: judges});
+    }
+
+
 
     render() {
         return (
@@ -76,13 +128,25 @@ class App extends React.Component {
                                 <Home />
                             </Tab>
                             <Tab eventKey="divone" className="app-nav-tab" title="Division One">
-                                <Participants div="one" />
+                                <Participants
+                                    speakers={this.state.speakers_one}
+                                    teams={this.state.teams_one}
+                                    updateSpeakers={this.updateSpeakersOne}
+                                    updateTeams={this.updateTeamsOne}
+                                    div="one" />
                             </Tab>
                             <Tab eventKey="divtwo" className="app-nav-tab" title="Division Two">
-                                <Participants div="two" />
+                                <Participants
+                                    speakers={this.state.speakers_two}
+                                    teams={this.state.teams_two}
+                                    updateSpeakers={this.updateSpeakersTwo}
+                                    updateTeams={this.updateTeamsTwo}
+                                    div="two" />
                             </Tab>
                             <Tab eventKey="judges" className="app-nav-tab" title="Judges">
-                                <Judges />
+                                <Judges
+                                    judges={this.state.judges}
+                                    updateJudges={this.updateJudges} />
                             </Tab>
                             <Tab eventKey="draw" className="app-nav-tab" title="Draw">
                                 <Draw />

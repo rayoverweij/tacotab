@@ -10,28 +10,6 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 
 class Participants extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            teams: this.props.div === "one" ? JSON.parse(localStorage.getItem("teams_one")) : JSON.parse(localStorage.getItem("teams_two")),
-            speakers: this.props.div === "one" ? JSON.parse(localStorage.getItem("speakers_one")) : JSON.parse(localStorage.getItem("speakers_two"))
-        }
-
-        this.updateSpeakers = this.updateSpeakers.bind(this);
-        this.updateTeams = this.updateTeams.bind(this);
-    }
-
-
-    updateSpeakers(speakers) {
-        this.setState({speakers: speakers});
-    }
-
-    updateTeams(teams) {
-        this.setState({teams: teams});
-    }
-
-
     render() {
         return (
             <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
@@ -53,24 +31,22 @@ class Participants extends React.Component {
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
                                 <Speakers
-                                    speakers={this.state.speakers}
-                                    teams={this.state.teams}
-                                    div={this.props.div}
-                                    updateSpeakers={this.updateSpeakers}
-                                    updateTeams={this.updateTeams} />
+                                    speakers={this.props.speakers}
+                                    teams={this.props.teams}
+                                    updateSpeakers={this.props.updateSpeakers} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="teams">
                                 <Teams
-                                    speakers={this.state.speakers}
-                                    teams={this.state.teams}
+                                    speakers={this.props.speakers}
+                                    teams={this.props.teams}
                                     div={this.props.div}
-                                    updateSpeakers={this.updateSpeakers}
-                                    updateTeams={this.updateTeams} />
+                                    updateSpeakers={this.props.updateSpeakers}
+                                    updateTeams={this.props.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
                                 <Ranking
-                                    speakers={this.state.speakers}
-                                    teams={this.state.teams} />
+                                    speakers={this.props.speakers}
+                                    teams={this.props.teams} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

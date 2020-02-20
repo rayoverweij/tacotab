@@ -30,8 +30,8 @@ class TeamTable extends React.Component {
                                 div={this.props.div}
                                 updateSpeakers={this.props.updateSpeakers}
                                 updateTeam={this.props.updateTeam}
-                                deleteTeam = {this.props.deleteTeam}
-                                speakerPicker = {this.props.speakerPicker} />;
+                                deleteTeam={this.props.deleteTeam}
+                                speakerPicker={this.props.speakerPicker} />;
                 })}
             </Table>
         );

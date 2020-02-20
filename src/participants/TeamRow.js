@@ -51,33 +51,19 @@ class TeamRow extends React.Component {
     
     setScore(speaker, no, value) {
         let speakers = this.props.speakers;
-        
         speakers
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .scores[no] = parseInt(value);
-
-        if(this.props.div === "one") {
-            localStorage.setItem("speakers_one", JSON.stringify(speakers));
-        } else {
-            localStorage.setItem("speakers_two", JSON.stringify(speakers));
-        }
 
         this.props.updateSpeakers(speakers);
     }
 
     setRank(speaker, no, value) {
         let speakers = this.props.speakers;
-
         speakers
             .find(el => el.debaterID.toString() === speaker.debaterID.toString())
             .ranks[no] = parseInt(value);
         
-        if(this.props.div === "one") {
-            localStorage.setItem("speakers_one", JSON.stringify(speakers));
-        } else {
-            localStorage.setItem("speakers_two", JSON.stringify(speakers));
-        }
-
         this.props.updateSpeakers(speakers);
     }
 

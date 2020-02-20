@@ -58,32 +58,16 @@ class Teams extends React.Component {
         const newTeam = new Team(counter++, this.state.addTeamForm.teamName, this.state.addTeamForm.speaker1, this.state.addTeamForm.speaker2, this.state.addTeamForm.speaker3);
         teams.push(newTeam);
 
-        if(this.props.div === "one") {
-            localStorage.setItem("teams_one", JSON.stringify(teams));
-        } else {
-            localStorage.setItem("teams_two", JSON.stringify(teams));
-        }
         localStorage.setItem("teams_counter", counter);
-
         this.props.updateTeams(teams);
+
         this.modalHide();
     }
 
     updateTeam(team) {
         let teams = this.props.teams;
-
-        const index = teams.indexOf(el => {
-            return el.teamID === team.teamID;
-        });
-
+        const index = teams.indexOf(el => el.teamID === team.teamID);
         teams[index] = team;
-
-        if(this.props.div === "one") {
-            localStorage.setItem("teams_one", JSON.stringify(teams));
-        } else {
-            localStorage.setItem("teams_two", JSON.stringify(teams));
-        }
-
         this.props.updateTeams(teams);
     }
 
@@ -105,20 +89,9 @@ class Teams extends React.Component {
         }
 
         const conf = window.confirm(`Are you sure you want to delete team ${team.teamName}?`);
-        
         if(conf) {
             let teams = this.props.teams;
-
-            teams = teams.filter(el => {
-                return el.teamID !== team.teamID;
-            });
-            
-            if(this.props.div === "one") {
-                localStorage.setItem("teams_one", JSON.stringify(teams));
-            } else {
-                localStorage.setItem("teams_two", JSON.stringify(teams));
-            }
-
+            teams = teams.filter(el => el.teamID !== team.teamID);  
             this.props.updateTeams(teams);
         }
     }

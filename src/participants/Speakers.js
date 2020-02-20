@@ -16,65 +16,52 @@ class Speakers extends React.Component {
         super(props);
 
         this.state = {
-            speakerForm: {
+            addSpeakerForm: {
                 name: "",
                 school: ""
             }
         }
 
-        this.handleSpeakerFormChange = this.handleSpeakerFormChange.bind(this);
-        this.handleSpeakerFormSubmit = this.handleSpeakerFormSubmit.bind(this);
-        this.handleSpeakerUpdate = this.handleSpeakerUpdate.bind(this);
-        this.handleSpeakerDelete = this.handleSpeakerDelete.bind(this);
+        this.handleAddSpeakerFormChange = this.handleAddSpeakerFormChange.bind(this);
+        this.handleAddSpeakerFormSubmit = this.handleAddSpeakerFormSubmit.bind(this);
+        this.updateSpeaker = this.updateSpeaker.bind(this);
+        this.deleteSpeaker = this.deleteSpeaker.bind(this);
     }
 
 
-    handleSpeakerFormChange(event) {
+    handleAddSpeakerFormChange(event) {
         const value = event.target.value;
         const name = event.target.name;
-        let speakerFormState = {...this.state.speakerForm};
-        speakerFormState[name] = value;
-        this.setState({speakerForm: speakerFormState});
+        let speakerAddFormState = {...this.state.addSpeakerForm};
+        speakerAddFormState[name] = value;
+        this.setState({addSpeakerForm: speakerAddFormState});
     }
 
-    handleSpeakerFormSubmit(event) {
+    handleAddSpeakerFormSubmit(event) {
         event.preventDefault();
 
         let speakers = this.props.speakers;
         let counter = localStorage.getItem("speakers_counter");
 
-        const newSpeaker = new Debater(counter++, this.state.speakerForm.name, this.state.speakerForm.school);
+        const newSpeaker = new Debater(counter++, this.state.addSpeakerForm.name, this.state.addSpeakerForm.school);
         speakers.push(newSpeaker);
 
-        if(this.props.div === "one") {
-            localStorage.setItem("speakers_one", JSON.stringify(speakers));
-        } else {
-            localStorage.setItem("speakers_two", JSON.stringify(speakers));
-        }
         localStorage.setItem("speakers_counter", counter);
-
         this.props.updateSpeakers(speakers);
 
-        let blankForm = {...this.state.speakerForm};
+        let blankForm = {...this.state.addSpeakerForm};
         blankForm.name = "";
-        this.setState({speakerForm: blankForm});
+        this.setState({addSpeakerForm: blankForm});
     }
 
-    handleSpeakerUpdate(speaker) {
+    updateSpeaker(speaker) {
         let speakers = this.props.speakers;
         const index = speakers.indexOf(speaker);
         speakers[index] = speaker;
-
-        if(this.props.div === "one") {
-            localStorage.setItem("speakers_one", JSON.stringify(speakers));
-        } else {
-            localStorage.setItem("speakers_two", JSON.stringify(speakers));
-        }
-
         this.props.updateSpeakers(speakers);
     }
 
-    handleSpeakerDelete(speaker) {
+    deleteSpeaker(speaker) {
         for(const team of this.props.teams) {
             if(team.round1.includes(speaker.debaterID.toString()) || team.round2.includes(speaker.debaterID.toString()) || team.round3.includes(speaker.debaterID.toString())) {
                 window.alert(`This speaker is still part of team ${team.teamName}. You need to remove them from the team before you can delete them.`);
@@ -83,19 +70,10 @@ class Speakers extends React.Component {
         }
 
         const conf = window.confirm(`Are you sure you want to delete speaker ${speaker.name}?`);
-
         if(conf) {
             let speakers = this.props.speakers;
-
             const index = speakers.indexOf(speaker);
             speakers.splice(index, 1);
-
-            if(this.props.div === "one") {
-                localStorage.setItem("speakers_one", JSON.stringify(speakers));
-            } else {
-                localStorage.setItem("speakers_two", JSON.stringify(speakers));
-            }
-
             this.props.updateSpeakers(speakers);
         }
     }
@@ -128,8 +106,8 @@ class Speakers extends React.Component {
                                 <SpeakerRow 
                                     key={`speaker-row-${speaker.debaterID}`}
                                     speaker={speaker}
-                                    handleSpeakerUpdate={this.handleSpeakerUpdate}
-                                    handleSpeakerDelete={this.handleSpeakerDelete} />
+                                    updateSpeaker={this.updateSpeaker}
+                                    deleteSpeaker={this.deleteSpeaker} />
                             );
                         })}
                     </tbody>
@@ -145,23 +123,23 @@ class Speakers extends React.Component {
                     <Col>
                     <h2>Speakers</h2>
                     
-                        <Form onSubmit={this.handleSpeakerFormSubmit}>
+                        <Form onSubmit={this.handleAddSpeakerFormSubmit}>
                             <Form.Row>
                                 <Col>
                                     <Form.Control
                                         name="name"
                                         type="text"
                                         placeholder="Name"
-                                        value={this.state.speakerForm.name}
-                                        onChange={this.handleSpeakerFormChange} />
+                                        value={this.state.addSpeakerForm.name}
+                                        onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
                                 <Col>
                                     <Form.Control
                                         name="school"
                                         type="text"
                                         placeholder="School"
-                                        value={this.state.speakerForm.school}
-                                        onChange={this.handleSpeakerFormChange} />
+                                        value={this.state.addSpeakerForm.school}
+                                        onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
                                 <Col>
                                     <Button variant="primary" type="submit">Add speaker</Button>

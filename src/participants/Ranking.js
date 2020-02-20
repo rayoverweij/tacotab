@@ -6,7 +6,6 @@ import Table from 'react-bootstrap/Table';
 
 
 class Ranking extends React.Component {
-    // doesn't automatically update yet
     render() {
         const speakers = this.props.speakers;
         const teams = this.props.teams;
@@ -77,7 +76,7 @@ class Ranking extends React.Component {
                     <td>{team.totalPoints}</td>
                 </tr>
             );
-        }).splice(0, 20);
+        });
 
 
         const teams_ranked = teams.slice(0).sort((a, b) => {
