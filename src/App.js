@@ -82,11 +82,13 @@ class App extends React.Component {
         this.updateTeamsTwo = this.updateTeamsTwo.bind(this);
         this.updateJudges = this.updateJudges.bind(this);
 
+        this.getTotalTeams = this.getTotalTeams.bind(this);
+
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
 
 
-
+    // Global update state methods
     updateTournamentName(name) {
         localStorage.setItem("tournament_name", JSON.stringify(name));
         this.setState({tournament_name: name});
@@ -121,6 +123,11 @@ class App extends React.Component {
     updateJudges(judges) {
         localStorage.setItem("judges", JSON.stringify(judges));
         this.setState({judges: judges});
+    }
+
+    // Global helper methods
+    getTotalTeams() {
+        return this.state.teams_one.length + this.state.teams_two.length;
     }
 
 
@@ -162,7 +169,8 @@ class App extends React.Component {
                             <Tab eventKey="judges" className="app-nav-tab" title="Judges">
                                 <Judges
                                     judges={this.state.judges}
-                                    updateJudges={this.updateJudges} />
+                                    updateJudges={this.updateJudges}
+                                    getTotalTeams={this.getTotalTeams} />
                             </Tab>
                             <Tab eventKey="draw" className="app-nav-tab" title="Draw">
                                 <Draw />

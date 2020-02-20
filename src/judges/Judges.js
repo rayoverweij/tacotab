@@ -152,6 +152,8 @@ class Judges extends React.Component {
                                                 Total judges each round: {this.props.judges.filter(el => el.r1).length} &middot; {this.props.judges.filter(el => el.r2).length} &middot; {this.props.judges.filter(el => el.r3).length}
                                                 <br />
                                                 Total chairs each round: {this.props.judges.filter(el => el.canChair && el.r1).length} &middot; {this.props.judges.filter(el => el.canChair && el.r2).length} &middot; {this.props.judges.filter(el => el.canChair && el.r3).length}
+                                                <br />
+                                                Total chairs needed: {Math.round(this.props.getTotalTeams() / 2)}
                                             </p>
                                         </div>
                                     </Col>
