@@ -37,10 +37,8 @@ class Settings extends React.Component {
 
     handleNameFormSubmit(event) {
         event.preventDefault();
-
         const name = this.state.nameForm;
-        localStorage.setItem("tournament_name", JSON.stringify(name));
-        document.title = `${name} - TacoTab`;
+        this.props.updateTournamentName(name);
         this.setState({nameForm: ""});
     }
 
@@ -97,11 +95,9 @@ class Settings extends React.Component {
  
     clearData() {
         const conf = window.confirm("Are you sure you want to delete all data?");
-
         if(!conf) {
-            return;
+            return false;
         }
-
         localStorage.clear();
         window.location.reload();
     }

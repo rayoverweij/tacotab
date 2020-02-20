@@ -10,14 +10,6 @@ import Nav from 'react-bootstrap/Nav';
 
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            'tournament_name': localStorage.getItem("tournament_name")
-        }
-    }
-
     render() {
         return (
             <Tab.Container id="home-view" defaultActiveKey="welcome">
@@ -38,7 +30,8 @@ class Home extends React.Component {
                                 <Welcome />
                             </Tab.Pane>
                             <Tab.Pane eventKey="settings">
-                                <Settings />
+                                <Settings
+                                    updateTournamentName={this.props.updateTournamentName} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

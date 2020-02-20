@@ -75,17 +75,24 @@ class App extends React.Component {
             judges: JSON.parse(localStorage.getItem("judges"))
         }
 
-        this.updateJudges = this.updateJudges.bind(this);
+        this.updateTournamentName = this.updateTournamentName.bind(this);
         this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
         this.updateSpeakersTwo = this.updateSpeakersTwo.bind(this);
         this.updateTeamsOne = this.updateTeamsOne.bind(this);
         this.updateTeamsTwo = this.updateTeamsTwo.bind(this);
+        this.updateJudges = this.updateJudges.bind(this);
 
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
 
 
 
+    updateTournamentName(name) {
+        localStorage.setItem("tournament_name", JSON.stringify(name));
+        this.setState({tournament_name: name});
+        document.title = `${name} - TacoTab`;
+    }
+    
     updateSpeakersOne(speakers) {
         localStorage.setItem("speakers_one", JSON.stringify(speakers));
         this.setState({speakers_one: speakers});
@@ -125,7 +132,9 @@ class App extends React.Component {
 
                         <Tabs defaultActiveKey="home" id="app-nav">
                             <Tab eventKey="home" className="app-nav-tab" title="Home">
-                                <Home />
+                                <Home
+                                    tournamentName={this.state.tournament_name}
+                                    updateTournamentName={this.updateTournamentName} />
                             </Tab>
                             <Tab eventKey="divone" className="app-nav-tab" title="Division One">
                                 <Participants
