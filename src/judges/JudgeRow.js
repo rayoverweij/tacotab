@@ -34,6 +34,7 @@ class JudgeRow extends React.Component {
         return (
             <tr>
                 <td className="judge-table-name">{this.props.judge.name}</td>
+                <td className="judge-table-school">{this.props.judge.school}</td>
                 <td className="cell-low-padding">
                     <Form.Switch
                         name="canChair"

@@ -18,7 +18,10 @@ class Judges extends React.Component {
         super(props);
 
         this.state = {
-            addJudgeForm: ""
+            addJudgeForm: {
+                judgeName: "",
+                judgeSchool: ""
+            }
         }
 
         this.handleAddJudgeFormChange = this.handleAddJudgeFormChange.bind(this);
@@ -29,7 +32,11 @@ class Judges extends React.Component {
 
 
     handleAddJudgeFormChange(event) {
-        this.setState({addJudgeForm: event.target.value});
+        const value = event.target.value;
+        const name = event.target.name;
+        let judgeAddFormState = {...this.state.addJudgeForm};
+        judgeAddFormState[name] = value;
+        this.setState({addJudgeForm: judgeAddFormState});
     }
 
     handleAddJudgeFormSubmit(event) {
@@ -38,12 +45,14 @@ class Judges extends React.Component {
         let judges = this.props.judges;
         let counter = localStorage.getItem("judges_counter");
 
-        judges.push(new Judge(counter++, this.state.addJudgeForm));
+        judges.push(new Judge(counter++, this.state.addJudgeForm.judgeName, this.state.addJudgeForm.judgeSchool));
 
         this.props.updateJudges(judges);
         localStorage.setItem("judges_counter", counter);
 
-        this.setState({addJudgeForm: ""});
+        let blankForm = {...this.state.addJudgeForm};
+        blankForm.name = "";
+        this.setState({addJudgeForm: blankForm});
     }
 
     updateJudge(judge) {
@@ -91,6 +100,7 @@ class Judges extends React.Component {
                     <thead>
                         <tr>
                             <th className="judge-table-name">Name</th>
+                            <th>School</th>
                             <th>Chair?</th>
                             <th>Round 1?</th>
                             <th>Round 2?</th>
@@ -134,12 +144,20 @@ class Judges extends React.Component {
                                         <h2>Judges</h2>
                                         <Form onSubmit={this.handleAddJudgeFormSubmit}>
                                             <Form.Row>
-                                                <Col md={4}>
+                                                <Col>
                                                     <Form.Control
                                                         name="judgeName"
                                                         type="text"
                                                         placeholder="Name"
-                                                        value={this.state.addJudgeForm}
+                                                        value={this.state.addJudgeForm.judgeName}
+                                                        onChange={this.handleAddJudgeFormChange} />
+                                                </Col>
+                                                <Col>
+                                                    <Form.Control
+                                                        name="judgeSchool"
+                                                        type="text"
+                                                        placeholder="School"
+                                                        value={this.state.addJudgeForm.judgeSchool}
                                                         onChange={this.handleAddJudgeFormChange} />
                                                 </Col>
                                                 <Col>
