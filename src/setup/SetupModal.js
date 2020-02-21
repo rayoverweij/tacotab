@@ -62,9 +62,16 @@ class SetupModal extends React.Component {
 
     render() {
         return (
-            <Modal show={!this.props.init} backdrop="static" className="setup-modal">
+            <Modal
+                show={!this.props.init}
+                backdrop="static"
+                animation={false}
+                className="setup-modal"
+                dialogClassName="setup-modal-dialog"
+                backdropClassName="setup-modal-backdrop"
+                aria-labelledby="setup-modal-title" >
                 <Modal.Header>
-                    <Modal.Title>
+                    <Modal.Title id="setup-modal-title">
                         <img src={logo} alt="TacoTab logo" id="setup-logo" />
                         Welcome to TacoTab!
                     </Modal.Title>

@@ -1,6 +1,6 @@
 @import '../vars';
 
-.setup-modal {
+.setup-modal-backdrop {
     background-color: white;
 
     &.show {
@@ -8,7 +8,7 @@
     }
 }
 
-.setup-modal > .modal-dialog > .modal-content {
+.setup-modal-dialog > .modal-content {
     border: none;
 
     & > .modal-header {
