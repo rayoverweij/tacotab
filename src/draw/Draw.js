@@ -17,7 +17,7 @@ class Draw extends React.Component {
                         <Nav variant="pills" className="flex-column">
                             {[1, 2, 3].map(round => {
                                 return (
-                                    <Nav.Item>
+                                    <Nav.Item key={`draw-nav-${round}`}>
                                         <Nav.Link eventKey={`round-${round}`} className="sub-nav-link">
                                             Round {round}
                                         </Nav.Link>
@@ -30,7 +30,7 @@ class Draw extends React.Component {
                         <Tab.Content>
                             {[1, 2, 3].map(round => {
                                 return (
-                                    <Tab.Pane eventKey={`round-${round}`}>
+                                    <Tab.Pane key={`draw-pane-${round}`} eventKey={`round-${round}`}>
                                         <Round
                                             r={round}
                                             config={this.props.config}

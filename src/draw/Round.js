@@ -2,6 +2,7 @@ import React from 'react';
 import './Round.scss';
 
 import RoundRow from './RoundRow';
+import Room from '../structures/room';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -196,7 +197,7 @@ class Round extends React.Component {
         }
 
         // Distribute teams and chairs
-        let currProp, currOpp;
+        let currProp, currOpp, currChair;
         for (let i = 0; i < len1; i += 2) {
             if(this.props.r === "1") {
                 t1[i].sideR1 = "prop";
@@ -205,14 +206,8 @@ class Round extends React.Component {
 
             currProp = t1[i].teamID;
             currOpp = t1[i + 1].teamID;
-            let currChair = chairs.pop();
-            pairings_one[i / 2] = {
-                prop: currProp,
-                opp: currOpp,
-                chair: currChair,
-                wings: [],
-                room: "[room]"
-            }
+            currChair = chairs.pop();
+            pairings_one[i / 2] = new Room(currProp, currOpp, currChair, []);
         }
         for (let i = 0; i < len2; i += 2) {
             if(this.props.r === "1") {
@@ -222,14 +217,8 @@ class Round extends React.Component {
 
             currProp = t2[i].teamID;
             currOpp = t2[i + 1].teamID;
-            let currChair = chairs.pop();
-            pairings_two[i / 2] = {
-                prop: currProp,
-                opp: currOpp,
-                chair: currChair,
-                wings: [],
-                room: "[room]"
-            }
+            currChair = chairs.pop();
+            pairings_two[i / 2] = new Room(currProp, currOpp, currChair, []);
         }
 
         // Add wings
