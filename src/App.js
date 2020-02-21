@@ -5,13 +5,14 @@ import logo from './images/logo.svg';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Nav from 'react-bootstrap/Nav';
 
 import Home from './home/Home';
 import Participants from './participants/Participants';
 import Judges from './judges/Judges';
 import Draw from './draw/Draw';
+import SetupModal from './setup/SetupModal';
 
 
 const s = JSON.stringify;
@@ -21,7 +22,7 @@ class App extends React.Component {
         super(props);
 
         if(!localStorage.getItem("init")) {
-            localStorage.setItem("init", false);
+            localStorage.setItem("init", s(false));
         }
         if(!localStorage.getItem("tournament_name")) {
             localStorage.setItem("tournament_name", s("New tournament"));
@@ -42,16 +43,16 @@ class App extends React.Component {
             localStorage.setItem("teams_two", s([]));
         }
         if(!localStorage.getItem("speakers_counter")) {
-            localStorage.setItem("speakers_counter", 0);
+            localStorage.setItem("speakers_counter", s(0));
         }
         if(!localStorage.getItem("teams_counter")) {
-            localStorage.setItem("teams_counter", 0);
+            localStorage.setItem("teams_counter", s(0));
         }
         if(!localStorage.getItem("judges")) {
             localStorage.setItem("judges", s([]));
         }
         if(!localStorage.getItem("judges_counter")) {
-            localStorage.setItem("judges_counter", 0);
+            localStorage.setItem("judges_counter", s(0));
         }
         if(!localStorage.getItem("draws_generated")) {
             localStorage.setItem("draws_generated", s([false, false, false]));
@@ -65,7 +66,7 @@ class App extends React.Component {
         }
 
         this.state = {
-            init: localStorage.getItem("init"),
+            init: JSON.parse(localStorage.getItem("init")),
             tournament_name: JSON.parse(localStorage.getItem("tournament_name")),
             config: JSON.parse(localStorage.getItem("config")),
             speakers_one: JSON.parse(localStorage.getItem("speakers_one")),
@@ -74,6 +75,8 @@ class App extends React.Component {
             teams_two: JSON.parse(localStorage.getItem("teams_two")),
             judges: JSON.parse(localStorage.getItem("judges"))
         }
+
+        this.initializeTournament = this.initializeTournament.bind(this);
 
         this.updateTournamentName = this.updateTournamentName.bind(this);
         this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
@@ -87,7 +90,7 @@ class App extends React.Component {
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
     }
 
-
+  
     // Global update state methods
     updateTournamentName(name) {
         localStorage.setItem("tournament_name", JSON.stringify(name));
@@ -126,6 +129,26 @@ class App extends React.Component {
     }
 
     // Global helper methods
+    initializeTournament(name, divisions, divisionNames) {
+        this.updateTournamentName(name);
+
+        let config;
+        if(divisions === "1") {
+            config = {
+                divisions: divisions
+            }
+        } else {
+            config = {
+                divisions: divisions,
+                divisionNames: [divisionNames[0], divisionNames[1]]
+            }
+        }
+        this.updateConfig(config);
+
+        localStorage.setItem("init", JSON.stringify(true));
+        this.setState({init: true});
+    }
+
     getTotalTeams() {
         return this.state.teams_one.length + this.state.teams_two.length;
     }
@@ -133,52 +156,109 @@ class App extends React.Component {
 
 
     render() {
-        return (
-            <Container fluid="true" className="app">
-                <Row>
-                    <Col id="app-container">
-                        <div id="logo">
-                            <img src={logo} alt="TacoTab logo" />
-                            <h1>TacoTab</h1>
-                        </div>
+        let participants_nav, participants_panes;
+        if(this.state.config.divisions !== "2") {
+            participants_nav = (
+                <Nav.Item>
+                    <Nav.Link eventKey="participants">Participants</Nav.Link>
+                </Nav.Item>
+            );
+            participants_panes = (
+                <Tab.Pane eventKey="participants">
+                    <Participants
+                        speakers={this.state.speakers_one}
+                        teams={this.state.teams_one}
+                        updateSpeakers={this.updateSpeakersOne}
+                        updateTeams={this.updateTeamsOne}
+                        div="one" />
+                </Tab.Pane>
+            );
+        } else {
+            participants_nav = (
+                <>
+                    <Nav.Item>
+                        <Nav.Link eventKey="divone">{this.state.config.divisionNames[0]}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="divtwo">{this.state.config.divisionNames[1]}</Nav.Link>
+                    </Nav.Item>
+                </>
+            );
+            participants_panes = (
+                <>
+                    <Tab.Pane eventKey="divone">
+                        <Participants
+                            speakers={this.state.speakers_one}
+                            teams={this.state.teams_one}
+                            updateSpeakers={this.updateSpeakersOne}
+                            updateTeams={this.updateTeamsOne}
+                            div="one" />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="divtwo">
+                        <Participants
+                            speakers={this.state.speakers_two}
+                            teams={this.state.teams_two}
+                            updateSpeakers={this.updateSpeakersTwo}
+                            updateTeams={this.updateTeamsTwo}
+                            div="two" />
+                    </Tab.Pane>
+                </>
+            );
+        }
 
-                        <Tabs defaultActiveKey="home" id="app-nav">
-                            <Tab eventKey="home" className="app-nav-tab" title="Home">
-                                <Home
-                                    tournamentName={this.state.tournament_name}
-                                    config={this.state.config}
-                                    updateTournamentName={this.updateTournamentName}
-                                    updateConfig={this.updateConfig} />
-                            </Tab>
-                            <Tab eventKey="divone" className="app-nav-tab" title="Division One">
-                                <Participants
-                                    speakers={this.state.speakers_one}
-                                    teams={this.state.teams_one}
-                                    updateSpeakers={this.updateSpeakersOne}
-                                    updateTeams={this.updateTeamsOne}
-                                    div="one" />
-                            </Tab>
-                            <Tab eventKey="divtwo" className="app-nav-tab" title="Division Two">
-                                <Participants
-                                    speakers={this.state.speakers_two}
-                                    teams={this.state.teams_two}
-                                    updateSpeakers={this.updateSpeakersTwo}
-                                    updateTeams={this.updateTeamsTwo}
-                                    div="two" />
-                            </Tab>
-                            <Tab eventKey="judges" className="app-nav-tab" title="Judges">
-                                <Judges
-                                    judges={this.state.judges}
-                                    updateJudges={this.updateJudges}
-                                    getTotalTeams={this.getTotalTeams} />
-                            </Tab>
-                            <Tab eventKey="draw" className="app-nav-tab" title="Draw">
-                                <Draw />
-                            </Tab>
-                        </Tabs>
-                    </Col>
-                </Row>
-            </Container>
+
+        return (
+            <div>
+                <Container fluid="true" className="app">
+                    <Row>
+                        <Col id="app-container">
+                            <div id="logo">
+                                <img src={logo} alt="TacoTab logo" />
+                                <h1>TacoTab</h1>
+                            </div>
+
+                            <Tab.Container id="app-nav" defaultActiveKey="home">
+                                <Nav className="nav-tabs">
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="home">Home</Nav.Link>
+                                    </Nav.Item>
+                                    {participants_nav}
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="judges">Judges</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="draw">Draw</Nav.Link>
+                                    </Nav.Item>
+                                </Nav>
+                                <Tab.Content>
+                                    <Tab.Pane eventKey="home">
+                                        <Home
+                                            tournamentName={this.state.tournament_name}
+                                            config={this.state.config}
+                                            updateTournamentName={this.updateTournamentName}
+                                            updateConfig={this.updateConfig} />
+                                    </Tab.Pane>
+                                    {participants_panes}
+                                    <Tab.Pane eventKey="judges">
+                                        <Judges
+                                            judges={this.state.judges}
+                                            updateJudges={this.updateJudges}
+                                            getTotalTeams={this.getTotalTeams} />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="draw">
+                                        <Draw
+                                            config={this.state.config} />
+                                    </Tab.Pane>
+                                </Tab.Content>
+                            </Tab.Container>
+                        </Col>
+                    </Row>
+                </Container>
+
+                <SetupModal
+                    init={this.state.init}
+                    initializeTournament={this.initializeTournament} />
+            </div>
         );
     }
 }

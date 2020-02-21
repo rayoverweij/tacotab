@@ -350,11 +350,11 @@ class Round extends React.Component {
     render() {
         let tables;
         if(!this.state.generated) {
-            tables = <div></div>;
+            tables = <div className="draw-placeholder"></div>;
         } else {
             tables = (
                 <div>
-                    <h3>Division One</h3>
+                    <h3>{this.props.config.divisions === "2" ? this.props.config.divisionNames[0] : "Draw"}</h3>
                     <Table className="table-no-top-margin draw-table-one" hover>
                         <thead>
                             <tr>
@@ -378,8 +378,8 @@ class Round extends React.Component {
                         </tbody>
                     </Table>
                     
-                    <h3>Division Two</h3>
-                    <Table className="table-no-top-margin" hover>
+                    <h3>{this.props.config.divisions === "2" ? this.props.config.divisionNames[1] : ""}</h3>
+                    <Table className={`table-no-top-margin ${this.props.config.divisions === "1" ? "hidden" : ""}`} hover>
                         <thead>
                             <tr>
                                 <th>Room</th>

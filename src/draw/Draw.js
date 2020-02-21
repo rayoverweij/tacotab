@@ -29,13 +29,13 @@ class Draw extends React.Component {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="round1">
-                                <Round r="1" />
+                                <Round r="1" config={this.props.config} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="round2">
-                                <Round r="2" />
+                                <Round r="2" config={this.props.config} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="round3">
-                                <Round r="3" />
+                                <Round r="3" config={this.props.config} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

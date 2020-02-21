@@ -52,7 +52,9 @@ class Settings extends React.Component {
         const fr = new FileReader();
         fr.onload = event => {
             const result = JSON.parse(event.target.result);
+            localStorage.setItem("init", JSON.stringify(result.init));
             localStorage.setItem("tournament_name", JSON.stringify(result.tournament_name));
+            localStorage.setItem("config", JSON.stringify(result.config));
             localStorage.setItem("speakers_one", JSON.stringify(result.speakers_one));
             localStorage.setItem("teams_one", JSON.stringify(result.teams_one));
             localStorage.setItem("speakers_two", JSON.stringify(result.speakers_two));
@@ -72,7 +74,9 @@ class Settings extends React.Component {
     exportData() {
         let data = "data:text/json;charset=utf-8,";
         data += encodeURIComponent("{");
+        data += encodeURIComponent('"init": ' + localStorage.getItem("init") + ",");
         data += encodeURIComponent('"tournament_name": ' + localStorage.getItem("tournament_name") + ",");
+        data += encodeURIComponent('"config": ' + localStorage.getItem("config") + ",");
         data += encodeURIComponent('"speakers_one": ' + localStorage.getItem("speakers_one") + ",");
         data += encodeURIComponent('"teams_one": ' + localStorage.getItem("teams_one") + ",");
         data += encodeURIComponent('"speakers_two": ' + localStorage.getItem("speakers_two") + ",");
