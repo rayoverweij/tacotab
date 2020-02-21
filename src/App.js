@@ -54,14 +54,11 @@ class App extends React.Component {
         if(!localStorage.getItem("judges_counter")) {
             localStorage.setItem("judges_counter", s(0));
         }
-        if(!localStorage.getItem("draws_generated")) {
-            localStorage.setItem("draws_generated", s([false, false, false]));
-        }
         if(!localStorage.getItem("draws")) {
             localStorage.setItem("draws", s([
-                {pairings_one: [], pairings_two: []},
-                {pairings_one: [], pairings_two: []},
-                {pairings_one: [], pairings_two: []}
+                {generated: false, pairings_one: [], pairings_two: []},
+                {generated: false, pairings_one: [], pairings_two: []},
+                {generated: false, pairings_one: [], pairings_two: []}
             ]));
         }
 
@@ -73,7 +70,8 @@ class App extends React.Component {
             speakers_two: JSON.parse(localStorage.getItem("speakers_two")),
             teams_one: JSON.parse(localStorage.getItem("teams_one")),
             teams_two: JSON.parse(localStorage.getItem("teams_two")),
-            judges: JSON.parse(localStorage.getItem("judges"))
+            judges: JSON.parse(localStorage.getItem("judges")),
+            draws: JSON.parse(localStorage.getItem("draws"))
         }
 
         this.updateTournamentName = this.updateTournamentName.bind(this);
@@ -166,7 +164,6 @@ class App extends React.Component {
             localStorage.setItem("teams_counter", JSON.stringify(result.teams_counter));
             localStorage.setItem("judges", JSON.stringify(result.judges));
             localStorage.setItem("judges_counter", JSON.stringify(result.judges_counter));
-            localStorage.setItem("draws_generated", JSON.stringify(result.draws_generated));
             localStorage.setItem("draws", JSON.stringify(result.draws));
         }
         fr.readAsText(files.item(0));
@@ -276,7 +273,8 @@ class App extends React.Component {
                                             config={this.state.config}
                                             teams_one={this.state.teams_one}
                                             teams_two={this.state.teams_two}
-                                            judges={this.state.judges} />
+                                            judges={this.state.judges}
+                                            draws={this.state.draws} />
                                     </Tab.Pane>
                                 </Tab.Content>
                             </Tab.Container>

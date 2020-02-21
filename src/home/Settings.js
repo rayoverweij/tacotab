@@ -62,7 +62,6 @@ class Settings extends React.Component {
         data += encodeURIComponent('"teams_counter": ' + localStorage.getItem("teams_counter") + ",");
         data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
         data += encodeURIComponent('"judges_counter": ' + localStorage.getItem("judges_counter") + ",");
-        data += encodeURIComponent('"draws_generated": ' + localStorage.getItem("draws_generated") + ",");
         data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
         data += encodeURIComponent("}");
         

@@ -14,10 +14,10 @@ class Round extends React.Component {
     constructor(props) {
         super(props);
 
-        const pairings = JSON.parse(localStorage.getItem("draws"))[this.props.r - 1];
+        const pairings = this.props.draws[this.props.round - 1];
 
         this.state = {
-            generated: JSON.parse(localStorage.getItem("draws_generated"))[this.props.r - 1],
+            generated: pairings.generated,
             pairings_one: pairings.pairings_one,
             pairings_two: pairings.pairings_two
         }
@@ -28,6 +28,22 @@ class Round extends React.Component {
 
 
     generateDraw() {
+        const round = this.props.round;
+        let draws = this.props.draws;
+
+        // Check whether previous draws have happened
+        if(round === 2) {
+            if(draws[0].generated !== true) {
+                alert("You can't generate the draw for round 2 before generating the draw for round 1.");
+                return false;
+            }
+        } else if(round === 3) {
+            if(draws[0].generated !== true || draws[1].generated !== true) {
+                alert("You can't generate the draw for round 3 before generating the draws for rounds 1 and 2.");
+                return false;
+            }
+        }
+
         // Check if regenerating
         if(this.state.generated) {
             const confGen = window.confirm("Do you really want to regenerate the draw?");
@@ -37,12 +53,9 @@ class Round extends React.Component {
         }
 
         // Initialize values
-        let draws_generated = JSON.parse(localStorage.getItem("draws_generated"));
-        let draws = JSON.parse(localStorage.getItem("draws"));
         let teams_one = this.props.teams_one;
         let teams_two = this.props.teams_two;
         let judges = this.props.judges;
-
         const len1 = teams_one.length;
         const len2 = teams_two.length;
 
@@ -51,19 +64,6 @@ class Round extends React.Component {
             alert("Add some teams to generate the draw.");
             return;
         }
-
-        // Select only the judges that are available this round
-        if(this.props.r === "1") {
-            judges = judges.filter(el => el.r1 === true);
-        } else if(this.props.r === "2") {
-            judges = judges.filter(el => el.r2 === true);
-        } else {
-            judges = judges.filter(el => el.r3 === true);
-        }
-
-        // Split chairs and wings
-        const chairs = judges.filter(el => el.canChair === true).map(el => el.judgeID);
-        let wings = judges.filter(el => el.canChair === false).map(el => el.judgeID);
 
         // Check for an even number of teams
         if(len1 % 2 !== 0 && len2 % 2 !== 0) {
@@ -77,18 +77,18 @@ class Round extends React.Component {
             return false;
         }
 
-        // Check whether previous draws have happened
-        if(this.props.r === "2") {
-            if(draws_generated[0] !== true) {
-                alert("You can't generate the draw for round 2 before generating the draw for round 1.");
-                return false;
-            }
-        } else if(this.props.r === "3") {
-            if(draws_generated[0] !== true || draws_generated[1] !== true) {
-                alert("You can't generate the draw for round 3 before generating the draws for rounds 1 and 2.");
-                return false;
-            }
+        // Select only the judges that are available this round
+        if(round === 1) {
+            judges = judges.filter(el => el.r1 === true);
+        } else if(round === 2) {
+            judges = judges.filter(el => el.r2 === true);
+        } else {
+            judges = judges.filter(el => el.r3 === true);
         }
+
+        // Split chairs and wings
+        const chairs = judges.filter(el => el.canChair === true);
+        let wings = judges.filter(el => el.canChair === false);
 
         // Check whether there are enough chairs
         const totalTeams = len1 + len2;
@@ -114,7 +114,7 @@ class Round extends React.Component {
         let t1 = teams_one.slice(0);
         let t2 = teams_two.slice(0);
 
-        if(this.props.r === "1") {
+        if(round === 1) {
             // Generate lists of teams in random order
             for (let i = len1 - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -159,7 +159,7 @@ class Round extends React.Component {
         }
 
         // For round 2, make sure everyone is on another side
-        if(this.props.r === "2") {
+        if(round === 2) {
             t1.forEach((team, index) => {
                 if(index % 2 === 0 && team.sideR1 === "prop") {
                     for(let i = index + 1; i < len1; i++) {
@@ -199,32 +199,32 @@ class Round extends React.Component {
         // Distribute teams and chairs
         let currProp, currOpp, currChair;
         for (let i = 0; i < len1; i += 2) {
-            if(this.props.r === "1") {
+            if(round === 1) {
                 t1[i].sideR1 = "prop";
                 t1[i + 1].sideR1 = "opp";
             }
 
             currProp = t1[i].teamID;
             currOpp = t1[i + 1].teamID;
-            currChair = chairs.pop();
+            currChair = chairs.pop().judgeID;
             pairings_one[i / 2] = new Room(currProp, currOpp, currChair, []);
         }
         for (let i = 0; i < len2; i += 2) {
-            if(this.props.r === "1") {
+            if(round === 1) {
                 t2[i].sideR1 = "prop";
                 t2[i + 1].sideR1 = "opp";
             }
 
             currProp = t2[i].teamID;
             currOpp = t2[i + 1].teamID;
-            currChair = chairs.pop();
+            currChair = chairs.pop().judgeID;
             pairings_two[i / 2] = new Room(currProp, currOpp, currChair, []);
         }
 
         // Add wings
         while(wings.length > 0) {
             for (let i = 0; i < pairings_one.length; i++) {
-                pairings_one[i].wings.push(wings.pop());
+                pairings_one[i].wings.push(wings.pop().judgeID);
                 if(wings.length === 0) {
                     break;
                 }
@@ -233,14 +233,14 @@ class Round extends React.Component {
                 break;
             }
             for (let i = 0; i < pairings_two.length; i++) {
-                pairings_two[i].wings.push(wings.pop());
+                pairings_two[i].wings.push(wings.pop().judgeID);
                 if(wings.length === 0) {
                     break;
                 }
             }
         }
 
-        // Randomize rows
+        // Randomize row order
         for (let i = pairings_one.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [pairings_one[i], pairings_one[j]] = [pairings_one[j], pairings_one[i]];
@@ -252,12 +252,13 @@ class Round extends React.Component {
 
         // Save in storage
         const drawr = {
+            generated: true,
             pairings_one: pairings_one,
             pairings_two: pairings_two
         }
-        if(this.props.r === "1") {
+        if(round === 1) {
             draws[0] = drawr;
-        } else if(this.props.r === "2") {
+        } else if(round === 2) {
             draws[1] = drawr;
         } else {
             draws[2] = drawr;
@@ -276,7 +277,6 @@ class Round extends React.Component {
         });
         localStorage.setItem("teams_two", JSON.stringify(teams_two));
 
-
         // Update chair values
         chairs.forEach(chair => {
             const j = judges.indexOf(chair);
@@ -284,13 +284,12 @@ class Round extends React.Component {
         });
         localStorage.setItem("judges", JSON.stringify(judges));
 
+        // Update local state
         this.setState({pairings_one: pairings_one});
         this.setState({pairings_two: pairings_two});
-
-        draws_generated[this.props.r - 1] = true;
-        localStorage.setItem("draws_generated", JSON.stringify(draws_generated));
         this.setState({generated: true});
     }
+
 
     updatePairings(pair, div) {
         const draws = JSON.parse(localStorage.getItem("draws"));
@@ -306,10 +305,10 @@ class Round extends React.Component {
 
         if(div === "one") {
             this.setState({pairings_one: pairings});
-            draws[this.props.r - 1].pairings_one = pairings;
+            draws[this.props.round - 1].pairings_one = pairings;
         } else {
             this.setState({pairings_two: pairings});
-            draws[this.props.r - 1].pairings_two = pairings;
+            draws[this.props.round - 1].pairings_two = pairings;
         }
         localStorage.setItem("draws", JSON.stringify(draws));
     }
@@ -339,7 +338,6 @@ class Round extends React.Component {
                                             key={`one-pair-${index}`}
                                             pair={pair}
                                             div="one"
-                                            round={this.props.r}
                                             updatePairings={this.updatePairings} />;
                                 })
                             }
@@ -362,7 +360,8 @@ class Round extends React.Component {
                                     return <RoundRow 
                                             key={`two-pair-${index}`}
                                             pair={pair}
-                                            div="two" />;
+                                            div="two"
+                                            updatePairings={this.updatePairings} />;
                                 })
                             }
                         </tbody>
@@ -375,7 +374,7 @@ class Round extends React.Component {
             <div>
                 <Row className="draw-header">
                     <Col>
-                        <h2>Round {this.props.r}</h2>
+                        <h2>Round {this.props.round}</h2>
                         <Button
                             onClick={this.generateDraw}
                             className={this.state.generated && "hidden"}>

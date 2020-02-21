@@ -32,11 +32,12 @@ class Draw extends React.Component {
                                 return (
                                     <Tab.Pane key={`draw-pane-${round}`} eventKey={`round-${round}`}>
                                         <Round
-                                            r={round}
+                                            round={round}
                                             config={this.props.config}
                                             teams_one={this.props.teams_one}
                                             teams_two={this.props.teams_two}
-                                            judges={this.props.judges} />
+                                            judges={this.props.judges}
+                                            draws={this.props.draws} />
                                     </Tab.Pane>
                                 )
                             })}
