@@ -44,31 +44,8 @@ class Settings extends React.Component {
 
     importData(event) {
         event.preventDefault();
-        const files = document.getElementById("import").files;
-        console.log(files);
-
-        if(files.length <= 0) return false;
-
-        const fr = new FileReader();
-        fr.onload = event => {
-            const result = JSON.parse(event.target.result);
-            localStorage.setItem("init", JSON.stringify(result.init));
-            localStorage.setItem("tournament_name", JSON.stringify(result.tournament_name));
-            localStorage.setItem("config", JSON.stringify(result.config));
-            localStorage.setItem("speakers_one", JSON.stringify(result.speakers_one));
-            localStorage.setItem("teams_one", JSON.stringify(result.teams_one));
-            localStorage.setItem("speakers_two", JSON.stringify(result.speakers_two));
-            localStorage.setItem("teams_two", JSON.stringify(result.teams_two));
-            localStorage.setItem("speakers_counter", JSON.stringify(result.speakers_counter));
-            localStorage.setItem("teams_counter", JSON.stringify(result.teams_counter));
-            localStorage.setItem("judges", JSON.stringify(result.judges));
-            localStorage.setItem("judges_counter", JSON.stringify(result.judges_counter));
-            localStorage.setItem("draws_generated", JSON.stringify(result.draws_generated));
-            localStorage.setItem("draws", JSON.stringify(result.draws));
-        }
-        fr.readAsText(files.item(0));
-
-        window.location.reload();
+        const files = document.getElementById("import-settings").files;
+        this.props.importTournament(files);
     }
 
     exportData() {
@@ -148,7 +125,7 @@ class Settings extends React.Component {
                                             <div className="custom-file">
                                                 <Form.Control
                                                     name="import"
-                                                    id="import"
+                                                    id="import-settings"
                                                     className="custom-file-input"
                                                     type="file" />
                                                 <label className="custom-file-label" htmlFor="customFile">Choose file</label>

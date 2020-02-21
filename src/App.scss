@@ -34,7 +34,7 @@
     }
 }
 
-.nav-tabs {
+.main-nav {
     height: 4rem;
     margin-left: 220px;
     border-bottom: 0;
@@ -70,9 +70,9 @@
     }
 }
 
-.modal-backdrop {
+body > .modal-backdrop {
     &.show {
-        opacity: 0.9;
+        opacity: 1;
     }
 }
 

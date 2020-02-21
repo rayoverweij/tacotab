@@ -1,0 +1,21 @@
+@import '../vars';
+
+.modal-body > .tab-content {
+    padding: 15px;
+    border: 1px solid #DEE2E6;
+    border-top: none;
+    overflow: auto;
+}
+
+#setup-form-div-h5 {
+    margin-top: 20px;
+}
+
+#setup-form-num-div {
+    margin-bottom: 0;
+}
+
+#setup-form-submit {
+    margin-top: 20px;
+    float: right;
+}

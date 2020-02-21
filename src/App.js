@@ -76,15 +76,15 @@ class App extends React.Component {
             judges: JSON.parse(localStorage.getItem("judges"))
         }
 
-        this.initializeTournament = this.initializeTournament.bind(this);
-
         this.updateTournamentName = this.updateTournamentName.bind(this);
         this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
         this.updateSpeakersTwo = this.updateSpeakersTwo.bind(this);
         this.updateTeamsOne = this.updateTeamsOne.bind(this);
         this.updateTeamsTwo = this.updateTeamsTwo.bind(this);
         this.updateJudges = this.updateJudges.bind(this);
-
+        
+        this.initializeTournament = this.initializeTournament.bind(this);
+        this.importTournament = this.importTournament.bind(this);
         this.getTotalTeams = this.getTotalTeams.bind(this);
 
         document.title = `${JSON.parse(localStorage.getItem("tournament_name"))} - TacoTab`;
@@ -147,6 +147,31 @@ class App extends React.Component {
 
         localStorage.setItem("init", JSON.stringify(true));
         this.setState({init: true});
+    }
+
+    importTournament(files) {
+        if(files.length <= 0) return false;
+
+        const fr = new FileReader();
+        fr.onload = event => {
+            const result = JSON.parse(event.target.result);
+            localStorage.setItem("init", JSON.stringify(result.init));
+            localStorage.setItem("tournament_name", JSON.stringify(result.tournament_name));
+            localStorage.setItem("config", JSON.stringify(result.config));
+            localStorage.setItem("speakers_one", JSON.stringify(result.speakers_one));
+            localStorage.setItem("teams_one", JSON.stringify(result.teams_one));
+            localStorage.setItem("speakers_two", JSON.stringify(result.speakers_two));
+            localStorage.setItem("teams_two", JSON.stringify(result.teams_two));
+            localStorage.setItem("speakers_counter", JSON.stringify(result.speakers_counter));
+            localStorage.setItem("teams_counter", JSON.stringify(result.teams_counter));
+            localStorage.setItem("judges", JSON.stringify(result.judges));
+            localStorage.setItem("judges_counter", JSON.stringify(result.judges_counter));
+            localStorage.setItem("draws_generated", JSON.stringify(result.draws_generated));
+            localStorage.setItem("draws", JSON.stringify(result.draws));
+        }
+        fr.readAsText(files.item(0));
+
+        window.location.reload();
     }
 
     getTotalTeams() {
@@ -218,7 +243,7 @@ class App extends React.Component {
                             </div>
 
                             <Tab.Container id="app-nav" defaultActiveKey="home">
-                                <Nav className="nav-tabs">
+                                <Nav className="nav-tabs main-nav">
                                     <Nav.Item>
                                         <Nav.Link eventKey="home">Home</Nav.Link>
                                     </Nav.Item>
@@ -236,7 +261,8 @@ class App extends React.Component {
                                             tournamentName={this.state.tournament_name}
                                             config={this.state.config}
                                             updateTournamentName={this.updateTournamentName}
-                                            updateConfig={this.updateConfig} />
+                                            updateConfig={this.updateConfig}
+                                            importTournament={this.importTournament} />
                                     </Tab.Pane>
                                     {participants_panes}
                                     <Tab.Pane eventKey="judges">
@@ -257,7 +283,8 @@ class App extends React.Component {
 
                 <SetupModal
                     init={this.state.init}
-                    initializeTournament={this.initializeTournament} />
+                    initializeTournament={this.initializeTournament}
+                    importTournament={this.importTournament} />
             </div>
         );
     }
