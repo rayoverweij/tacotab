@@ -338,6 +338,9 @@ class Round extends React.Component {
                                             key={`one-pair-${index}`}
                                             pair={pair}
                                             div="one"
+                                            teams={this.props.teams_one}
+                                            judges={this.props.judges}
+                                            draws={this.props.draws[this.props.round - 1]}
                                             updatePairings={this.updatePairings} />;
                                 })
                             }
@@ -361,6 +364,9 @@ class Round extends React.Component {
                                             key={`two-pair-${index}`}
                                             pair={pair}
                                             div="two"
+                                            teams={this.props.teams_two}
+                                            judges={this.props.judges}
+                                            draws={this.props.draws[this.props.round - 1]}
                                             updatePairings={this.updatePairings} />;
                                 })
                             }

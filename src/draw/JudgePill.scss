@@ -1,0 +1,17 @@
+@import '../vars';
+
+.judgepill {
+    display: inline-block;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.btn-popover {
+    width: 100%;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    padding: 0.225rem 0.375rem;
+}
