@@ -1,5 +1,6 @@
 import React from 'react';
 import './SetupModal.scss';
+import logo from '../images/logo.svg';
 
 import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs';
@@ -61,17 +62,20 @@ class SetupModal extends React.Component {
 
     render() {
         return (
-            <Modal show={!this.props.init}>
+            <Modal show={!this.props.init} backdrop="static" className="setup-modal">
                 <Modal.Header>
-                    <Modal.Title>Welcome to TacoTab!</Modal.Title>
+                    <Modal.Title>
+                        <img src={logo} alt="TacoTab logo" id="setup-logo" />
+                        Welcome to TacoTab!
+                    </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p><strong>This is prerelease software, still under active development. Use at your own risk.</strong> For more information, see the <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">GitHub repository</a>.</p>
+                    <p><strong>This is prerelease software, still under active development. Use at your own risk&mdash;this app might bite.</strong> For more information, see the <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">GitHub repository</a>.</p>
                     <p>You can create a new tournament from scratch, or import data from a previous TacoTab tournament.</p>
                     
                     <Tabs defaultActiveKey="createnew" id="setup-tabs">
-                        <Tab eventKey="createnew" title="Create new tournament">
+                        <Tab eventKey="createnew" title="New tournament">
                             <Form onSubmit={this.handleSetupFormSubmit}>
                                 <h5>Tournament name</h5>
                                 <Form.Group controlId="setupFormTournamentName">
@@ -105,27 +109,29 @@ class SetupModal extends React.Component {
                                 </Form.Group>
 
                                 <Collapse in={this.state.setupForm.divisions === "2"}>
-                                    <Form.Group controlId="setupFormDivisionNames">
-                                        <Form.Label>Give both divisions a name for easy identification.</Form.Label>
-                                        <Form.Row>
-                                            <Col md={6}>
-                                                <Form.Control
-                                                    name="division_one"
-                                                    type="text"
-                                                    placeholder="e.g. 'Novice'"
-                                                    value={this.state.setupForm.division_one}
-                                                    onChange={this.handleSetupFormChange} />
-                                            </Col>
-                                            <Col md={6}>
-                                                <Form.Control
-                                                    name="division_two"
-                                                    type="text"
-                                                    placeholder="e.g. 'Open'"
-                                                    value={this.state.setupForm.division_two}
-                                                    onChange={this.handleSetupFormChange} />
-                                            </Col>
-                                        </Form.Row>
-                                    </Form.Group>
+                                    <div>
+                                        <Form.Group controlId="setupFormDivisionNames">
+                                            <Form.Label>Give both divisions a name for easy identification.</Form.Label>
+                                            <Form.Row>
+                                                <Col md={6}>
+                                                    <Form.Control
+                                                        name="division_one"
+                                                        type="text"
+                                                        placeholder="e.g. 'Novice'"
+                                                        value={this.state.setupForm.division_one}
+                                                        onChange={this.handleSetupFormChange} />
+                                                </Col>
+                                                <Col md={6}>
+                                                    <Form.Control
+                                                        name="division_two"
+                                                        type="text"
+                                                        placeholder="e.g. 'Open'"
+                                                        value={this.state.setupForm.division_two}
+                                                        onChange={this.handleSetupFormChange} />
+                                                </Col>
+                                            </Form.Row>
+                                        </Form.Group>
+                                    </div>
                                 </Collapse>
 
                                 <Button variant="primary" type="Submit" id="setup-form-submit">
@@ -134,7 +140,7 @@ class SetupModal extends React.Component {
                             </Form>
                         </Tab>
 
-                        <Tab eventKey="importnew" title="Import tournament data">
+                        <Tab eventKey="importnew" title="Import tournament">
                             <p>Open files generated with the Export function.</p>
                             <Form onSubmit={this.importData}>
                                 <Form.Row>
@@ -155,8 +161,6 @@ class SetupModal extends React.Component {
                             </Form>
                         </Tab>
                     </Tabs>
-                    
-                    
                 </Modal.Body>
             </Modal>
         )
