@@ -11,32 +11,35 @@ import Nav from 'react-bootstrap/Nav';
 class Draw extends React.Component {
     render() {
         return (
-            <Tab.Container id={`draw-view`} defaultActiveKey="round1">
+            <Tab.Container id={`draw-view`} defaultActiveKey="round-1">
                 <Row>
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
-                            <Nav.Item>
-                                <Nav.Link eventKey="round1" className="sub-nav-link">Round 1</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="round2" className="sub-nav-link">Round 2</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link eventKey="round3" className="sub-nav-link">Round 3</Nav.Link>
-                            </Nav.Item>
+                            {[1, 2, 3].map(round => {
+                                return (
+                                    <Nav.Item>
+                                        <Nav.Link eventKey={`round-${round}`} className="sub-nav-link">
+                                            Round {round}
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                );
+                            })}
                         </Nav>
                     </Col>
                     <Col sm={10}>
                         <Tab.Content>
-                            <Tab.Pane eventKey="round1">
-                                <Round r="1" config={this.props.config} />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="round2">
-                                <Round r="2" config={this.props.config} />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="round3">
-                                <Round r="3" config={this.props.config} />
-                            </Tab.Pane>
+                            {[1, 2, 3].map(round => {
+                                return (
+                                    <Tab.Pane eventKey={`round-${round}`}>
+                                        <Round
+                                            r={round}
+                                            config={this.props.config}
+                                            teams_one={this.props.teams_one}
+                                            teams_two={this.props.teams_two}
+                                            judges={this.props.judges} />
+                                    </Tab.Pane>
+                                )
+                            })}
                         </Tab.Content>
                     </Col>
                 </Row>

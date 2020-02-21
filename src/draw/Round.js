@@ -31,22 +31,22 @@ class Round extends React.Component {
         if(this.state.generated) {
             const confGen = window.confirm("Do you really want to regenerate the draw?");
             if(!confGen) {
-                return;
+                return false;
             }
         }
 
         // Initialize values
         let draws_generated = JSON.parse(localStorage.getItem("draws_generated"));
         let draws = JSON.parse(localStorage.getItem("draws"));
-        let teams_one = JSON.parse(localStorage.getItem("teams_one"));
-        let teams_two = JSON.parse(localStorage.getItem("teams_two"));
-        let judges = JSON.parse(localStorage.getItem("judges"));
+        let teams_one = this.props.teams_one;
+        let teams_two = this.props.teams_two;
+        let judges = this.props.judges;
 
-        const lenM = teams_one.length;
-        const lenH = teams_two.length;
+        const len1 = teams_one.length;
+        const len2 = teams_two.length;
 
         // Don't run the draw if division one has no teams
-        if(lenM === 0) {
+        if(len1 === 0) {
             alert("Add some teams to generate the draw.");
             return;
         }
@@ -65,40 +65,35 @@ class Round extends React.Component {
         let wings = judges.filter(el => el.canChair === false).map(el => el.judgeID);
 
         // Check for an even number of teams
-        if(lenM % 2 !== 0 && lenH % 2 !== 0) {
-            const confMix = window.confirm("Both divisions have an odd number of teams. This means that one division one team would debate one division two team. Do you want to continue under these circumstances?");
-            if(!confMix) {
-                return;
-            } else {
-                alert("This scenario hasn't been implemented yet, sorry.");
-                return;
-            }
-        } else if(lenM % 2 !== 0) {
+        if(len1 % 2 !== 0 && len2 % 2 !== 0) {
+            alert("Both divisions have an odd number of teams. A team from one division debating a team from the other division is not currently supported. Please add or remove a team to/from both in order to continue.")
+            return false;
+        } else if(len1 % 2 !== 0) {
             alert("There is an odd number of division one teams\u2014add or remove a team to generate the draw.");
-            return;
-        } else if(lenH % 2 !== 0) {
+            return false;
+        } else if(len2 % 2 !== 0) {
             alert("There is an odd number of division two teams\u2014add or remove a team to generate the draw.");
-            return;
+            return false;
         }
 
         // Check whether previous draws have happened
         if(this.props.r === "2") {
             if(draws_generated[0] !== true) {
                 alert("You can't generate the draw for round 2 before generating the draw for round 1.");
-                return;
+                return false;
             }
         } else if(this.props.r === "3") {
             if(draws_generated[0] !== true || draws_generated[1] !== true) {
-                alert("You can't generate the draw for round 3 before generating the draw for rounds 1 and 2.");
-                return;
+                alert("You can't generate the draw for round 3 before generating the draws for rounds 1 and 2.");
+                return false;
             }
         }
 
         // Check whether there are enough chairs
-        const totalTeams = lenM + lenH;
+        const totalTeams = len1 + len2;
         if(chairs.length < totalTeams / 2) {
             alert("There are not enough chairs to adjudicate every room. Please add some more.");
-            return;
+            return false;
         }
 
         // Shuffle chairs for random picking
@@ -115,90 +110,84 @@ class Round extends React.Component {
         // Generate pairings
         let pairings_one = [];
         let pairings_two = [];
-        let tm = [];
-        let th = [];
+        let t1 = teams_one.slice(0);
+        let t2 = teams_two.slice(0);
 
         if(this.props.r === "1") {
             // Generate lists of teams in random order
-            tm = teams_one.slice(0);
-            for (let i = lenM - 1; i > 0; i--) {
+            for (let i = len1 - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [tm[i], tm[j]] = [tm[j], tm[i]];
+                [t1[i], t1[j]] = [t1[j], t1[i]];
             }
-            th = teams_two.slice(0);
-            for (let i = lenH - 1; i > 0; i--) {
+            for (let i = len2 - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [th[i], th[j]] = [th[j], th[i]];
+                [t2[i], t2[j]] = [t2[j], t2[i]];
             }
         } else {
             // Generate lists of teams in order of team wins, then total team points
-            tm = teams_one
-                .slice(0)
-                .sort((a, b) => {
-                    if(a.totalWins < b.totalWins) {
+            t1.sort((a, b) => {
+                if(a.totalWins < b.totalWins) {
+                    return 1;
+                } else if(a.totalWins > b.totalWins) {
+                    return -1;
+                } else {
+                    if(a.totalPoints < b.totalPoints) {
                         return 1;
-                    } else if(a.totalWins > b.totalWins) {
+                    } else if(a.totalPoints > b.totalPoints) {
                         return -1;
                     } else {
-                        if(a.totalPoints < b.totalPoints) {
-                            return 1;
-                        } else if(a.totalPoints > b.totalPoints) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    }
-                });
-            th = teams_two
-                .slice(0)
-                .sort((a, b) => {
-                    if(a.totalWins < b.totalWins) {
                         return 1;
-                    } else if(a.totalWins > b.totalWins) {
+                    }
+                }
+            });
+            t2.sort((a, b) => {
+                if(a.totalWins < b.totalWins) {
+                    return 1;
+                } else if(a.totalWins > b.totalWins) {
+                    return -1;
+                } else {
+                    if(a.totalPoints < b.totalPoints) {
+                        return 1;
+                    } else if(a.totalPoints > b.totalPoints) {
                         return -1;
                     } else {
-                        if(a.totalPoints < b.totalPoints) {
-                            return 1;
-                        } else if(a.totalPoints > b.totalPoints) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
+                        return 1;
                     }
-                });
+                }
+            });
         }
 
         // For round 2, make sure everyone is on another side
         if(this.props.r === "2") {
-            tm.forEach((team, index) => {
+            t1.forEach((team, index) => {
                 if(index % 2 === 0 && team.sideR1 === "prop") {
-                    for(let i = index + 1; i < lenM; i++) {
-                        if(tm[i].sideR1 === "opp") {
-                            [tm[index], tm[i]] = [tm[i], tm[index]];
+                    for(let i = index + 1; i < len1; i++) {
+                        if(t1[i].sideR1 === "opp") {
+                            [t1[index], t1[i]] = [t1[i], t1[index]];
                             break;
                         }
                     }
                 } else if(index % 2 === 1 && team.sideR1 === "opp") {
-                    for(let i = index + 1; i < lenM; i++) {
-                        if(tm[i].sideR1 === "prop") {
-                            [tm[index], tm[i]] = [tm[i], tm[index]];
+                    for(let i = index + 1; i < len1; i++) {
+                        if(t1[i].sideR1 === "prop") {
+                            [t1[index], t1[i]] = [t1[i], t1[index]];
                             break;
                         }
                     }
                 }
             });
-            th.forEach((team, index) => {
+            t2.forEach((team, index) => {
                 if(index % 2 === 0 && team.sideR1 === "prop") {
-                    for(let i = index + 1; i < lenH; i++) {
-                        if(th[i].sideR1 === "opp") {
-                            [th[index], th[i]] = [th[i], th[index]];
+                    for(let i = index + 1; i < len2; i++) {
+                        if(t2[i].sideR1 === "opp") {
+                            [t2[index], t2[i]] = [t2[i], t2[index]];
                             break;
                         }
                     }
                 } else if(index % 2 === 1 && team.sideR1 === "opp") {
-                    for(let i = index + 1; i < lenH; i++) {
-                        if(th[i].sideR1 === "prop") {
-                            [th[index], th[i]] = [th[i], th[index]];
+                    for(let i = index + 1; i < len2; i++) {
+                        if(t2[i].sideR1 === "prop") {
+                            [t2[index], t2[i]] = [t2[i], t2[index]];
                             break;
                         }
                     }
@@ -207,15 +196,15 @@ class Round extends React.Component {
         }
 
         // Distribute teams and chairs
-        let currProp, currOpp, chIndex;
-        for (let i = 0; i < lenM; i += 2) {
+        let currProp, currOpp;
+        for (let i = 0; i < len1; i += 2) {
             if(this.props.r === "1") {
-                tm[i].sideR1 = "prop";
-                tm[i + 1].sideR1 = "opp";
+                t1[i].sideR1 = "prop";
+                t1[i + 1].sideR1 = "opp";
             }
 
-            currProp = tm[i].teamID;
-            currOpp = tm[i + 1].teamID;
+            currProp = t1[i].teamID;
+            currOpp = t1[i + 1].teamID;
             let currChair = chairs.pop();
             pairings_one[i / 2] = {
                 prop: currProp,
@@ -224,20 +213,15 @@ class Round extends React.Component {
                 wings: [],
                 room: "[room]"
             }
-
-            chIndex = judges.findIndex(el => {
-                return el.judgeID.toString() === currChair.toString()
-            });
-            judges[chIndex].hasChaired.push(currProp, currOpp);
         }
-        for (let i = 0; i < lenH; i += 2) {
+        for (let i = 0; i < len2; i += 2) {
             if(this.props.r === "1") {
-                th[i].sideR1 = "prop";
-                th[i + 1].sideR1 = "opp";
+                t2[i].sideR1 = "prop";
+                t2[i + 1].sideR1 = "opp";
             }
 
-            currProp = th[i].teamID;
-            currOpp = th[i + 1].teamID;
+            currProp = t2[i].teamID;
+            currOpp = t2[i + 1].teamID;
             let currChair = chairs.pop();
             pairings_two[i / 2] = {
                 prop: currProp,
@@ -246,11 +230,6 @@ class Round extends React.Component {
                 wings: [],
                 room: "[room]"
             }
-
-            chIndex = judges.findIndex(el => {
-                return el.judgeID.toString() === currChair.toString()
-            });
-            judges[chIndex].hasChaired.push(currProp, currOpp);
         }
 
         // Add wings
@@ -297,12 +276,12 @@ class Round extends React.Component {
         localStorage.setItem("draws", JSON.stringify(draws));
 
         // Update team values
-        tm.forEach(team => {
+        t1.forEach(team => {
             const i = teams_one.indexOf(team);
             teams_one[i] = team;
         });
         localStorage.setItem("teams_one", JSON.stringify(teams_one));
-        th.forEach(team => {
+        t2.forEach(team => {
             const i = teams_two.indexOf(team);
             teams_two[i] = team;
         });
