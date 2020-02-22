@@ -3,6 +3,8 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 class Ranking extends React.Component {
@@ -70,6 +72,7 @@ class Ranking extends React.Component {
                 <tr key={`speaker_rank_${index + 1}`}>
                     <td>{index + 1}</td>
                     <td>{speaker.name}</td>
+                    <td>{speaker.school}</td>
                     <td>{speaker.scores.reduce((x, y) => x + y, 0)}</td>
                     <td>{speaker.ranks.reduce((x, y) => x + y, 0)}</td>
                     <td>{team.totalWins}</td>
@@ -123,17 +126,50 @@ class Ranking extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={6} className="table-col">
+                    <Col md={7} className="table-col">
                         <h4>Speakers</h4>
-                        <Table hover className="speaker-ranking-table table-no-top-margin">
+                        <Table striped className="speaker-ranking-table table-no-top-margin">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th><abbr title="Total speaker points">ΣSP</abbr></th>
-                                    <th><abbr title="Total speaker ranks (lower is better)">ΣSR</abbr></th>
-                                    <th><abbr title="Total team wins">ΣTW</abbr></th>
-                                    <th><abbr title="Total team points">ΣTP</abbr></th>
+                                    <th>School</th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total speaker points</Tooltip>
+                                            }>
+                                            <abbr title="">ΣSP</abbr>
+                                        </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total speaker ranks (lower is better)</Tooltip>
+                                            }>
+                                            <abbr title="">ΣSR</abbr>
+                                        </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total team wins</Tooltip>
+                                            }>
+                                            <abbr title="">ΣTW</abbr>
+                                        </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total team points</Tooltip>
+                                            }>
+                                            <abbr title="">ΣTW</abbr>
+                                        </OverlayTrigger>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,15 +177,31 @@ class Ranking extends React.Component {
                             </tbody>
                         </Table>
                     </Col>
-                    <Col md={6}>
+                    <Col md={5}>
                         <h4>Teams</h4>
-                        <Table hover className="table-no-top-margin">
+                        <Table striped className="table-no-top-margin">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th><abbr title="Total team wins">ΣTW</abbr></th>
-                                    <th><abbr title="Total team points">ΣTP</abbr></th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total team wins</Tooltip>
+                                            }>
+                                            <abbr title="">ΣTW</abbr>
+                                        </OverlayTrigger>
+                                    </th>
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip>Total team points</Tooltip>
+                                            }>
+                                            <abbr title="">ΣTW</abbr>
+                                        </OverlayTrigger>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>

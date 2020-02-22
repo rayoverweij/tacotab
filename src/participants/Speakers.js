@@ -9,6 +9,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 class Speakers extends React.Component {
@@ -91,9 +93,13 @@ class Speakers extends React.Component {
                             <th>Name</th>
                             <th>School</th>
                             <th>
-                                <abbr title="Disqualified speakers can still be added to teams and receive scores, but won't be listed in the ranking">
-                                    Disq
-                                </abbr>
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={
+                                        <Tooltip>Disqualified speakers can still be added to teams and receive scores, but won't be listed in the ranking</Tooltip>
+                                    }>
+                                    <abbr title="">Disq</abbr>
+                                </OverlayTrigger>
                             </th>
                             <th className="table-delete">
                                 <div className="icon icon-trash-filled"></div>
