@@ -55,9 +55,36 @@ class RoundRow extends React.Component {
 
 
     render() {
+        const speakers = this.props.speakers;
         const teams = this.props.teams;
         const judges = this.props.judges;
         const pair = this.props.pair;
+        const round = this.props.round;
+
+        const prop = teams.find(el => el.teamID === pair.prop);
+        const opp = teams.find(el => el.teamID === pair.opp);
+        const chair = judges.find(el => el.judgeID === pair.chair);
+
+        // Look for institutional judge conflicts
+        let chair_conflict = false;
+
+        let speakers_in_teams = [];
+        if(round === 1) {
+            prop.round1.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+            opp.round1.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+        } else if(round === 2) {
+            prop.round2.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+            opp.round2.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+        } else {
+            prop.round3.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+            opp.round3.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
+        }
+        let speaker_schools = [];
+        speakers_in_teams
+            .filter(sp => sp !== undefined)
+            .forEach(sp => speaker_schools.push(sp.school));
+
+        if(speaker_schools.includes(chair.school)) chair_conflict = true;
 
         return (
             <tr>
@@ -71,23 +98,27 @@ class RoundRow extends React.Component {
                         onChange={this.handleRoomChange} />
                 </td>
                 <td className="draw-table-team-cell">
-                    {teams.find(el => el.teamID === pair.prop).teamName}
+                    {prop.teamName}
                 </td>
                 <td className="draw-table-team-cell">
-                    {teams.find(el => el.teamID === pair.opp).teamName}
+                    {opp.teamName}
                 </td>
                 <td>
                     <JudgePill
-                        judge={judges.find(el => el.judgeID === pair.chair)}
+                        judge={chair}
                         chair={true}
+                        conflict={chair_conflict}
                         pair={pair}
                         draws={this.props.draws}
                         updateRoom={this.updateRoom} />
                     {pair.wings.map((el, index) => {
+                        let wing = judges.find(j => j.judgeID === el);
                         return (
                             <div key={`judgepil-${index}`} className="judgepill-container">
                                 ,&nbsp;<JudgePill
-                                        judge={judges.find(j => j.judgeID === el)}
+                                        judge={wing}
+                                        chair={false}
+                                        conflict={speaker_schools.includes(wing.school)}
                                         pair={pair}
                                         draws={this.props.draws}
                                         updateRoom={this.updateRoom} />

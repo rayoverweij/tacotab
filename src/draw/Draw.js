@@ -34,6 +34,8 @@ class Draw extends React.Component {
                                         <Round
                                             round={round}
                                             config={this.props.config}
+                                            speakers_one={this.props.speakers_one}
+                                            speakers_two={this.props.speakers_two}
                                             teams_one={this.props.teams_one}
                                             teams_two={this.props.teams_two}
                                             judges={this.props.judges}

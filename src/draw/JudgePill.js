@@ -1,10 +1,10 @@
 import React from 'react';
 import './JudgePill.scss';
 
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 
 class JudgePill extends React.Component {
@@ -71,7 +71,7 @@ class JudgePill extends React.Component {
 
         return (
             <OverlayTrigger trigger="click" placement="top" overlay={popover} rootClose>
-                <div className="judgepill">
+                <div className={`judgepill ${this.props.conflict ? "red" : ""}`}>
                     {this.props.judge.name}{this.props.chair ? "\u00A9" : ""}
                 </div>
             </OverlayTrigger>

@@ -271,6 +271,8 @@ class App extends React.Component {
                                     <Tab.Pane eventKey="draw">
                                         <Draw
                                             config={this.state.config}
+                                            speakers_one={this.state.speakers_one}
+                                            speakers_two={this.state.speakers_two}
                                             teams_one={this.state.teams_one}
                                             teams_two={this.state.teams_two}
                                             judges={this.state.judges}
