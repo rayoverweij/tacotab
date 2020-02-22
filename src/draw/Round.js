@@ -203,6 +203,23 @@ class Round extends React.Component {
             });
         }
 
+        // For round 3, make sure teams don't get the same opponent
+        if(round === 3) {
+            for(let i = 0; i < t1.length; i += 2) {
+                console.log(t1[i].opponents[1]);
+                if(t1[i].opponents[1] === t1[i + 1].teamID) {
+                    [t1[i], t1[i - 1]] = [t1[i - 1], t1[i]];
+                    break;
+                }
+            }
+            for(let i = 1; i < t2.length; i += 2) {
+                if(t2[i].opponents[1] === t2[i + 1].teamID) {
+                    [t2[i], t2[i - 1]] = [t2[i - 1], t2[i]];
+                    break;
+                }
+            }
+        }
+
         // Distribute teams and chairs
         let currProp, currOpp, currChair;
         for (let i = 0; i < len1; i += 2) {
@@ -213,6 +230,10 @@ class Round extends React.Component {
 
             currProp = t1[i].teamID;
             currOpp = t1[i + 1].teamID;
+
+            t1[i].opponents[round - 1] = currOpp;
+            t1[i + 1].opponents[round - 1] = currProp;
+
             currChair = chairs.pop().judgeID;
             pairings_one[i / 2] = new Room(currProp, currOpp, currChair, []);
         }
@@ -224,6 +245,10 @@ class Round extends React.Component {
 
             currProp = t2[i].teamID;
             currOpp = t2[i + 1].teamID;
+
+            t1[i].opponents[round - 1] = currOpp;
+            t1[i + 1].opponents[round - 1] = currProp;
+
             currChair = chairs.pop().judgeID;
             pairings_two[i / 2] = new Room(currProp, currOpp, currChair, []);
         }

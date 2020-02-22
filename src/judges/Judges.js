@@ -134,7 +134,7 @@ class Judges extends React.Component {
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="judges" className="sub-nav-link">
-                                    <IconJudge class="btn-icon" alt="Icon of an award" />
+                                    <IconJudge className="btn-icon" alt="Icon of an award" />
                                     Judges
                                 </Nav.Link>
                             </Nav.Item>

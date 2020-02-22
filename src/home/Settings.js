@@ -146,7 +146,7 @@ class Settings extends React.Component {
                                     variant="primary"
                                     className="button-settings"
                                     onClick={this.exportData}>
-                                        <IconDownload class="btn-icon" alt="Download icon" />
+                                        <IconDownload className="btn-icon" alt="Download icon" />
                                         Export data
                                     </Button>
                             </Col>
@@ -159,7 +159,7 @@ class Settings extends React.Component {
                                     variant="danger"
                                     className="button-settings"
                                     onClick={this.clearData}>
-                                        <IconDelete class="btn-icon" alt="Icon of a trash can" />
+                                        <IconDelete className="btn-icon" alt="Icon of a trash can" />
                                         Clear data
                                     </Button>
                             </Col>

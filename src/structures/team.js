@@ -8,6 +8,7 @@ class Team {
     wins;
     totalWins;
     sideR1;
+    opponents;
 
     constructor(teamID, teamName, d1, d2, d3) {
         this.teamID = teamID;
@@ -19,6 +20,7 @@ class Team {
         this.wins = [false, false, false];
         this.totalWins = 0;
         this.sideR1 = "";
+        this.opponents = [];
     }
 
 }
