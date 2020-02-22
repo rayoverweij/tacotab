@@ -1,5 +1,6 @@
 import React from 'react';
 import './Judges.scss';
+import { ReactComponent as IconJudge } from '../images/icon-judge.svg';
 
 import JudgeRow from './JudgeRow';
 import Judge from '../structures/judge';
@@ -132,7 +133,10 @@ class Judges extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="judges" className="sub-nav-link">Judges</Nav.Link>
+                                <Nav.Link eventKey="judges" className="sub-nav-link">
+                                    <IconJudge class="btn-icon" alt="Icon of an award" />
+                                    Judges
+                                </Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

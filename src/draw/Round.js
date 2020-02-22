@@ -1,7 +1,8 @@
 import React from 'react';
 import './Round.scss';
-import IconRegen from '../images/icon-regen.svg';
-import IconFullScreen from '../images/icon-fullscreen.svg';
+import { ReactComponent as IconGenerate } from '../images/icon-bullseye.svg';
+import { ReactComponent as IconRegen } from '../images/icon-regen.svg';
+import { ReactComponent as IconFullScreen } from '../images/icon-fullscreen.svg';
 
 import RoundRow from './RoundRow';
 import Room from '../structures/room';
@@ -407,20 +408,21 @@ class Round extends React.Component {
                         <Button
                             onClick={this.generateDraw}
                             className={this.state.generated && "hidden"}>
+                            <IconGenerate className="btn-icon" alt="Icon of a bullseye" />
                             Generate draw
                         </Button>
                         <Button
                             variant="secondary"
                             onClick={this.generateDraw}
                             className={!this.state.generated && "hidden"}>
-                            <img src={IconRegen} alt="Regenerate draw icon" className="btn-icon" />
+                            <IconRegen className="btn-icon" alt="Icon of a circular arrow" />
                             Regenerate draw
                         </Button>
                         <Button
                             variant="primary"
                             onClick={this.fullScreenDraw}
                             className={!this.state.generated && "hidden"}>
-                            <img src={IconFullScreen} alt="Go fullscreen icon" className="btn-icon" />
+                            <IconFullScreen className="btn-icon" alt="Icon of arrows pointing away from each other" />
                             Display fullscreen
                         </Button>
                     </Col>

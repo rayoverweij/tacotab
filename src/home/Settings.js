@@ -1,6 +1,7 @@
 import React from 'react';
 import './Settings.scss';
-
+import { ReactComponent as IconDownload } from '../images/icon-download.svg';
+import { ReactComponent as IconDelete } from '../images/icon-trash-fill.svg';
 import GitHubLogo from '../images/icon-github.svg';
 
 import Row from 'react-bootstrap/Row';
@@ -145,6 +146,7 @@ class Settings extends React.Component {
                                     variant="primary"
                                     className="button-settings"
                                     onClick={this.exportData}>
+                                        <IconDownload class="btn-icon" alt="Download icon" />
                                         Export data
                                     </Button>
                             </Col>
@@ -157,6 +159,7 @@ class Settings extends React.Component {
                                     variant="danger"
                                     className="button-settings"
                                     onClick={this.clearData}>
+                                        <IconDelete class="btn-icon" alt="Icon of a trash can" />
                                         Clear data
                                     </Button>
                             </Col>

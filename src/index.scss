@@ -48,6 +48,16 @@ h3 {
 .btn-icon {
     height: 1.5rem;
     margin-right: 10px;
+    fill: $cyan;
+
+    .active > &, .btn > & {
+        fill: white;
+    }
+}
+
+
+.nav-icon {
+    height: 1.5rem;
 }
 
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { ReactComponent as IconHome } from '../images/icon-home.svg';
+import { ReactComponent as IconSettings } from '../images/icon-settings.svg';
 
 import Welcome from './Welcome';
 import Settings from './Settings';
@@ -17,10 +19,16 @@ class Home extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="welcome" className="sub-nav-link">Welcome</Nav.Link>
+                                <Nav.Link eventKey="welcome" className="sub-nav-link">
+                                    <IconHome className="btn-icon" alt="Icon of a house" />
+                                    Welcome
+                                </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="settings" className="sub-nav-link">Settings</Nav.Link>
+                                <Nav.Link eventKey="settings" className="sub-nav-link">
+                                    <IconSettings className="btn-icon" alt="Icon of a gear" />
+                                    Settings
+                                </Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

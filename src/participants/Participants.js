@@ -1,4 +1,7 @@
 import React from 'react';
+import { ReactComponent as IconSpeaker } from '../images/icon-speaker.svg';
+import { ReactComponent as IconTeam } from '../images/icon-people-filled.svg';
+import { ReactComponent as IconRanking } from '../images/icon-ranking.svg';
 
 import Speakers from './Speakers';
 import Teams from './Teams';
@@ -17,13 +20,22 @@ class Participants extends React.Component {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="speakers" className="sub-nav-link">Speakers</Nav.Link>
+                                <Nav.Link eventKey="speakers" className="sub-nav-link">
+                                    <IconSpeaker className="btn-icon" alt="Icon of a person" />
+                                    Speakers
+                                </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="teams" className="sub-nav-link">Teams</Nav.Link>
+                                <Nav.Link eventKey="teams" className="sub-nav-link">
+                                    <IconTeam className="btn-icon" alt="Icon of multiple people" />
+                                    Teams
+                                </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="ranking" className="sub-nav-link">Ranking</Nav.Link>
+                                <Nav.Link eventKey="ranking" className="sub-nav-link">
+                                    <IconRanking className="btn-icon" alt="Icon of a trophy" />
+                                    Ranking
+                                </Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactComponent as IconRound } from '../images/icon-round.svg';
 
 import Round from './Round';
 
@@ -19,6 +20,7 @@ class Draw extends React.Component {
                                 return (
                                     <Nav.Item key={`draw-nav-${round}`}>
                                         <Nav.Link eventKey={`round-${round}`} className="sub-nav-link">
+                                            <IconRound className="btn-icon" alt="Icon of a half-full circle" />
                                             Round {round}
                                         </Nav.Link>
                                     </Nav.Item>
