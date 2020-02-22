@@ -170,7 +170,7 @@ class Settings extends React.Component {
                             <Col>
                                 <h3>About</h3>
                                 <p>
-                                    TacoTab β version 0.2.0<br />
+                                    TacoTab β version 0.2.1<br />
                                     <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
                                         GitHub
