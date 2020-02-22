@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/tacotab/static/css/main.07ccee03.chunk.css",
-    "main.js": "/tacotab/static/js/main.d662981a.chunk.js",
-    "main.js.map": "/tacotab/static/js/main.d662981a.chunk.js.map",
+    "main.js": "/tacotab/static/js/main.bca233e4.chunk.js",
+    "main.js.map": "/tacotab/static/js/main.bca233e4.chunk.js.map",
     "runtime-main.js": "/tacotab/static/js/runtime-main.90fdb388.js",
     "runtime-main.js.map": "/tacotab/static/js/runtime-main.90fdb388.js.map",
     "static/js/2.ed254866.chunk.js": "/tacotab/static/js/2.ed254866.chunk.js",
     "static/js/2.ed254866.chunk.js.map": "/tacotab/static/js/2.ed254866.chunk.js.map",
     "index.html": "/tacotab/index.html",
-    "precache-manifest.a843fdcd442b4270d8eb6f756f19d358.js": "/tacotab/precache-manifest.a843fdcd442b4270d8eb6f756f19d358.js",
+    "precache-manifest.2910f2ba70f686b70a94e5d880106e84.js": "/tacotab/precache-manifest.2910f2ba70f686b70a94e5d880106e84.js",
     "service-worker.js": "/tacotab/service-worker.js",
     "static/css/main.07ccee03.chunk.css.map": "/tacotab/static/css/main.07ccee03.chunk.css.map",
     "static/js/2.ed254866.chunk.js.LICENSE": "/tacotab/static/js/2.ed254866.chunk.js.LICENSE",
@@ -31,6 +31,6 @@
     "static/js/runtime-main.90fdb388.js",
     "static/js/2.ed254866.chunk.js",
     "static/css/main.07ccee03.chunk.css",
-    "static/js/main.d662981a.chunk.js"
+    "static/js/main.bca233e4.chunk.js"
   ]
 }
