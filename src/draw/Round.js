@@ -1,5 +1,7 @@
 import React from 'react';
 import './Round.scss';
+import IconRegen from '../images/icon-regen.svg';
+import IconFullScreen from '../images/icon-fullscreen.svg';
 
 import RoundRow from './RoundRow';
 import Room from '../structures/room';
@@ -8,6 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 
 
 class Round extends React.Component {
@@ -19,11 +22,14 @@ class Round extends React.Component {
         this.state = {
             generated: pairings.generated,
             pairings_one: pairings.pairings_one,
-            pairings_two: pairings.pairings_two
+            pairings_two: pairings.pairings_two,
+            fullScreen: false
         }
 
         this.generateDraw = this.generateDraw.bind(this);
         this.updatePairings = this.updatePairings.bind(this);
+        this.fullScreenDraw = this.fullScreenDraw.bind(this);
+        this.modalHide = this.modalHide.bind(this);
     }
 
 
@@ -314,6 +320,19 @@ class Round extends React.Component {
     }
 
 
+    fullScreenDraw() {
+        this.setState({fullScreen: true});
+        document.documentElement.requestFullscreen();
+    }
+
+    modalHide() {
+        this.setState({fullScreen: false});
+        if(document.fullscreenElement !== null) {
+            document.exitFullscreen();
+        }
+    }
+
+
     render() {
         let tables;
         if(!this.state.generated) {
@@ -322,7 +341,7 @@ class Round extends React.Component {
             tables = (
                 <div>
                     <h3>{this.props.config.divisions === "2" ? this.props.config.divisionNames[0] : "Draw"}</h3>
-                    <Table className="table-no-top-margin draw-table-one" hover>
+                    <Table className="table-no-top-margin draw-table-one" hover striped>
                         <thead>
                             <tr>
                                 <th>Room</th>
@@ -350,7 +369,7 @@ class Round extends React.Component {
                     </Table>
                     
                     <h3>{this.props.config.divisions === "2" ? this.props.config.divisionNames[1] : ""}</h3>
-                    <Table className={`table-no-top-margin ${this.props.config.divisions === "1" ? "hidden" : ""}`} hover>
+                    <Table className={`table-no-top-margin ${this.props.config.divisions === "1" ? "hidden" : ""}`} hover striped>
                         <thead>
                             <tr>
                                 <th>Room</th>
@@ -394,7 +413,15 @@ class Round extends React.Component {
                             variant="secondary"
                             onClick={this.generateDraw}
                             className={!this.state.generated && "hidden"}>
+                            <img src={IconRegen} alt="Regenerate draw icon" className="btn-icon" />
                             Regenerate draw
+                        </Button>
+                        <Button
+                            variant="primary"
+                            onClick={this.fullScreenDraw}
+                            className={!this.state.generated && "hidden"}>
+                            <img src={IconFullScreen} alt="Go fullscreen icon" className="btn-icon" />
+                            Display fullscreen
                         </Button>
                     </Col>
                 </Row>
@@ -403,6 +430,22 @@ class Round extends React.Component {
                         {tables}
                     </Col>
                 </Row>
+
+                <Modal
+                    show={this.state.fullScreen}
+                    onHide={this.modalHide}
+                    backdrop="static"
+                    size="xl"
+                    className="draw-modal"
+                    dialogClassName="draw-modal-dialog"
+                    backdropClassName="draw-modal-backdrop">
+                    <Modal.Header closeButton>
+                        Draw Round {this.props.round}
+                    </Modal.Header>
+                    <Modal.Body>
+                        {tables}
+                    </Modal.Body>
+                </Modal>
             </div>
         );
     }

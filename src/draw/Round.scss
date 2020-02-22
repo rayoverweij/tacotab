@@ -19,3 +19,35 @@
 .judgepill-container {
     display: inline-block;
 }
+
+.draw-modal {
+    padding: 0;
+}
+
+.draw-modal-dialog {
+    margin: 0;
+
+    & > .modal-content {
+        width: 100vw;
+        min-height: 100vh;
+        font-size: 1.5rem;
+        border: none;
+        border-radius: 0;
+
+        & > .modal-header {
+            font-weight: bold;
+            font-size: 2rem;
+            padding-left: calc(1rem + 5px);
+        }
+
+        h3 {
+            font-weight: bold;
+            font-size: 1.75rem;
+            padding-left: 5px;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    }
+}
