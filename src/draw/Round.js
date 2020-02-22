@@ -77,10 +77,10 @@ class Round extends React.Component {
             alert("Both divisions have an odd number of teams. A team from one division debating a team from the other division is not currently supported. Please add or remove a team to/from both in order to continue.")
             return false;
         } else if(len1 % 2 !== 0) {
-            alert("There is an odd number of division one teams\u2014add or remove a team to generate the draw.");
+            alert(`There is an odd number of ${this.props.config.divisions === "2" ? `${this.props.config.divisionNames[0]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
             return false;
         } else if(len2 % 2 !== 0) {
-            alert("There is an odd number of division two teams\u2014add or remove a team to generate the draw.");
+            alert(`There is an odd number of ${this.props.config.divisions === "2" ? `${this.props.config.divisionNames[1]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
             return false;
         }
 
