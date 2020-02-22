@@ -1,26 +1,36 @@
 {
   "files": {
-    "main.css": "/tacotab/static/css/main.b1ea7c75.chunk.css",
-    "main.js": "/tacotab/static/js/main.c9f518d8.chunk.js",
-    "main.js.map": "/tacotab/static/js/main.c9f518d8.chunk.js.map",
+    "main.css": "/tacotab/static/css/main.07ccee03.chunk.css",
+    "main.js": "/tacotab/static/js/main.d662981a.chunk.js",
+    "main.js.map": "/tacotab/static/js/main.d662981a.chunk.js.map",
     "runtime-main.js": "/tacotab/static/js/runtime-main.90fdb388.js",
     "runtime-main.js.map": "/tacotab/static/js/runtime-main.90fdb388.js.map",
-    "static/js/2.df9f28ea.chunk.js": "/tacotab/static/js/2.df9f28ea.chunk.js",
-    "static/js/2.df9f28ea.chunk.js.map": "/tacotab/static/js/2.df9f28ea.chunk.js.map",
+    "static/js/2.ed254866.chunk.js": "/tacotab/static/js/2.ed254866.chunk.js",
+    "static/js/2.ed254866.chunk.js.map": "/tacotab/static/js/2.ed254866.chunk.js.map",
     "index.html": "/tacotab/index.html",
-    "precache-manifest.8a3419e70c87168e21a01f2785f80333.js": "/tacotab/precache-manifest.8a3419e70c87168e21a01f2785f80333.js",
+    "precache-manifest.a843fdcd442b4270d8eb6f756f19d358.js": "/tacotab/precache-manifest.a843fdcd442b4270d8eb6f756f19d358.js",
     "service-worker.js": "/tacotab/service-worker.js",
-    "static/css/main.b1ea7c75.chunk.css.map": "/tacotab/static/css/main.b1ea7c75.chunk.css.map",
-    "static/js/2.df9f28ea.chunk.js.LICENSE": "/tacotab/static/js/2.df9f28ea.chunk.js.LICENSE",
-    "static/media/icon-github.svg": "/tacotab/static/media/icon-github.07883e93.svg",
+    "static/css/main.07ccee03.chunk.css.map": "/tacotab/static/css/main.07ccee03.chunk.css.map",
+    "static/js/2.ed254866.chunk.js.LICENSE": "/tacotab/static/js/2.ed254866.chunk.js.LICENSE",
+    "static/media/icon-bullseye.15d5bf74.svg": "/tacotab/static/media/icon-bullseye.15d5bf74.svg",
+    "static/media/icon-download.27a70d0c.svg": "/tacotab/static/media/icon-download.27a70d0c.svg",
+    "static/media/icon-fullscreen.479f8748.svg": "/tacotab/static/media/icon-fullscreen.479f8748.svg",
+    "static/media/icon-github.svg": "/tacotab/static/media/icon-github.026cb8cd.svg",
+    "static/media/icon-home.51bf66dc.svg": "/tacotab/static/media/icon-home.51bf66dc.svg",
+    "static/media/icon-judge.1193c285.svg": "/tacotab/static/media/icon-judge.1193c285.svg",
     "static/media/TeamTable.scss": "/tacotab/static/media/icon-people.85d9f981.svg",
+    "static/media/icon-ranking.9300e192.svg": "/tacotab/static/media/icon-ranking.9300e192.svg",
+    "static/media/icon-regen.aaa187d3.svg": "/tacotab/static/media/icon-regen.aaa187d3.svg",
+    "static/media/icon-round.800a2c66.svg": "/tacotab/static/media/icon-round.800a2c66.svg",
+    "static/media/icon-settings.f248b468.svg": "/tacotab/static/media/icon-settings.f248b468.svg",
+    "static/media/icon-speaker.509ab3f4.svg": "/tacotab/static/media/icon-speaker.509ab3f4.svg",
     "static/media/index.scss": "/tacotab/static/media/icon-trash.92088904.svg",
     "static/media/logo.svg": "/tacotab/static/media/logo.15863a1a.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.90fdb388.js",
-    "static/js/2.df9f28ea.chunk.js",
-    "static/css/main.b1ea7c75.chunk.css",
-    "static/js/main.c9f518d8.chunk.js"
+    "static/js/2.ed254866.chunk.js",
+    "static/css/main.07ccee03.chunk.css",
+    "static/js/main.d662981a.chunk.js"
   ]
 }
