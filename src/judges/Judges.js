@@ -92,10 +92,10 @@ class Judges extends React.Component {
 
 
     render() {
+        const judges = this.props.judges;
+
         let table;
-        if(this.props.judges.length === 0) {
-            table = <p className="none-yet">No judges yet!</p>;
-        } else {
+        if(this.props.judges.length !== 0) {
             table = (
                 <Table className="judge-table" hover bordered>
                     <thead>
@@ -126,6 +126,10 @@ class Judges extends React.Component {
             );
         }
 
+        const totalRooms = Math.round(this.props.getTotalTeams() / 2);
+        const chairsR1 = judges.filter(el => el.canChair && el.r1).length;
+        const chairsR2 = judges.filter(el => el.canChair && el.r2).length;
+        const chairsR3 = judges.filter(el => el.canChair && el.r3).length;
 
         return (
             <Tab.Container id={`judges-view`} defaultActiveKey="judges">
@@ -173,9 +177,11 @@ class Judges extends React.Component {
                                             <p>
                                                 Total judges each round: {this.props.judges.filter(el => el.r1).length} &middot; {this.props.judges.filter(el => el.r2).length} &middot; {this.props.judges.filter(el => el.r3).length}
                                                 <br />
-                                                Total chairs each round: {this.props.judges.filter(el => el.canChair && el.r1).length} &middot; {this.props.judges.filter(el => el.canChair && el.r2).length} &middot; {this.props.judges.filter(el => el.canChair && el.r3).length}
+                                                Total chairs each round: {chairsR1} &middot; {chairsR2} &middot; {chairsR3}
                                                 <br />
-                                                Total chairs needed: {Math.round(this.props.getTotalTeams() / 2)}
+                                                <span className={(totalRooms > chairsR1 || totalRooms > chairsR2 || totalRooms > chairsR3) ? "red" : ""}>
+                                                    Total chairs needed: {totalRooms}
+                                                </span>
                                             </p>
                                         </div>
                                     </Col>
