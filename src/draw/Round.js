@@ -38,10 +38,18 @@ class Round extends React.Component {
         const round = this.props.round;
         let draws = this.props.draws;
 
-        // Check whether previous draws have happened
-        if(round === 2) {
+        // Check whether previous or next draws have happened
+        if(round === 1) {
+            if(draws[1].generated === true || draws[2].generated === true) {
+                alert("You can't regenerate a draw after you've generated the next one.");
+                return false;
+            }
+        } else if(round === 2) {
             if(draws[0].generated !== true) {
                 alert("You can't generate the draw for round 2 before generating the draw for round 1.");
+                return false;
+            } else if(draws[2].generated === true) {
+                alert("You can't regenerate a draw after you've generated the next one.");
                 return false;
             }
         } else if(round === 3) {

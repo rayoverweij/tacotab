@@ -122,7 +122,7 @@ class TeamRow extends React.Component {
         // Generate the table rows
         const speakerRows = speakers.map(speaker => {
             if(speaker.debaterID === "avg") {
-                return <tr key={`${team.teamID}-average-third`} className="invisible-third"></tr>;
+                return <tr key={`${team.teamID}-average-third`}></tr>;
             }
 
             const isInR1 = this.props.team.round1.includes(speaker.debaterID.toString());

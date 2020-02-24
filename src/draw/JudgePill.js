@@ -36,35 +36,40 @@ class JudgePill extends React.Component {
             <Popover className="judgepill-popover">
                 <Popover.Title as="h3">Switch rooms</Popover.Title>
                 <Popover.Content>
-                    <Form onSubmit={this.handleRoomFormSubmit}>
-                        {this.props.draws.pairings_one.map((room, index) => {
-                            return (
-                                <Form.Check custom
-                                    key={`room-check-${index}`}
-                                    id={`room-check-${Math.floor(Math.random() * 1000000)}`}
-                                    name="room"
-                                    type="radio"
-                                    label={room.room}
-                                    value={room.room}
-                                    checked={this.state.room === room.room}
-                                    onChange={this.handleRoomFormChange} />
-                            );
-                        })}
-                        {this.props.draws.pairings_two.map((room, index) => {
-                            return (
-                                <Form.Check custom
-                                    key={`room-check-${index}`}
-                                    id={`room-check-${Math.floor(Math.random() * 1000000)}`}
-                                    name="room"
-                                    type="radio"
-                                    label={room.room}
-                                    value={room.room}
-                                    checked={this.state.room === room.room}
-                                    onChange={this.handleRoomFormChange} />
-                            );
-                        })}
-                        <Button className="btn-popover" variant="primary" type="submit">Change</Button>
-                    </Form>
+                    {(this.props.draws.pairings_one.map(room => room.room).includes("[room]") ||
+                      this.props.draws.pairings_two.map(room => room.room).includes("[room]") )
+                        ?
+                        <p>You need to assign each round to a room before you can switch judges.</p>
+                        :
+                        <Form onSubmit={this.handleRoomFormSubmit}>
+                            {this.props.draws.pairings_one.map((room, index) => {
+                                return (
+                                    <Form.Check custom
+                                        key={`room-check-${index}`}
+                                        id={`room-check-${Math.floor(Math.random() * 1000000)}`}
+                                        name="room"
+                                        type="radio"
+                                        label={room.room}
+                                        value={room.room}
+                                        checked={this.state.room === room.room}
+                                        onChange={this.handleRoomFormChange} />
+                                );
+                            })}
+                            {this.props.draws.pairings_two.map((room, index) => {
+                                return (
+                                    <Form.Check custom
+                                        key={`room-check-${index}`}
+                                        id={`room-check-${Math.floor(Math.random() * 1000000)}`}
+                                        name="room"
+                                        type="radio"
+                                        label={room.room}
+                                        value={room.room}
+                                        checked={this.state.room === room.room}
+                                        onChange={this.handleRoomFormChange} />
+                                );
+                            })}
+                            <Button className="btn-popover" variant="primary" type="submit">Change</Button>
+                        </Form>}
                 </Popover.Content>
             </Popover>
         );
