@@ -1,7 +1,7 @@
 @import '_vars';
 @import url('https://rsms.me/inter/inter.css');
 
-
+// Fonts
 body, .popover {
     font-family: 'Inter', var(--font-family-sans-serif);
 }
@@ -13,11 +13,11 @@ body, .popover {
 }
 
 
+// Basic styles
 ::selection {
     background-color: $cyan;
     color: white;
 }
-
 
 body {
     background-color: $gray;
@@ -42,6 +42,7 @@ h3 {
 }
 
 
+// General button styling
 .btn ~ .btn {
     margin-right: 10px;
 }
@@ -56,12 +57,24 @@ h3 {
     }
 }
 
-
-.nav-icon {
-    height: 1.5rem;
+.btn-submit {
+    float: right;
+    @media (min-width: 768px) {
+        float: left;
+    }
 }
 
 
+// General form styling
+input[type=text] {
+    margin-bottom: 10px;
+    @media(min-widith: 768px) {
+        margin-bottom: 0;
+    }
+}
+
+
+// General table styling
 .table {
     margin-top: 30px;
     margin-bottom: 100px;
@@ -86,11 +99,20 @@ h3 {
     margin-top: 0;
 }
 
+.table-less-bottom-margin-sm {
+    margin-bottom: 40px;
+
+    @media(min-width: 992px) {
+        margin-bottom: 100px;
+    }
+}
+
 .cell-valupdate {
     text-align: left;
 }
 
 
+// Switch styling
 .custom-switch {
     .custom-control-label {
         left: 4px;
@@ -127,12 +149,23 @@ h3 {
 }
 
 
+// General miscellaneous
+.nav-icon {
+    height: 1.5rem;
+}
+
 .none-yet {
     margin-top: 30px;
 }
 
 .table-col {
     padding: 0;
+
+    &.table-col-margin-lg {
+        @media (min-width: 992px) {
+            padding-left: 15px;
+        }
+    }
 }
 
 .icon-trash {

@@ -30,7 +30,7 @@
     vertical-align: top !important;
 
     .icon-people {
-        display: none;
+        display: inline-block;
         width: 1.3rem;
         height: 1.3rem;
         margin-right: 5px;
@@ -42,15 +42,9 @@
             background-image: url(../images/icon-people-filled.svg);
         }
     }
-    
+
     .icon-trash {
-        display: none;
-    }
-    
-    &:hover {
-        .icon-people, .icon-trash {
-            display: inline-block;
-        }
+        display: inline-block;
     }
 }
 

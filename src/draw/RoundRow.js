@@ -104,24 +104,28 @@ class RoundRow extends React.Component {
                     {opp.teamName}
                 </td>
                 <td>
-                    <JudgePill
-                        judge={chair}
-                        chair={true}
-                        conflict={chair_conflict}
-                        pair={pair}
-                        draws={this.props.draws}
-                        updateRoom={this.updateRoom} />
+                    <div className="judgepill-container">
+                        <JudgePill
+                            judge={chair}
+                            chair={true}
+                            conflict={chair_conflict}
+                            pair={pair}
+                            draws={this.props.draws}
+                            updateRoom={this.updateRoom} />
+                    </div>
+                    {pair.wings.length !== 0 ? ",\u00A0" : ""}
                     {pair.wings.map((el, index) => {
                         let wing = judges.find(j => j.judgeID === el);
                         return (
                             <div key={`judgepil-${index}`} className="judgepill-container">
-                                ,&nbsp;<JudgePill
-                                        judge={wing}
-                                        chair={false}
-                                        conflict={speaker_schools.includes(wing.school)}
-                                        pair={pair}
-                                        draws={this.props.draws}
-                                        updateRoom={this.updateRoom} />
+                                <JudgePill
+                                    judge={wing}
+                                    chair={false}
+                                    conflict={speaker_schools.includes(wing.school)}
+                                    pair={pair}
+                                    draws={this.props.draws}
+                                    updateRoom={this.updateRoom} />
+                                {index < pair.wings.length - 1 ? ",\u00A0" : ""}
                             </div>
                         );
                     })}

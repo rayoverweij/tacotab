@@ -292,7 +292,12 @@ class TeamRow extends React.Component {
                     <Modal.Body>
                         <Form onSubmit={this.handleTeamUpdate}>
                             {teamSpeakerSelects}
-                            <Button variant="primary" type="submit" className="form-button">Save</Button>
+                            <Button
+                                variant="primary"
+                                className="btn-submit"
+                                type="submit">
+                                Save
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

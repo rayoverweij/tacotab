@@ -131,7 +131,7 @@ class Speakers extends React.Component {
                     
                         <Form onSubmit={this.handleAddSpeakerFormSubmit}>
                             <Form.Row>
-                                <Col>
+                                <Col md={4}>
                                     <Form.Control
                                         name="name"
                                         type="text"
@@ -139,7 +139,7 @@ class Speakers extends React.Component {
                                         value={this.state.addSpeakerForm.name}
                                         onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
-                                <Col>
+                                <Col md={4}>
                                     <Form.Control
                                         name="school"
                                         type="text"
@@ -148,7 +148,12 @@ class Speakers extends React.Component {
                                         onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
                                 <Col>
-                                    <Button variant="primary" type="submit">Add speaker</Button>
+                                    <Button
+                                        variant="primary"
+                                        className="btn-submit"
+                                        type="submit">
+                                        Add speaker
+                                    </Button>
                                 </Col>
                             </Form.Row>
                         </Form>
@@ -156,7 +161,7 @@ class Speakers extends React.Component {
                 </Row>
 
                 <Row>
-                    <Col md={8} className="table-col">
+                    <Col lg={10} xl={8} className="table-col">
                         {table}
                     </Col>
                 </Row>

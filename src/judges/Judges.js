@@ -152,7 +152,7 @@ class Judges extends React.Component {
                                         <h2>Judges</h2>
                                         <Form onSubmit={this.handleAddJudgeFormSubmit}>
                                             <Form.Row>
-                                                <Col>
+                                                <Col md={4}>
                                                     <Form.Control
                                                         name="judgeName"
                                                         type="text"
@@ -160,7 +160,7 @@ class Judges extends React.Component {
                                                         value={this.state.addJudgeForm.judgeName}
                                                         onChange={this.handleAddJudgeFormChange} />
                                                 </Col>
-                                                <Col>
+                                                <Col md={4}>
                                                     <Form.Control
                                                         name="judgeSchool"
                                                         type="text"
@@ -169,7 +169,12 @@ class Judges extends React.Component {
                                                         onChange={this.handleAddJudgeFormChange} />
                                                 </Col>
                                                 <Col>
-                                                    <Button variant="primary" type="submit">Add judge</Button>
+                                                    <Button
+                                                        variant="primary"
+                                                        className="btn-submit"
+                                                        type="submit">
+                                                        Add judge
+                                                    </Button>
                                                 </Col>
                                             </Form.Row>
                                         </Form>
@@ -188,7 +193,7 @@ class Judges extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Col md={8} className="table-col">
+                                    <Col lg={10} xl={8} className="table-col">
                                         {table}
                                     </Col>
                                 </Row>

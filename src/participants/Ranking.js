@@ -126,9 +126,9 @@ class Ranking extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={7} className="table-col">
-                        <h4>Speakers</h4>
-                        <Table striped className="speaker-ranking-table table-no-top-margin">
+                    <Col lg={7} className="table-col">
+                        <h3>Speakers</h3>
+                        <Table striped className="speaker-ranking-table table-no-top-margin table-less-bottom-margin-sm">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -177,8 +177,8 @@ class Ranking extends React.Component {
                             </tbody>
                         </Table>
                     </Col>
-                    <Col md={5}>
-                        <h4>Teams</h4>
+                    <Col lg={5} className="table-col table-col-margin-lg">
+                        <h3>Teams</h3>
                         <Table striped className="table-no-top-margin">
                             <thead>
                                 <tr>

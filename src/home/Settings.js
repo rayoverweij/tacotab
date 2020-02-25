@@ -88,7 +88,7 @@ class Settings extends React.Component {
         return (
             <div>
                 <Row>
-                    <Col md={8}>
+                    <Col lg={8}>
                         <Row>
                             <Col>
                                 <h2>Settings</h2>
@@ -100,7 +100,7 @@ class Settings extends React.Component {
                                 <h3>Change tournament name</h3>
                                 <Form onSubmit={this.handleNameFormSubmit} className="form-settings">
                                     <Form.Row>
-                                        <Col sm={6}>
+                                        <Col sm={9} xl={6}>
                                             <Form.Control
                                                 name="tournament-name"
                                                 type="text"
@@ -109,7 +109,11 @@ class Settings extends React.Component {
                                                 onChange={this.handleNameFormChange} />
                                         </Col>
                                         <Col>
-                                            <Button variant="primary" type="submit">Save</Button>
+                                            <Button
+                                                variant="primary"
+                                                type="submit">
+                                                Save
+                                            </Button>
                                         </Col>
                                     </Form.Row>
                                 </Form>
@@ -121,7 +125,7 @@ class Settings extends React.Component {
                                 <p>Open files generated with the Export function below. <strong>Note:</strong> this will override all current data!</p>
                                 <Form onSubmit={this.importData} className="form-settings">
                                     <Form.Row>
-                                        <Col>
+                                        <Col xs={9} xl={6}>
                                             <div className="custom-file">
                                                 <Form.Control
                                                     name="import"
@@ -165,8 +169,8 @@ class Settings extends React.Component {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md={4}>
-                        <Row>
+                    <Col lg={4}>
+                        <Row className="row-about">
                             <Col>
                                 <h3>About</h3>
                                 <p>

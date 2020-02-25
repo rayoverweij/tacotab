@@ -1,5 +1,4 @@
 import React from 'react';
-import './Teams.scss';
 import TeamTable from './TeamTable';
 
 import Team from '../structures/team';
@@ -181,7 +180,12 @@ class Teams extends React.Component {
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>
-                            <Button variant="primary" type="submit" className="form-button">Add</Button>
+                            <Button
+                                variant="primary"
+                                className="btn-submit"
+                                type="submit">
+                                Add
+                            </Button>
                         </Form>
                     </Modal.Body>
                 </Modal>

@@ -461,7 +461,7 @@ class Round extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={9} className="table-col">
+                    <Col lg={10} xl={9} className="table-col">
                         {tables}
                     </Col>
                 </Row>
