@@ -1,12 +1,18 @@
 @import '../_vars';
 
+.no-show-sm {
+    display: none;
+
+    @media(min-width: 768px) {
+        display: flex;
+    }
+}
+
 #total-judges {
     margin-top: 30px;
 }
 
 .judge-table {
-    margin-top: 0;
-
     th, td {
         width: 12.5%;
         text-align: center;

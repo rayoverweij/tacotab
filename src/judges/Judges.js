@@ -97,7 +97,7 @@ class Judges extends React.Component {
         let table;
         if(this.props.judges.length !== 0) {
             table = (
-                <Table className="judge-table" hover bordered>
+                <Table className="judge-table table-no-top-margin" hover bordered>
                     <thead>
                         <tr>
                             <th className="judge-table-name">Name</th>
@@ -135,7 +135,7 @@ class Judges extends React.Component {
             <Tab.Container id={`judges-view`} defaultActiveKey="judges">
                 <Row>
                     <Col md={3} lg={2}>
-                        <Nav variant="pills">
+                        <Nav variant="pills" className="no-show-sm">
                             <Nav.Item>
                                 <Nav.Link eventKey="judges" className="sub-nav-link">
                                     <IconJudge className="btn-icon" alt="Icon of an award" />

@@ -48,9 +48,14 @@ h3 {
 }
 
 .btn-icon {
+    display: none;
     height: 1.5rem;
     margin-right: 10px;
     fill: $cyan;
+
+    @media(min-width: 768px) {
+        display: inline-block;
+    }
 
     .active > &, .btn > & {
         fill: white;
@@ -120,6 +125,7 @@ input[type=text] {
 
         &::before {
             border-color: black;
+            background-color: transparent;
         }
 
         &::after {
