@@ -17,8 +17,8 @@ class Participants extends React.Component {
         return (
             <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
                 <Row className="part-view">
-                    <Col sm={2}>
-                        <Nav variant="pills" className="flex-column">
+                    <Col md={3} lg={2}>
+                        <Nav variant="pills">
                             <Nav.Item>
                                 <Nav.Link eventKey="speakers" className="sub-nav-link">
                                     <IconSpeaker className="btn-icon" alt="Icon of a person" />
@@ -39,7 +39,7 @@ class Participants extends React.Component {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={10}>
+                    <Col md={9} lg={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="speakers">
                                 <Speakers

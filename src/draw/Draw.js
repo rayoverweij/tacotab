@@ -14,8 +14,8 @@ class Draw extends React.Component {
         return (
             <Tab.Container id={`draw-view`} defaultActiveKey="round-1">
                 <Row>
-                    <Col sm={2}>
-                        <Nav variant="pills" className="flex-column">
+                    <Col md={3} lg={2}>
+                        <Nav variant="pills">
                             {[1, 2, 3].map(round => {
                                 return (
                                     <Nav.Item key={`draw-nav-${round}`}>
@@ -28,7 +28,7 @@ class Draw extends React.Component {
                             })}
                         </Nav>
                     </Col>
-                    <Col sm={10}>
+                    <Col md={9} lg={10}>
                         <Tab.Content>
                             {[1, 2, 3].map(round => {
                                 return (

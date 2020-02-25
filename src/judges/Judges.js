@@ -134,8 +134,8 @@ class Judges extends React.Component {
         return (
             <Tab.Container id={`judges-view`} defaultActiveKey="judges">
                 <Row>
-                    <Col sm={2}>
-                        <Nav variant="pills" className="flex-column">
+                    <Col md={3} lg={2}>
+                        <Nav variant="pills">
                             <Nav.Item>
                                 <Nav.Link eventKey="judges" className="sub-nav-link">
                                     <IconJudge className="btn-icon" alt="Icon of an award" />
@@ -144,7 +144,7 @@ class Judges extends React.Component {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={10}>
+                    <Col md={9} lg={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="judges">
                                 <Row>

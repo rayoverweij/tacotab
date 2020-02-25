@@ -128,8 +128,29 @@
     padding-top: 15px;
 
     .nav-pills {
-        position: fixed;
-        width: calc(16.66667% - 30px);
+        flex-direction: row;
+        margin-bottom: 20px;
+        justify-content: space-evenly;
+
+        @media (min-width: 768px) {
+            flex-direction: column;
+            position: fixed;
+            width: calc(25% - 30px);
+        }
+
+        @media (min-width: 992px) {
+            width: calc(16.66667% - 30px);
+        }
+
+        .nav-item {
+            width: 33%;
+            text-align: center;
+
+            @media (min-width: 768px) {
+                width: 100%;
+                text-align: left;
+            }
+        }
     }
 }
 

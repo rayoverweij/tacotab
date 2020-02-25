@@ -16,8 +16,8 @@ class Home extends React.Component {
         return (
             <Tab.Container id="home-view" defaultActiveKey="welcome">
                 <Row>
-                    <Col sm={2}>
-                        <Nav variant="pills" className="flex-column">
+                    <Col md={3} lg={2}>
+                        <Nav variant="pills">
                             <Nav.Item>
                                 <Nav.Link eventKey="welcome" className="sub-nav-link">
                                     <IconHome className="btn-icon" alt="Icon of a house" />
@@ -32,7 +32,7 @@ class Home extends React.Component {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={10}>
+                    <Col md={9} lg={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="welcome">
                                 <Welcome
