@@ -37,28 +37,36 @@ class JudgeRow extends React.Component {
                 <td className="judge-table-school">{this.props.judge.school}</td>
                 <td className="cell-low-padding">
                     <Form.Switch
+                        id={`judge-canchair-${this.props.judge.judgeID}`}
                         name="canChair"
+                        label=""
                         onChange={this.handleJudgeToggle}
                         checked={this.state.canChair}
                         className={this.state.canChair ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
+                        id={`judge-r1-${this.props.judge.judgeID}`}
                         name="r1"
+                        label=""
                         onChange={this.handleJudgeToggle}
                         checked={this.state.r1}
                         className={this.state.r1 ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
+                        id={`judge-r2-${this.props.judge.judgeID}`}
                         name="r2"
+                        label=""
                         onChange={this.handleJudgeToggle}
                         checked={this.state.r2}
                         className={this.state.r2 ? "on" : "off"} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
+                        id={`judge-r3-${this.props.judge.judgeID}`}
                         name="r3"
+                        label=""
                         onChange={this.handleJudgeToggle}
                         checked={this.state.r3}
                         className={this.state.r3 ? "on" : "off"} />

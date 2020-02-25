@@ -51,7 +51,9 @@ class SpeakerRow extends React.Component {
                 </td>
                 <td className="cell-low-padding">
                     <Form.Switch
+                        id={`speaker-disq-${speaker.debaterID}`}
                         name="disqualified"
+                        label=""
                         onChange={this.handleDisqUpdate}
                         checked={this.state.disqualified}
                         className={this.state.disqualified ? "on" : "off"} />
