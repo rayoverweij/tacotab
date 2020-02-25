@@ -79,10 +79,12 @@
 
         @media(min-width: 768px) {
             margin-bottom: 0;
+            z-index: 20;
         }
     }
 
     .nav-link {
+        position: relative;
         text-align: center;
         border: none;
         border-top-left-radius: 0;
@@ -99,11 +101,29 @@
 
         @media(min-width: 768px) {
             padding: 1.25rem;
-            z-index: 20;
     
             &.active {
                 background-color: white;
-                box-shadow: 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+
+                &::before {
+                    box-shadow: -5px 0 5px -5px rgba(0,0,0,0.16) inset, -5px 0 5px -5px rgba(0,0,0,0.23) inset;
+                    content: "";
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: -5px;
+                    width: 5px;
+                }
+
+                &::after {
+                    box-shadow: 5px 0 5px -5px rgba(0,0,0,0.16) inset, 5px 0 5px -5px rgba(0,0,0,0.23) inset;
+                    content: "";
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    right: -5px;
+                    width: 5px;
+                }
             }
     
             &:focus {
@@ -111,7 +131,7 @@
                 box-shadow: inset $focus;
     
                 &.active {
-                    box-shadow: inset $focus, 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+                    box-shadow: inset $focus;
                 }
             }
         }
@@ -124,7 +144,6 @@
     background-color: white;
     box-shadow: $card;
     overflow-y: scroll;
-    border-top: 5px solid white;
     padding-top: 15px;
 
     .nav-pills {
