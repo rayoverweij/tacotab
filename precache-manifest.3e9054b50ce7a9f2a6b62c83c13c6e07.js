@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "28c4d96194eca8fff21e99d0a7d445d3",
+    "revision": "68396bb32624f1563564883bbe44f898",
     "url": "/tacotab/index.html"
   },
   {
-    "revision": "b9c1187a50e0b7d19bf9",
-    "url": "/tacotab/static/css/main.07ccee03.chunk.css"
+    "revision": "d4df05d981708ef22dae",
+    "url": "/tacotab/static/css/main.1593269a.chunk.css"
   },
   {
-    "revision": "1c88968d553183c6b7d5",
-    "url": "/tacotab/static/js/2.ed254866.chunk.js"
+    "revision": "efadae961e873786e20e",
+    "url": "/tacotab/static/js/2.a8dd7e59.chunk.js"
   },
   {
     "revision": "1cb50518bb4aec38ea455dde488883b0",
-    "url": "/tacotab/static/js/2.ed254866.chunk.js.LICENSE"
+    "url": "/tacotab/static/js/2.a8dd7e59.chunk.js.LICENSE"
   },
   {
-    "revision": "b9c1187a50e0b7d19bf9",
-    "url": "/tacotab/static/js/main.bca233e4.chunk.js"
+    "revision": "d4df05d981708ef22dae",
+    "url": "/tacotab/static/js/main.f60344ee.chunk.js"
   },
   {
     "revision": "62f64ff46eccb12c73c9",
@@ -48,6 +48,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tacotab/static/media/icon-judge.1193c285.svg"
   },
   {
+    "revision": "355f590b7cf07dc3e1b0c3268393b957",
+    "url": "/tacotab/static/media/icon-menu.355f590b.svg"
+  },
+  {
     "revision": "b1b7eac078f3a81bfe82eaee4bc507d6",
     "url": "/tacotab/static/media/icon-people-filled.b1b7eac0.svg"
   },
@@ -74,22 +78,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "509ab3f4e7e5986d30e0474848629d09",
     "url": "/tacotab/static/media/icon-speaker.509ab3f4.svg"
-  },
-  {
-    "revision": "64bc33927244228f1d0dcab1ca5230ed",
-    "url": "/tacotab/static/media/icon-toggle-off-cyan.64bc3392.svg"
-  },
-  {
-    "revision": "daa1b63de1ad82f1789ccb06874668b8",
-    "url": "/tacotab/static/media/icon-toggle-off.daa1b63d.svg"
-  },
-  {
-    "revision": "a5371628fc0e2b9949910e0047bae436",
-    "url": "/tacotab/static/media/icon-toggle-on-cyan.a5371628.svg"
-  },
-  {
-    "revision": "6f9d06ab732a5f32deb66219bb5b5c9e",
-    "url": "/tacotab/static/media/icon-toggle-on.6f9d06ab.svg"
   },
   {
     "revision": "bdaf1aacb5978d240b967e986ea19044",
