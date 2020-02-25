@@ -15,7 +15,6 @@
 
 #logo {
     height: 4rem;
-    position: absolute;
 
     img {
         height: 2rem;
@@ -34,37 +33,86 @@
     }
 }
 
-.main-nav {
+#hamburger {
     height: 4rem;
-    margin-left: 220px;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+
+    svg {
+        height: 3rem;
+        transition: $transition;
+
+        &:hover {
+            fill: $cyan;
+            cursor: pointer;
+        }
+    }
+}
+
+.main-nav {
+    flex-direction: column;
+    flex-wrap: nowrap;
     border-bottom: 0;
 
-    .nav-item {
+    @media(min-width: 768px) {
+        height: 4rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: -4rem;
+        margin-left: 220px;
         margin-bottom: 0;
     }
 
+    &.hidden {
+        @media(min-width: 768px) {
+            display: flex;
+        }
+    }
+
+    .nav-item {
+        margin-bottom: 20px;
+
+        @media(min-width: 768px) {
+            margin-bottom: 0;
+        }
+    }
+
     .nav-link {
+        text-align: center;
         border: none;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        padding: 1.25rem;
         transition: $transition;
-        z-index: 20;
 
         &.active {
-            box-shadow: 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+            background-color: transparent;
         }
 
         &:hover:not(.active) {
             text-decoration: underline;
         }
 
-        &:focus {
-            outline: none;
-            box-shadow: inset $focus;
-
+        @media(min-width: 768px) {
+            padding: 1.25rem;
+            z-index: 20;
+    
             &.active {
-                box-shadow: inset $focus, 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+                background-color: white;
+                box-shadow: 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+            }
+    
+            &:focus {
+                outline: none;
+                box-shadow: inset $focus;
+    
+                &.active {
+                    box-shadow: inset $focus, 0 5px 0 white, 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
+                }
             }
         }
     }

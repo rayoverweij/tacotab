@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.scss';
 import logo from './images/logo.svg';
+import { ReactComponent as MenuIcon } from './images/icon-menu.svg';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
+import Collapse from 'react-bootstrap/Collapse';
 
 import Home from './home/Home';
 import Participants from './participants/Participants';
@@ -63,6 +65,7 @@ class App extends React.Component {
         }
 
         this.state = {
+            showmenu: false,
             init: JSON.parse(localStorage.getItem("init")),
             tournament_name: JSON.parse(localStorage.getItem("tournament_name")),
             config: JSON.parse(localStorage.getItem("config")),
@@ -74,6 +77,9 @@ class App extends React.Component {
             draws: JSON.parse(localStorage.getItem("draws"))
         }
 
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.hideMenu = this.hideMenu.bind(this);
+        
         this.updateTournamentName = this.updateTournamentName.bind(this);
         this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
         this.updateSpeakersTwo = this.updateSpeakersTwo.bind(this);
@@ -89,6 +95,20 @@ class App extends React.Component {
     }
 
   
+    // Toggle menu
+    toggleMenu() {
+        if(this.state.showmenu) {
+            this.setState({showmenu: false});
+        } else {
+            this.setState({showmenu: true});
+        }
+    }
+
+    hideMenu() {
+        this.setState({showmenu: false});
+    }
+
+    
     // Global update state methods
     updateTournamentName(name) {
         localStorage.setItem("tournament_name", JSON.stringify(name));
@@ -182,7 +202,7 @@ class App extends React.Component {
         if(this.state.config.divisions !== "2") {
             participants_nav = (
                 <Nav.Item>
-                    <Nav.Link eventKey="participants">Participants</Nav.Link>
+                    <Nav.Link onClick={this.hideMenu} eventKey="participants">Participants</Nav.Link>
                 </Nav.Item>
             );
             participants_panes = (
@@ -199,10 +219,10 @@ class App extends React.Component {
             participants_nav = (
                 <>
                     <Nav.Item>
-                        <Nav.Link eventKey="divone">{this.state.config.divisionNames[0]}</Nav.Link>
+                        <Nav.Link onClick={this.hideMenu} eventKey="divone">{this.state.config.divisionNames[0]}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="divtwo">{this.state.config.divisionNames[1]}</Nav.Link>
+                        <Nav.Link onClick={this.hideMenu} eventKey="divtwo">{this.state.config.divisionNames[1]}</Nav.Link>
                     </Nav.Item>
                 </>
             );
@@ -239,19 +259,28 @@ class App extends React.Component {
                                 <h1>TacoTab</h1>
                             </div>
 
+                            <div id="hamburger">
+                                <MenuIcon
+                                    onClick={this.toggleMenu}
+                                    aria-controls="app-nav"
+                                    aria-expanded={this.state.showmenu} />
+                            </div>
+
                             <Tab.Container id="app-nav" defaultActiveKey="home">
-                                <Nav className="nav-tabs main-nav">
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="home">Home</Nav.Link>
-                                    </Nav.Item>
-                                    {participants_nav}
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="judges">Judges</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="draw">Draw</Nav.Link>
-                                    </Nav.Item>
-                                </Nav>
+                                <Collapse in={this.state.showmenu}>
+                                    <Nav className={`nav-tabs main-nav ${!this.state.showmenu ? "hidden" : ""}`}>
+                                        <Nav.Item>
+                                            <Nav.Link onClick={this.hideMenu} eventKey="home">Home</Nav.Link>
+                                        </Nav.Item>
+                                        {participants_nav}
+                                        <Nav.Item>
+                                            <Nav.Link onClick={this.hideMenu} eventKey="judges">Judges</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link onClick={this.hideMenu} eventKey="draw">Draw</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Collapse>
                                 <Tab.Content>
                                     <Tab.Pane eventKey="home">
                                         <Home
