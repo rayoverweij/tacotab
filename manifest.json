@@ -1,6 +1,9 @@
 {
   "short_name": "TacoTab",
   "name": "TacoTab",
+  "lang": "en-US",
+  "categories": ["education"],
+  "description": "A tabbing app for Bard College's Middle and High School Debating Tournament",
   "icons": [
     {
       "src": "favicon.ico",

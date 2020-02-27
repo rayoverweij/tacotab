@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/tacotab/static/css/main.1593269a.chunk.css",
-    "main.js": "/tacotab/static/js/main.f60344ee.chunk.js",
-    "main.js.map": "/tacotab/static/js/main.f60344ee.chunk.js.map",
+    "main.css": "/tacotab/static/css/main.87463dde.chunk.css",
+    "main.js": "/tacotab/static/js/main.a5e90afe.chunk.js",
+    "main.js.map": "/tacotab/static/js/main.a5e90afe.chunk.js.map",
     "runtime-main.js": "/tacotab/static/js/runtime-main.90fdb388.js",
     "runtime-main.js.map": "/tacotab/static/js/runtime-main.90fdb388.js.map",
     "static/js/2.a8dd7e59.chunk.js": "/tacotab/static/js/2.a8dd7e59.chunk.js",
     "static/js/2.a8dd7e59.chunk.js.map": "/tacotab/static/js/2.a8dd7e59.chunk.js.map",
     "index.html": "/tacotab/index.html",
-    "precache-manifest.3e9054b50ce7a9f2a6b62c83c13c6e07.js": "/tacotab/precache-manifest.3e9054b50ce7a9f2a6b62c83c13c6e07.js",
+    "precache-manifest.a539d4942dc32a844bbc09a47d0d3f0e.js": "/tacotab/precache-manifest.a539d4942dc32a844bbc09a47d0d3f0e.js",
     "service-worker.js": "/tacotab/service-worker.js",
-    "static/css/main.1593269a.chunk.css.map": "/tacotab/static/css/main.1593269a.chunk.css.map",
+    "static/css/main.87463dde.chunk.css.map": "/tacotab/static/css/main.87463dde.chunk.css.map",
     "static/js/2.a8dd7e59.chunk.js.LICENSE": "/tacotab/static/js/2.a8dd7e59.chunk.js.LICENSE",
     "static/media/icon-bullseye.15d5bf74.svg": "/tacotab/static/media/icon-bullseye.15d5bf74.svg",
     "static/media/icon-download.27a70d0c.svg": "/tacotab/static/media/icon-download.27a70d0c.svg",
@@ -31,7 +31,7 @@
   "entrypoints": [
     "static/js/runtime-main.90fdb388.js",
     "static/js/2.a8dd7e59.chunk.js",
-    "static/css/main.1593269a.chunk.css",
-    "static/js/main.f60344ee.chunk.js"
+    "static/css/main.87463dde.chunk.css",
+    "static/js/main.a5e90afe.chunk.js"
   ]
 }
