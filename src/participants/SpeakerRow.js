@@ -41,6 +41,7 @@ class SpeakerRow extends React.Component {
                     <textarea
                         className="cell-valupdate"
                         rows="1"
+                        cols="25"
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}

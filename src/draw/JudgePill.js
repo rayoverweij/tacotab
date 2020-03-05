@@ -75,7 +75,7 @@ class JudgePill extends React.Component {
         );
 
         return (
-            <OverlayTrigger trigger="click" placement="top" overlay={popover} rootClose>
+            <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose>
                 <div className={`judgepill ${this.props.conflict ? "red" : ""}`}>
                     {this.props.judge.name}{this.props.chair ? "\u00A9" : ""}
                 </div>

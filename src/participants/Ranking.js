@@ -167,7 +167,7 @@ class Ranking extends React.Component {
                                             overlay={
                                                 <Tooltip>Total team points</Tooltip>
                                             }>
-                                            <abbr title="">ΣTW</abbr>
+                                            <abbr title="">ΣTP</abbr>
                                         </OverlayTrigger>
                                     </th>
                                 </tr>
@@ -199,7 +199,7 @@ class Ranking extends React.Component {
                                             overlay={
                                                 <Tooltip>Total team points</Tooltip>
                                             }>
-                                            <abbr title="">ΣTW</abbr>
+                                            <abbr title="">ΣTP</abbr>
                                         </OverlayTrigger>
                                     </th>
                                 </tr>
