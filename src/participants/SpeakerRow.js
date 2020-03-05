@@ -12,15 +12,20 @@ class SpeakerRow extends React.Component {
             disqualified: this.props.speaker.disqualified
         }
 
-        this.handleNameUpdate = this.handleNameUpdate.bind(this);
+        this.handleSpeakerNameEdit = this.handleSpeakerNameEdit.bind(this);
+        this.handleSpeakerNameUpdate = this.handleSpeakerNameUpdate.bind(this);
         this.handleDisqUpdate = this.handleDisqUpdate.bind(this);
     }
 
-    handleNameUpdate(event) {
-        const name = event.target.value;
+    handleSpeakerNameEdit(event) {
+        this.setState({name: event.target.value});
+    }
+    
+    handleSpeakerNameUpdate(event) {
+        event.preventDefault();
+        const name = this.state.name;
         const speaker = this.props.speaker;
         speaker.name = name;
-        this.setState({name: name});
         this.props.updateSpeaker(speaker);
     }
 
@@ -45,7 +50,8 @@ class SpeakerRow extends React.Component {
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}
-                        onChange={this.handleNameUpdate} />
+                        onChange={this.handleSpeakerNameEdit}
+                        onBlur={this.handleSpeakerNameUpdate} />
                 </td>
                 <td>
                     {speaker.school}

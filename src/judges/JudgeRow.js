@@ -8,15 +8,29 @@ class JudgeRow extends React.Component {
         super(props);
 
         this.state = {
+            name: this.props.judge.name,
             canChair: this.props.judge.canChair,
             r1: this.props.judge.r1,
             r2: this.props.judge.r2,
             r3: this.props.judge.r3
         }
 
+        this.handleJudgeNameEdit = this.handleJudgeNameEdit.bind(this);
+        this.handleJudgeNameUpdate = this.handleJudgeNameUpdate.bind(this);
         this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
     }
 
+    handleJudgeNameEdit(event) {
+        this.setState({name: event.target.value});
+    }
+
+    handleJudgeNameUpdate(event) {
+        event.preventDefault();
+        const name = this.state.name;
+        const judge = this.props.judge;
+        judge.name = name;
+        this.props.updateJudge(judge);
+    }
 
     handleJudgeToggle(event) {
         const name = event.target.name;
@@ -33,7 +47,17 @@ class JudgeRow extends React.Component {
     render() {
         return (
             <tr>
-                <td className="judge-table-name">{this.props.judge.name}</td>
+                <td className="judge-table-name editable">
+                    <textarea
+                        className="cell-valupdate"
+                        rows="1"
+                        cols="25"
+                        autoComplete="off"
+                        spellCheck="false"
+                        value={this.state.name}
+                        onChange={this.handleJudgeNameEdit}
+                        onBlur={this.handleJudgeNameUpdate} />
+                </td>
                 <td className="judge-table-school">{this.props.judge.school}</td>
                 <td className="cell-low-padding">
                     <Form.Switch
