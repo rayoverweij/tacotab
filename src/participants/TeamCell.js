@@ -1,18 +1,24 @@
 import React from 'react';
-import './TeamCell.scss';
 
 class TeamCell extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             value: this.props.type === "score" ? this.props.speaker.scores[this.props.no] : this.props.speaker.ranks[this.props.no]
         }
-        this.handleChange = this.handleChange.bind(this);
+
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    handleChange(event) {
-        let value = event.target.value;
-        this.setState({value: value});
+    handleEdit(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleUpdate(event) {
+        event.preventDefault();
+        let value = this.state.value;
         if(!value || isNaN(value)) {
             value = 0;
         }
@@ -27,7 +33,8 @@ class TeamCell extends React.Component {
                 maxLength={this.props.type === "score" ? 2 : 1}
                 autoComplete="off"
                 value={this.state.value}
-                onChange={this.handleChange} />
+                onChange={this.handleEdit}
+                onBlur={this.handleUpdate} />
         );
     }
 }

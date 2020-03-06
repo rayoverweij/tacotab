@@ -1,6 +1,7 @@
 import React from 'react';
 import './Judges.scss';
 import { ReactComponent as IconJudge } from '../images/icon-judge.svg';
+import IconTrashFilled from '../images/icon-trash-fill.svg';
 
 import JudgeRow from './JudgeRow';
 import Judge from '../structures/judge';
@@ -102,12 +103,12 @@ class Judges extends React.Component {
                         <tr>
                             <th className="judge-table-name">Name</th>
                             <th>School</th>
-                            <th>Chair?</th>
-                            <th>Round 1?</th>
-                            <th>Round 2?</th>
-                            <th>Round 3?</th>
+                            <th className="judge-table-toggle">Chair?</th>
+                            <th className="judge-table-toggle">Round 1?</th>
+                            <th className="judge-table-toggle">Round 2?</th>
+                            <th className="judge-table-toggle">Round 3?</th>
                             <th className="table-delete">
-                                <div className="icon icon-trash-filled"></div>
+                                <img src={IconTrashFilled} alt="Icon of a trash can" className="icon" />
                             </th>
                         </tr>
                     </thead>
@@ -193,7 +194,7 @@ class Judges extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Col lg={10} xl={8} className="table-col">
+                                    <Col lg={10} xl={9} className="table-col">
                                         {table}
                                     </Col>
                                 </Row>

@@ -1,4 +1,6 @@
 import React from 'react';
+import IconTrash from '../images/icon-trash.svg';
+import IconTrashFilled from '../images/icon-trash-fill.svg';
 
 import Form from 'react-bootstrap/Form';
 
@@ -12,12 +14,15 @@ class JudgeRow extends React.Component {
             canChair: this.props.judge.canChair,
             r1: this.props.judge.r1,
             r2: this.props.judge.r2,
-            r3: this.props.judge.r3
+            r3: this.props.judge.r3,
+            trash: IconTrash
         }
 
         this.handleJudgeNameEdit = this.handleJudgeNameEdit.bind(this);
         this.handleJudgeNameUpdate = this.handleJudgeNameUpdate.bind(this);
         this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
+        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
+        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
     handleJudgeNameEdit(event) {
@@ -43,6 +48,14 @@ class JudgeRow extends React.Component {
         this.props.updateJudge(judge);
     }
 
+    trashOnMouseEnter() {
+        this.setState({trash: IconTrashFilled});
+    }
+
+    trashOnMouseLeave() {
+        this.setState({trash: IconTrash});
+    }
+
     
     render() {
         return (
@@ -59,7 +72,7 @@ class JudgeRow extends React.Component {
                         onBlur={this.handleJudgeNameUpdate} />
                 </td>
                 <td className="judge-table-school">{this.props.judge.school}</td>
-                <td className="cell-low-padding">
+                <td className="judge-table-toggle cell-low-padding">
                     <Form.Switch
                         id={`judge-canchair-${this.props.judge.judgeID}`}
                         name="canChair"
@@ -68,7 +81,7 @@ class JudgeRow extends React.Component {
                         checked={this.state.canChair}
                         className={this.state.canChair ? "on" : "off"} />
                 </td>
-                <td className="cell-low-padding">
+                <td className="judge-table-toggle cell-low-padding">
                     <Form.Switch
                         id={`judge-r1-${this.props.judge.judgeID}`}
                         name="r1"
@@ -77,7 +90,7 @@ class JudgeRow extends React.Component {
                         checked={this.state.r1}
                         className={this.state.r1 ? "on" : "off"} />
                 </td>
-                <td className="cell-low-padding">
+                <td className="judge-table-toggle cell-low-padding">
                     <Form.Switch
                         id={`judge-r2-${this.props.judge.judgeID}`}
                         name="r2"
@@ -86,7 +99,7 @@ class JudgeRow extends React.Component {
                         checked={this.state.r2}
                         className={this.state.r2 ? "on" : "off"} />
                 </td>
-                <td className="cell-low-padding">
+                <td className="judge-table-toggle cell-low-padding">
                     <Form.Switch
                         id={`judge-r3-${this.props.judge.judgeID}`}
                         name="r3"
@@ -95,8 +108,15 @@ class JudgeRow extends React.Component {
                         checked={this.state.r3}
                         className={this.state.r3 ? "on" : "off"} />
                 </td>
-                <td className="table-delete cell-low-padding">
-                    <div onClick={() => this.props.deleteJudge(this.props.judge)} className="icon icon-trash"></div>
+                <td className="table-delete">
+                    <img
+                        src={this.state.trash}
+                        alt="Icon of trash can"
+                        role="button"
+                        className="icon"
+                        onMouseEnter={this.trashOnMouseEnter}
+                        onMouseLeave={this.trashOnMouseLeave}
+                        onClick={() => this.props.deleteJudge(this.props.judge)} />
                 </td>
             </tr>
         );

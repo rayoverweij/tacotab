@@ -1,24 +1,12 @@
-.row-settings {
-    margin-top: 30px;
-}
-
-.row-about {
-    margin-top: 30px;
+#section-about {
+    margin-bottom: 100px; // for small screens
 
     @media(min-width: 992px) {
-        margin-top: 0;
+        margin-top: 0.5rem; // same baseline as page h2
     }
-}
-
-.form-settings {
-    margin-bottom: 1rem;
-}
-
-.button-settings {
-    margin-bottom: 1rem;
 }
 
 #logo-github {
     height: 15px;
-    margin-top: -2px;
+    margin-top: -2px; // center icon with text
 }

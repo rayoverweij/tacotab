@@ -3,6 +3,11 @@ import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 
+import TrashIcon from '../images/icon-trash.svg';
+import TrashIconFilled from '../images/icon-trash-fill.svg';
+import PeopleIcon from '../images/icon-people.svg';
+import PeopleIconFilled from '../images/icon-people-filled.svg';
+
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -19,7 +24,9 @@ class TeamRow extends React.Component {
                 [this.props.team.round1[1], this.props.team.round2[1], this.props.team.round3[1]],
                 [this.props.team.round1[2], this.props.team.round2[2], this.props.team.round3[2]]
             ],
-            showModal: false
+            showModal: false,
+            trash: TrashIcon,
+            people: PeopleIcon
         }
 
         this.setScore = this.setScore.bind(this);
@@ -28,6 +35,10 @@ class TeamRow extends React.Component {
         this.modalHide = this.modalHide.bind(this);
         this.handleUpdateTeamFormChange = this.handleUpdateTeamFormChange.bind(this);
         this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
+        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
+        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
+        this.peopleOnMouseEnter = this.peopleOnMouseEnter.bind(this);
+        this.peopleOnMouseLeave = this.peopleOnMouseLeave.bind(this);
     }
 
 
@@ -84,6 +95,22 @@ class TeamRow extends React.Component {
         this.props.updateTeam(team);
         this.setState({speakers: this.getDistinctSpeakers()});
         this.modalHide();
+    }
+
+    trashOnMouseEnter() {
+        this.setState({trash: TrashIconFilled});
+    }
+
+    trashOnMouseLeave() {
+        this.setState({trash: TrashIcon});
+    }
+
+    peopleOnMouseEnter() {
+        this.setState({people: PeopleIconFilled});
+    }
+
+    peopleOnMouseLeave() {
+        this.setState({people: PeopleIcon});
     }
 
 
@@ -252,8 +279,22 @@ class TeamRow extends React.Component {
                     <th rowSpan={this.state.speakers.length + 3} className="cell-teamname">
                         {team.teamName}
                         <br />
-                        <div className="icon-people" onClick={this.modalShow}></div>
-                        <div className="icon-trash" onClick={() => this.props.deleteTeam(team)}></div>
+                        <img
+                            src={this.state.people}
+                            alt="Icon of multiple people"
+                            role="button"
+                            className="icon"
+                            onMouseEnter={this.peopleOnMouseEnter}
+                            onMouseLeave={this.peopleOnMouseLeave}
+                            onClick={this.modalShow} />
+                        <img
+                            src={this.state.trash}
+                            alt="Icon of trash can"
+                            role="button"
+                            className="icon"
+                            onMouseEnter={this.trashOnMouseEnter}
+                            onMouseLeave={this.trashOnMouseLeave}
+                            onClick={() => this.props.deleteTeam(team)} />
                     </th>
                 </tr>
                 {speakerRows}

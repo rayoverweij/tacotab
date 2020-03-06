@@ -1,17 +1,10 @@
-@import '_vars';
+@import 'vars';
 
 .container-fluid {
     padding-left: 0;
     padding-right: 0;
 }
 
-.row {
-    margin: 0;
-}
-
-.col {
-    padding: 0;
-}
 
 #logo {
     height: 4rem;
@@ -33,6 +26,7 @@
     }
 }
 
+
 #hamburger {
     height: 4rem;
     position: absolute;
@@ -48,11 +42,12 @@
         transition: $transition;
 
         &:hover {
-            fill: $cyan;
+            fill: var(--primary);
             cursor: pointer;
         }
     }
 }
+
 
 .main-nav {
     flex-direction: column;
@@ -172,6 +167,7 @@
         }
     }
 }
+
 
 .sub-nav-link {
     transition: $transition;

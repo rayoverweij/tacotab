@@ -1,4 +1,6 @@
 import React from 'react';
+import IconTrash from '../images/icon-trash.svg';
+import IconTrashFilled from '../images/icon-trash-fill.svg';
 
 import Form from 'react-bootstrap/Form';
 
@@ -9,12 +11,15 @@ class SpeakerRow extends React.Component {
 
         this.state = {
             name: this.props.speaker.name,
-            disqualified: this.props.speaker.disqualified
+            disqualified: this.props.speaker.disqualified,
+            trash: IconTrash
         }
 
         this.handleSpeakerNameEdit = this.handleSpeakerNameEdit.bind(this);
         this.handleSpeakerNameUpdate = this.handleSpeakerNameUpdate.bind(this);
         this.handleDisqUpdate = this.handleDisqUpdate.bind(this);
+        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
+        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
     handleSpeakerNameEdit(event) {
@@ -35,6 +40,14 @@ class SpeakerRow extends React.Component {
         speaker.disqualified = checked;
         this.setState({disqualified: checked});
         this.props.updateSpeaker(speaker);
+    }
+
+    trashOnMouseEnter() {
+        this.setState({trash: IconTrashFilled});
+    }
+
+    trashOnMouseLeave() {
+        this.setState({trash: IconTrash});
     }
     
     render() {
@@ -66,7 +79,14 @@ class SpeakerRow extends React.Component {
                         className={this.state.disqualified ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    <div onClick={() => this.props.deleteSpeaker(speaker)} className="icon icon-trash"></div>
+                    <img
+                        src={this.state.trash}
+                        alt="Icon of trash can"
+                        role="button"
+                        className="icon"
+                        onMouseEnter={this.trashOnMouseEnter}
+                        onMouseLeave={this.trashOnMouseLeave}
+                        onClick={() => this.props.deleteSpeaker(speaker)} />
                 </td>
             </tr>
         );

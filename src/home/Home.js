@@ -41,6 +41,7 @@ class Home extends React.Component {
                             <Tab.Pane eventKey="settings">
                                 <Settings
                                     config={this.props.config}
+                                    tournamentName={this.props.tournamentName}
                                     updateTournamentName={this.props.updateTournamentName}
                                     updateConfig={this.props.updateConfig}
                                     importTournament={this.props.importTournament} />

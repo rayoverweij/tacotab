@@ -1,5 +1,6 @@
 import React from 'react';
 import './Speakers.scss';
+import IconTrashFilled from '../images/icon-trash-fill.svg';
 
 import SpeakerRow from './SpeakerRow';
 import Debater from '../structures/debater';
@@ -102,7 +103,7 @@ class Speakers extends React.Component {
                                 </OverlayTrigger>
                             </th>
                             <th className="table-delete">
-                                <div className="icon icon-trash-filled"></div>
+                                <img src={IconTrashFilled} alt="Icon of a trash can" className="icon" />
                             </th>
                         </tr>
                     </thead>

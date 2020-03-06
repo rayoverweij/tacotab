@@ -17,7 +17,7 @@ class Settings extends React.Component {
         super(props);
 
         this.state = {
-            nameForm: ""
+            nameForm: this.props.tournamentName
         }
 
         this.handleNameFormChange = this.handleNameFormChange.bind(this);
@@ -40,7 +40,6 @@ class Settings extends React.Component {
         event.preventDefault();
         const name = this.state.nameForm;
         this.props.updateTournamentName(name);
-        this.setState({nameForm: ""});
     }
 
     importData(event) {
@@ -89,102 +88,86 @@ class Settings extends React.Component {
             <div>
                 <Row>
                     <Col lg={8}>
-                        <Row>
-                            <Col>
-                                <h2>Settings</h2>
-                                <p>Manage your tournament.</p>
-                            </Col>
-                        </Row>
-                        <Row className="row-settings">
-                            <Col>
-                                <h3>Change tournament name</h3>
-                                <Form onSubmit={this.handleNameFormSubmit} className="form-settings">
-                                    <Form.Row>
-                                        <Col sm={9} xl={6}>
+                        <h2>Settings</h2>
+                        <p>Manage your tournament.</p>
+                        <section>
+                            <h3>Change tournament name</h3>
+                            <Form onSubmit={this.handleNameFormSubmit}>
+                                <Form.Row>
+                                    <Col sm={9} xl={6}>
+                                        <Form.Control
+                                            name="tournament-name"
+                                            type="text"
+                                            placeholder="New name"
+                                            value={this.state.nameForm}
+                                            onChange={this.handleNameFormChange} />
+                                    </Col>
+                                    <Col>
+                                        <Button
+                                            variant="primary"
+                                            type="submit">
+                                            Save
+                                        </Button>
+                                    </Col>
+                                </Form.Row>
+                            </Form>
+                        </section>
+                        <section>
+                            <h3>Import tournament data</h3>
+                            <p>Open files generated with the Export function below. <strong>Note:</strong> this will override all current data!</p>
+                            <Form onSubmit={this.importData}>
+                                <Form.Row>
+                                    <Col xs={9} xl={6}>
+                                        <div className="custom-file">
                                             <Form.Control
-                                                name="tournament-name"
-                                                type="text"
-                                                placeholder="New name"
-                                                value={this.state.nameForm}
-                                                onChange={this.handleNameFormChange} />
-                                        </Col>
-                                        <Col>
-                                            <Button
-                                                variant="primary"
-                                                type="submit">
-                                                Save
-                                            </Button>
-                                        </Col>
-                                    </Form.Row>
-                                </Form>
-                            </Col>
-                        </Row>
-                        <Row className="row-settings">
-                            <Col>
-                                <h3>Import tournament data</h3>
-                                <p>Open files generated with the Export function below. <strong>Note:</strong> this will override all current data!</p>
-                                <Form onSubmit={this.importData} className="form-settings">
-                                    <Form.Row>
-                                        <Col xs={9} xl={6}>
-                                            <div className="custom-file">
-                                                <Form.Control
-                                                    name="import"
-                                                    id="import-settings"
-                                                    className="custom-file-input"
-                                                    type="file" />
-                                                <label className="custom-file-label" htmlFor="customFile">Choose file</label>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <Button variant="primary" type="submit">Import</Button>
-                                        </Col>
-                                    </Form.Row>
-                                </Form>
-                            </Col>
-                        </Row>
-                        <Row className="row-settings">
-                            <Col>
-                                <h3>Export tournament data</h3>
-                                <p>Save all tournament data to a file on your PC.</p>
-                                <Button
-                                    variant="primary"
-                                    className="button-settings"
-                                    onClick={this.exportData}>
-                                        <IconDownload className="btn-icon" alt="Download icon" />
-                                        Export data
-                                    </Button>
-                            </Col>
-                        </Row>
-                        <Row className="row-settings">
-                            <Col>
-                                <h3>Clear tournament data</h3>
-                                <p>Warning: this will delete <strong>all</strong> entered data. Save your data using the Export function first.</p>
-                                <Button
-                                    variant="danger"
-                                    className="button-settings"
-                                    onClick={this.clearData}>
-                                        <IconDelete className="btn-icon" alt="Icon of a trash can" />
-                                        Clear data
-                                    </Button>
-                            </Col>
-                        </Row>
+                                                name="import"
+                                                id="import-settings"
+                                                className="custom-file-input"
+                                                type="file" />
+                                            <label className="custom-file-label" htmlFor="customFile">Choose file</label>
+                                        </div>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="primary" type="submit">Import</Button>
+                                    </Col>
+                                </Form.Row>
+                            </Form>
+                        </section>
+                        <section>
+                            <h3>Export tournament data</h3>
+                            <p>Save all tournament data to a file on your PC.</p>
+                            <Button
+                                variant="primary"
+                                onClick={this.exportData}>
+                                <IconDownload className="btn-icon" alt="Download icon" />
+                                Export data
+                            </Button>
+                        </section>
+                        <section>
+                            <h3>Clear tournament data</h3>
+                            <p>Warning: this will delete <strong>all</strong> entered data. Save your data using the Export function first.</p>
+                            <Button
+                                variant="danger"
+                                onClick={this.clearData}>
+                                <IconDelete className="btn-icon" alt="Icon of a trash can" />
+                                Clear data
+                            </Button>
+                        </section>
                     </Col>
                     <Col lg={4}>
-                        <Row className="row-about">
-                            <Col>
-                                <h3>About</h3>
-                                <p>
-                                    TacoTab β version 0.2.3<br />
-                                    <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
-                                    <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
-                                        GitHub
-                                    </a>
-                                </p>
-                                <p>
-                                    Built by <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Rayo Verweij</a> for the <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">Bard Debate Union</a>&mdash;Bard's best sports team.
-                                </p>
-                            </Col>
-                        </Row>
+                        <section id="section-about">
+                            <h3>About</h3>
+                            <p>
+                                TacoTab β version 0.2.3<br />
+                                <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
+                                <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
+                                    GitHub
+                                </a>
+                            </p>
+                            <p>
+                                Built by <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Rayo Verweij</a> for the <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">Bard Debate Union</a>&mdash;Bard's best sports team.
+                            </p>
+                        </section>
                     </Col>
                 </Row>
             </div>

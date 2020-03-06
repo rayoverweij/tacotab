@@ -1,15 +1,9 @@
-@import '../_vars';
-
 .table {
     tbody + tbody {
         border-top-width: 3px;
     }
 
     th, td {
-        &.editable {
-            padding: 5px 0 0;
-        }
-
         &.disabled {
             textarea {
                 display: none;
@@ -28,24 +22,6 @@
 
 .cell-teamname {
     vertical-align: top !important;
-
-    .icon-people {
-        display: inline-block;
-        width: 1.3rem;
-        height: 1.3rem;
-        margin-right: 5px;
-        background-image: url(../images/icon-people.svg);
-        cursor: pointer;
-        transition: $transition;
-    
-        &:hover {
-            background-image: url(../images/icon-people-filled.svg);
-        }
-    }
-
-    .icon-trash {
-        display: inline-block;
-    }
 }
 
 .form-update-team-speaker {
@@ -54,6 +30,6 @@
     }
 
     p {
-        font-weight: 600;
+        font-weight: bold;
     }
 }
