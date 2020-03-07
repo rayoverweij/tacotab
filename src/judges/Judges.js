@@ -68,19 +68,28 @@ class Judges extends React.Component {
 
     deleteJudge(judge) {
         const draws = JSON.parse(localStorage.getItem("draws"));
+        
+        // Check if the judge has already been part of a round
+        let inRound = false;
         for (const round of draws) {
-            for(const pairs of Object.keys(round)) {
-                for (const pair of round[pairs]) {
-                    if(pair.chair === judge.judgeID || pair.wings.includes(judge.judgeID)) {
-                        alert("This judge has already taken part in a round. You can't delete them anymore. You can still change their availability for each round.");
-                        return;
-                    }
+            for(const pair of round.pairings_one) {
+                if(pair.chair === judge.judgeID || pair.wings.includes(judge.judgeID)) {
+                    inRound = true;
+                }
+            }
+            for(const pair of round.pairings_two) {
+                if(pair.chair === judge.judgeID || pair.wings.includes(judge.judgeID)) {
+                    inRound = true;
                 }
             }
         }
+        if(inRound) {
+            alert("This judge has already taken part in a round. You can't delete them anymore. You can still change their availability for each round.");
+            return false;
+        }
 
+        // Confirm deletion
         const conf = window.confirm(`Are you sure you want to delete judge ${judge.name}?`);
-
         if(conf) {
             let judges = this.props.judges;
 
