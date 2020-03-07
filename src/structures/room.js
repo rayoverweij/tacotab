@@ -6,7 +6,7 @@ class Room {
     wings;
 
     constructor(prop, opp, chair, wings) {
-        this.room = "[room]";
+        this.room = "";
         this.prop = prop;
         this.opp = opp;
         this.chair = chair;

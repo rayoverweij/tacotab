@@ -36,8 +36,8 @@ class JudgePill extends React.Component {
             <Popover className="judgepill-popover">
                 <Popover.Title as="h3">Switch rooms</Popover.Title>
                 <Popover.Content>
-                    {(this.props.draws.pairings_one.map(room => room.room).includes("[room]") ||
-                      this.props.draws.pairings_two.map(room => room.room).includes("[room]") )
+                    {(this.props.draws.pairings_one.map(room => room.room).includes("") ||
+                      this.props.draws.pairings_two.map(room => room.room).includes("") )
                         ?
                         <p>You need to assign each round to a room before you can switch judges.</p>
                         :

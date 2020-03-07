@@ -5,6 +5,14 @@
 .draw-table-one {
     margin-bottom: 3rem;
 }
+    
+.draw-table-room-cell {
+    width: 1%; // cell width becomes textarea width
+
+    textarea {
+        margin-right: 5px;
+    }
+}
 
 .draw-table-team-cell {
     width: 20%;

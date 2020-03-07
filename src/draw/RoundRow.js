@@ -15,6 +15,12 @@ class RoundRow extends React.Component {
         this.updateRoom = this.updateRoom.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if(this.props.pair.room !== prevProps.pair.room) {
+            this.setState({room: this.props.pair.room});
+        }
+    }
+
 
     handleRoomChange(event) {
         const newRoom = event.target.value;
@@ -96,22 +102,23 @@ class RoundRow extends React.Component {
 
         return (
             <tr>
-                <td className="editable">
+                <td className="editable draw-table-room-cell">
                     <textarea
                         className="cell-valupdate"
                         rows="1"
                         cols="12"
                         autoComplete="off"
+                        placeholder="room"
                         value={this.state.room}
                         onChange={this.handleRoomChange} />
                 </td>
                 <td className="draw-table-team-cell">
-                    <span className={team_conflict ? "orange" : ""} title="These teams have debated each other already">
+                    <span className={team_conflict ? "orange" : ""}>
                         {prop.teamName}
                     </span>
                 </td>
                 <td className="draw-table-team-cell">
-                    <span className={team_conflict ? "orange" : ""} title="These teams have debated each other already">
+                    <span className={team_conflict ? "orange" : ""}>
                         {opp.teamName}
                     </span>
                 </td>
