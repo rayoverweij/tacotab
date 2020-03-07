@@ -16,7 +16,7 @@ class Participants extends React.Component {
     render() {
         return (
             <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
-                <Row className="part-view">
+                <Row>
                     <Col md={3} lg={2}>
                         <Nav variant="pills">
                             <Nav.Item>

@@ -49,6 +49,13 @@
 }
 
 
+.collapse:not(.show) {
+    @media(min-width: 768px) {
+        display: flex;
+    }
+}
+
+
 .main-nav {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -61,12 +68,6 @@
         margin-top: -4rem;
         margin-left: 220px;
         margin-bottom: 0;
-    }
-
-    &.hidden {
-        @media(min-width: 768px) {
-            display: flex;
-        }
     }
 
     .nav-item {
@@ -88,9 +89,15 @@
 
         &.active {
             background-color: transparent;
+            color: black;
         }
 
         &:hover:not(.active) {
+            text-decoration: underline;
+        }
+
+        &:focus {
+            outline: none;
             text-decoration: underline;
         }
 
@@ -122,7 +129,7 @@
             }
     
             &:focus {
-                outline: none;
+                text-decoration: none;
                 box-shadow: inset $focus;
     
                 &.active {
@@ -134,7 +141,7 @@
 }
 
 
-#app-container > .tab-content {
+.app > .tab-content {
     height: calc(100vh - 4rem);
     background-color: white;
     box-shadow: $card;

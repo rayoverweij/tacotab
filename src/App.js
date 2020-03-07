@@ -4,8 +4,6 @@ import logo from './images/logo.svg';
 import { ReactComponent as MenuIcon } from './images/icon-menu.svg';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Collapse from 'react-bootstrap/Collapse';
@@ -78,7 +76,6 @@ class App extends React.Component {
         }
 
         this.toggleMenu = this.toggleMenu.bind(this);
-        this.hideMenu = this.hideMenu.bind(this);
         
         this.updateTournamentName = this.updateTournamentName.bind(this);
         this.updateSpeakersOne = this.updateSpeakersOne.bind(this);
@@ -102,10 +99,6 @@ class App extends React.Component {
         } else {
             this.setState({showmenu: true});
         }
-    }
-
-    hideMenu() {
-        this.setState({showmenu: false});
     }
 
     
@@ -202,7 +195,7 @@ class App extends React.Component {
         if(this.state.config.divisions !== "2") {
             participants_nav = (
                 <Nav.Item>
-                    <Nav.Link onClick={this.hideMenu} eventKey="participants">Participants</Nav.Link>
+                    <Nav.Link eventKey="participants">Participants</Nav.Link>
                 </Nav.Item>
             );
             participants_panes = (
@@ -219,10 +212,10 @@ class App extends React.Component {
             participants_nav = (
                 <>
                     <Nav.Item>
-                        <Nav.Link onClick={this.hideMenu} eventKey="divone">{this.state.config.divisionNames[0]}</Nav.Link>
+                        <Nav.Link eventKey="divone">{this.state.config.divisionNames[0]}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link onClick={this.hideMenu} eventKey="divtwo">{this.state.config.divisionNames[1]}</Nav.Link>
+                        <Nav.Link eventKey="divtwo">{this.state.config.divisionNames[1]}</Nav.Link>
                     </Nav.Item>
                 </>
             );
@@ -250,74 +243,71 @@ class App extends React.Component {
 
 
         return (
-            <div>
+            <>
                 <Container fluid="true" className="app">
-                    <Row>
-                        <Col id="app-container">
-                            <div id="logo">
-                                <img src={logo} alt="TacoTab logo" />
-                                <h1>TacoTab</h1>
-                            </div>
+                    <div id="logo">
+                        <img src={logo} alt="TacoTab logo" />
+                        <h1>TacoTab</h1>
+                    </div>
 
-                            <div id="hamburger">
-                                <MenuIcon
-                                    onClick={this.toggleMenu}
-                                    aria-controls="app-nav"
-                                    aria-expanded={this.state.showmenu} />
-                            </div>
+                    <div id="hamburger">
+                        <MenuIcon
+                            onClick={this.toggleMenu}
+                            role="button"
+                            aria-controls="app-nav"
+                            aria-expanded={this.state.showmenu} />
+                    </div>
 
-                            <Tab.Container id="app-nav" defaultActiveKey="home">
-                                <Collapse in={this.state.showmenu}>
-                                    <Nav className={`nav-tabs main-nav ${!this.state.showmenu ? "hidden" : ""}`}>
-                                        <Nav.Item>
-                                            <Nav.Link onClick={this.hideMenu} eventKey="home">Home</Nav.Link>
-                                        </Nav.Item>
-                                        {participants_nav}
-                                        <Nav.Item>
-                                            <Nav.Link onClick={this.hideMenu} eventKey="judges">Judges</Nav.Link>
-                                        </Nav.Item>
-                                        <Nav.Item>
-                                            <Nav.Link onClick={this.hideMenu} eventKey="draw">Draw</Nav.Link>
-                                        </Nav.Item>
-                                    </Nav>
-                                </Collapse>
-                                <Tab.Content>
-                                    <Tab.Pane eventKey="home">
-                                        <Home
-                                            tournamentName={this.state.tournament_name}
-                                            config={this.state.config}
-                                            updateTournamentName={this.updateTournamentName}
-                                            updateConfig={this.updateConfig}
-                                            importTournament={this.importTournament} />
-                                    </Tab.Pane>
-                                    {participants_panes}
-                                    <Tab.Pane eventKey="judges">
-                                        <Judges
-                                            judges={this.state.judges}
-                                            updateJudges={this.updateJudges}
-                                            getTotalTeams={this.getTotalTeams} />
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="draw">
-                                        <Draw
-                                            config={this.state.config}
-                                            speakers_one={this.state.speakers_one}
-                                            speakers_two={this.state.speakers_two}
-                                            teams_one={this.state.teams_one}
-                                            teams_two={this.state.teams_two}
-                                            judges={this.state.judges}
-                                            draws={this.state.draws} />
-                                    </Tab.Pane>
-                                </Tab.Content>
-                            </Tab.Container>
-                        </Col>
-                    </Row>
+                    <Tab.Container id="app-nav" defaultActiveKey="home">
+                        <Collapse in={this.state.showmenu}>
+                            <Nav className="main-nav">
+                                <Nav.Item>
+                                    <Nav.Link eventKey="home">Home</Nav.Link>
+                                </Nav.Item>
+                                {participants_nav}
+                                <Nav.Item>
+                                    <Nav.Link eventKey="judges">Judges</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="draw">Draw</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Collapse>
+                        <Tab.Content>
+                            <Tab.Pane eventKey="home">
+                                <Home
+                                    tournamentName={this.state.tournament_name}
+                                    config={this.state.config}
+                                    updateTournamentName={this.updateTournamentName}
+                                    updateConfig={this.updateConfig}
+                                    importTournament={this.importTournament} />
+                            </Tab.Pane>
+                            {participants_panes}
+                            <Tab.Pane eventKey="judges">
+                                <Judges
+                                    judges={this.state.judges}
+                                    updateJudges={this.updateJudges}
+                                    getTotalTeams={this.getTotalTeams} />
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="draw">
+                                <Draw
+                                    config={this.state.config}
+                                    speakers_one={this.state.speakers_one}
+                                    speakers_two={this.state.speakers_two}
+                                    teams_one={this.state.teams_one}
+                                    teams_two={this.state.teams_two}
+                                    judges={this.state.judges}
+                                    draws={this.state.draws} />
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Tab.Container>
                 </Container>
 
                 <SetupModal
                     init={this.state.init}
                     initializeTournament={this.initializeTournament}
                     importTournament={this.importTournament} />
-            </div>
+            </>
         );
     }
 }
