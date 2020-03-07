@@ -67,7 +67,6 @@ class RoundRow extends React.Component {
 
         // Look for institutional judge conflicts
         let chair_conflict = false;
-
         let speakers_in_teams = [];
         if(round === 1) {
             prop.round1.forEach(sp => speakers_in_teams.push(speakers.find(el => el.debaterID.toString() === sp)));
@@ -83,8 +82,17 @@ class RoundRow extends React.Component {
         speakers_in_teams
             .filter(sp => sp !== undefined)
             .forEach(sp => speaker_schools.push(sp.school));
-
         if(speaker_schools.includes(chair.school)) chair_conflict = true;
+
+        // Check whether the teams have met before
+        let team_conflict = false;
+        if(round === 2) {
+            if(prop.opponents[0] === opp.teamID) team_conflict = true;
+        }
+        if(round === 3) {
+            if(prop.opponents[0] === opp.teamID || prop.opponents[1] === opp.teamID) team_conflict = true;
+        }
+
 
         return (
             <tr>
@@ -98,10 +106,14 @@ class RoundRow extends React.Component {
                         onChange={this.handleRoomChange} />
                 </td>
                 <td className="draw-table-team-cell">
-                    {prop.teamName}
+                    <span className={team_conflict ? "orange" : ""} title="These teams have debated each other already">
+                        {prop.teamName}
+                    </span>
                 </td>
                 <td className="draw-table-team-cell">
-                    {opp.teamName}
+                    <span className={team_conflict ? "orange" : ""} title="These teams have debated each other already">
+                        {opp.teamName}
+                    </span>
                 </td>
                 <td>
                     <div className="judgepill-container">
