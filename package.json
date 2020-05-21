@@ -1,28 +1,35 @@
 {
   "name": "tacotab",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "author": {
     "name": "Rayo Verweij",
     "email": "rayo.verweij@live.nl",
     "url": "https://rayo.dev"
   },
   "license": "MIT",
-  "description": "A tabbing app for Bard College's Middle and High School Debating Tournament",
+  "description": "A tabbing app for small World Schools-like debating tournaments",
   "private": true,
   "homepage": "https://rayo.dev/tacotab",
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.41",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "bootstrap": "^4.5.0",
     "bs-custom-file-input": "^1.3.4",
     "gh-pages": "^2.2.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-bootstrap-icons": "^1.0.2-alpha3",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "3.4.1",
+    "typescript": "^3.7.5"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
