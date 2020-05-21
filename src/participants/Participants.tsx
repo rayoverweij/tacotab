@@ -1,6 +1,6 @@
 import React from 'react';
 import Speakers from './Speakers';
-//import Teams from './Teams';
+import Teams from './Teams';
 //import Ranking from './Ranking';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
@@ -54,7 +54,7 @@ class Participants extends React.Component<ParticipantsProps> {
                                     teams={this.props.teams}
                                     updateSpeakers={this.props.updateSpeakers} />
                             </Tab.Pane>
-                            {/* <Tab.Pane eventKey="teams">
+                            <Tab.Pane eventKey="teams">
                                 <Teams
                                     div={this.props.div}
                                     speakers={this.props.speakers}
@@ -62,7 +62,7 @@ class Participants extends React.Component<ParticipantsProps> {
                                     updateSpeakers={this.props.updateSpeakers}
                                     updateTeams={this.props.updateTeams} />
                             </Tab.Pane>
-                            <Tab.Pane eventKey="ranking">
+                            {/* <Tab.Pane eventKey="ranking">
                                 <Ranking
                                     speakers={this.props.speakers}
                                     teams={this.props.teams} />
