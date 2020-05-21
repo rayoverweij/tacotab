@@ -49,13 +49,6 @@
 }
 
 
-#app-nav .collapse:not(.show) {
-    @media(min-width: 768px) {
-        display: flex;
-    }
-}
-
-
 .main-nav {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -68,6 +61,12 @@
         margin-top: -4rem;
         margin-left: 220px;
         margin-bottom: 0;
+    }
+
+    &.collapse:not(.show) {
+        @media(min-width: 768px) {
+            display: flex;
+        }
     }
 
     .nav-item {

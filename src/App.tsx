@@ -3,6 +3,7 @@ import './App.scss';
 import logo from './images/logo.svg';
 import pgk from '../package.json';
 import SetupScreen from './setup/SetupScreen';
+import Home from './home/Home';
 import { Debater } from './types/Debater';
 import { Team } from './types/Team';
 import { Judge } from './types/Judge';
@@ -191,6 +192,57 @@ class App extends React.Component<AppProps, AppState> {
 
 
     render() {
+        let participants_nav, participants_panes;
+        if(this.state.config.numDivisions !== 2) {
+            participants_nav = (
+                <Nav.Item>
+                    <Nav.Link eventKey="participants">Participants</Nav.Link>
+                </Nav.Item>
+            );
+            // participants_panes = (
+            //     <Tab.Pane eventKey="participants">
+            //         <Participants
+            //             speakers={this.state.speakers_one}
+            //             teams={this.state.teams_one}
+            //             updateSpeakers={this.updateSpeakersOne}
+            //             updateTeams={this.updateTeamsOne}
+            //             div="one" />
+            //     </Tab.Pane>
+            // );
+        } else {
+            participants_nav = (
+                <>
+                    <Nav.Item>
+                        <Nav.Link eventKey="divone">{this.state.config.divisionNames![0]}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="divtwo">{this.state.config.divisionNames![1]}</Nav.Link>
+                    </Nav.Item>
+                </>
+            );
+            // participants_panes = (
+            //     <>
+            //         <Tab.Pane eventKey="divone">
+            //             <Participants
+            //                 speakers={this.state.speakers_one}
+            //                 teams={this.state.teams_one}
+            //                 updateSpeakers={this.updateSpeakersOne}
+            //                 updateTeams={this.updateTeamsOne}
+            //                 div="one" />
+            //         </Tab.Pane>
+            //         <Tab.Pane eventKey="divtwo">
+            //             <Participants
+            //                 speakers={this.state.speakers_two}
+            //                 teams={this.state.teams_two}
+            //                 updateSpeakers={this.updateSpeakersTwo}
+            //                 updateTeams={this.updateTeamsTwo}
+            //                 div="two" />
+            //         </Tab.Pane>
+            //     </>
+            // );
+        }
+
+
         return (
             <>
             <Container fluid className="app">
@@ -223,7 +275,31 @@ class App extends React.Component<AppProps, AppState> {
                         </Nav>
                     </Collapse>
                     <Tab.Content>
-
+                        <Tab.Pane eventKey="home">
+                            <Home
+                                tournamentName={this.state.tournamentName}
+                                config={this.state.config}
+                                updateTournamentName={this.updateTournamentName}
+                                updateConfig={this.updateConfig}
+                                importTournament={this.importTournament} />
+                        </Tab.Pane>
+                        {participants_panes}
+                        {/* <Tab.Pane eventKey="judges">
+                            <Judges
+                                judges={this.state.judges}
+                                updateJudges={this.updateJudges}
+                                getTotalTeams={this.getTotalTeams} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="draw">
+                            <Draw
+                                config={this.state.config}
+                                speakers_one={this.state.speakers_one}
+                                speakers_two={this.state.speakers_two}
+                                teams_one={this.state.teams_one}
+                                teams_two={this.state.teams_two}
+                                judges={this.state.judges}
+                                draws={this.state.draws} />
+                        </Tab.Pane> */}
                     </Tab.Content>
                 </Tab.Container>
             </Container>
