@@ -1,0 +1,35 @@
+.table {
+    tbody + tbody {
+        border-top-width: 3px;
+    }
+
+    th, td {
+        &.disabled {
+            textarea {
+                display: none;
+            }
+        }
+    }
+
+    .row-total {
+        font-style: italic;
+    }
+
+    .row-wins {
+        border-top: 2px solid #DEE2E6;
+    }
+}
+
+.cell-teamname {
+    vertical-align: top !important;
+}
+
+.form-update-team-speaker {
+    &:not(:first-of-type) {
+        margin-top: 20px;
+    }
+
+    p {
+        font-weight: bold;
+    }
+}
