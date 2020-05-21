@@ -4,7 +4,8 @@ import logo from './images/logo.svg';
 import pgk from '../package.json';
 import SetupScreen from './setup/SetupScreen';
 import Home from './home/Home';
-import { Debater } from './types/Debater';
+import Participants from './participants/Participants';
+import { Speaker } from './types/Speaker';
 import { Team } from './types/Team';
 import { Judge } from './types/Judge';
 import { Draw } from './types/Draw';
@@ -23,8 +24,8 @@ type AppState = {
     init: boolean,
     tournamentName: string,
     config: Config,
-    speakersOne: Debater[],
-    speakersTwo: Debater[],
+    speakersOne: Speaker[],
+    speakersTwo: Speaker[],
     teamsOne: Team[],
     teamsTwo: Team[],
     judges: Judge[],
@@ -199,16 +200,16 @@ class App extends React.Component<AppProps, AppState> {
                     <Nav.Link eventKey="participants">Participants</Nav.Link>
                 </Nav.Item>
             );
-            // participants_panes = (
-            //     <Tab.Pane eventKey="participants">
-            //         <Participants
-            //             speakers={this.state.speakers_one}
-            //             teams={this.state.teams_one}
-            //             updateSpeakers={this.updateSpeakersOne}
-            //             updateTeams={this.updateTeamsOne}
-            //             div="one" />
-            //     </Tab.Pane>
-            // );
+            participants_panes = (
+                <Tab.Pane eventKey="participants">
+                    <Participants
+                        div={1}
+                        speakers={this.state.speakersOne}
+                        teams={this.state.teamsOne}
+                        updateSpeakers={this.updateSpeakersOne}
+                        updateTeams={this.updateTeamsOne} />
+                </Tab.Pane>
+            );
         } else {
             participants_nav = (
                 <>
@@ -220,26 +221,26 @@ class App extends React.Component<AppProps, AppState> {
                     </Nav.Item>
                 </>
             );
-            // participants_panes = (
-            //     <>
-            //         <Tab.Pane eventKey="divone">
-            //             <Participants
-            //                 speakers={this.state.speakers_one}
-            //                 teams={this.state.teams_one}
-            //                 updateSpeakers={this.updateSpeakersOne}
-            //                 updateTeams={this.updateTeamsOne}
-            //                 div="one" />
-            //         </Tab.Pane>
-            //         <Tab.Pane eventKey="divtwo">
-            //             <Participants
-            //                 speakers={this.state.speakers_two}
-            //                 teams={this.state.teams_two}
-            //                 updateSpeakers={this.updateSpeakersTwo}
-            //                 updateTeams={this.updateTeamsTwo}
-            //                 div="two" />
-            //         </Tab.Pane>
-            //     </>
-            // );
+            participants_panes = (
+                <>
+                    <Tab.Pane eventKey="divone">
+                        <Participants
+                            div={1}
+                            speakers={this.state.speakersOne}
+                            teams={this.state.teamsOne}
+                            updateSpeakers={this.updateSpeakersOne}
+                            updateTeams={this.updateTeamsOne} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="divtwo">
+                        <Participants
+                            div={2}
+                            speakers={this.state.speakersTwo}
+                            teams={this.state.teamsTwo}
+                            updateSpeakers={this.updateSpeakersTwo}
+                            updateTeams={this.updateTeamsTwo} />
+                    </Tab.Pane>
+                </>
+            );
         }
 
 
@@ -265,7 +266,7 @@ class App extends React.Component<AppProps, AppState> {
                             <Nav.Item>
                                 <Nav.Link eventKey="home">Home</Nav.Link>
                             </Nav.Item>
-
+                            {participants_nav}
                             <Nav.Item>
                                 <Nav.Link eventKey="judges">Judges</Nav.Link>
                             </Nav.Item>

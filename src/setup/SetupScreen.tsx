@@ -47,8 +47,8 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
 
 
     handleSetupFormChange(event: ChangeEvent<HTMLInputElement>) {
-        const name = event.currentTarget.name;
-        let value: string|number = event.currentTarget.value;
+        const name = event.target.name;
+        let value: string|number = event.target.value;
         if(name === "numDivisions") value = Number(value);
         let setupFormState = {...this.state.setupForm};
         setupFormState[name] = value;

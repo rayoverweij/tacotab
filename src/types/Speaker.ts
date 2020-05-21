@@ -1,5 +1,5 @@
-export type Debater = {
-    debaterID: number,
+export type Speaker = {
+    speakerID: number,
     name: string,
     school: string,
     scores: number[],
