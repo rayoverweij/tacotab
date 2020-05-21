@@ -1,0 +1,53 @@
+.setup-modal-backdrop {
+    background-color: white;
+
+    &.show {
+        opacity: 1;
+    }
+}
+
+.setup-modal-dialog > .modal-content {
+    border: none;
+
+    & > .modal-header {
+        border: none;
+    }
+
+    & > .modal-body > .nav-tabs {
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    & > .modal-body > .tab-content {
+        padding: 15px;
+        border: 1px solid #DEE2E6;
+        border-top: none;
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+        overflow: auto;
+    }
+}
+
+#setup-logo {
+    height: 2rem;
+    margin-right: 20px;
+}
+
+#setup-form-div-h5 {
+    margin-top: 20px;
+}
+
+#setup-form-num-div {
+    margin-bottom: 0;
+}
+
+#setup-form-submit {
+    margin-top: 20px;
+    float: right;
+}
+
+#setup-needhelp {
+    text-align: center;
+    width: 70%;
+    margin: 50px auto;
+}
