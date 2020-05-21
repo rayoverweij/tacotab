@@ -49,7 +49,7 @@
 }
 
 
-.collapse:not(.show) {
+#app-nav .collapse:not(.show) {
     @media(min-width: 768px) {
         display: flex;
     }

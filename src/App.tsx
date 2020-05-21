@@ -2,18 +2,16 @@ import React from 'react';
 import './App.scss';
 import logo from './images/logo.svg';
 import pgk from '../package.json';
-
+import SetupScreen from './setup/SetupScreen';
 import { Debater } from './types/Debater';
 import { Team } from './types/Team';
 import { Judge } from './types/Judge';
 import { Draw } from './types/Draw';
 import { Config } from './types/Config';
-
 import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Collapse from 'react-bootstrap/Collapse';
-
 import { List } from 'react-bootstrap-icons';
 
 
@@ -208,7 +206,32 @@ class App extends React.Component<AppProps, AppState> {
                         aria-controls="app-nav"
                         aria-expanded={this.state.showMenu} />
                 </div>
+
+                <Tab.Container id="app-nav" defaultActiveKey="home">
+                    <Collapse in={this.state.showMenu}>
+                        <Nav className="main-nav">
+                            <Nav.Item>
+                                <Nav.Link eventKey="home">Home</Nav.Link>
+                            </Nav.Item>
+
+                            <Nav.Item>
+                                <Nav.Link eventKey="judges">Judges</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="draw">Draw</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Collapse>
+                    <Tab.Content>
+
+                    </Tab.Content>
+                </Tab.Container>
             </Container>
+
+            <SetupScreen
+                init={this.state.init}
+                initializeTournament={this.initializeTournament}
+                importTournament={this.importTournament} />
             </>
         );
     }
