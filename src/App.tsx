@@ -6,6 +6,7 @@ import SetupScreen from './setup/SetupScreen';
 import Home from './home/Home';
 import Participants from './participants/Participants';
 import Judges from './judges/Judges';
+import Draws from './draws/Draws';
 import { Speaker } from './types/Speaker';
 import { Team } from './types/Team';
 import { Judge } from './types/Judge';
@@ -78,6 +79,9 @@ class App extends React.Component<AppProps, AppState> {
                 {generated: false, roomsOne: [], roomsTwo: []},
                 {generated: false, roomsOne: [], roomsTwo: []}
             ]));
+        }
+        if(!localStorage.getItem("roomCounter")) {
+            localStorage.setItem("roomCounter", s(0));
         }
 
         this.state = {
@@ -181,6 +185,7 @@ class App extends React.Component<AppProps, AppState> {
             localStorage.setItem("judges", s(result.judges));
             localStorage.setItem("judgeCounter", s(result.judgeCounter));
             localStorage.setItem("draws", s(result.draws));
+            localStorage.setItem("roomCounter", s(result.roomCounter));
         }
         fr.readAsText(files.item(0) as File);
 
@@ -292,16 +297,16 @@ class App extends React.Component<AppProps, AppState> {
                                 updateJudges={this.updateJudges}
                                 getTotalTeams={this.getTotalTeams} />
                         </Tab.Pane>
-                        {/* <Tab.Pane eventKey="draw">
-                            <Draw
+                        <Tab.Pane eventKey="draw">
+                            <Draws
                                 config={this.state.config}
-                                speakers_one={this.state.speakers_one}
-                                speakers_two={this.state.speakers_two}
-                                teams_one={this.state.teams_one}
-                                teams_two={this.state.teams_two}
+                                speakersOne={this.state.speakersOne}
+                                speakersTwo={this.state.speakersTwo}
+                                teamsOne={this.state.teamsOne}
+                                teamsTwo={this.state.teamsTwo}
                                 judges={this.state.judges}
                                 draws={this.state.draws} />
-                        </Tab.Pane> */}
+                        </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>
             </Container>
