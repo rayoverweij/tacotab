@@ -5,6 +5,7 @@ import pgk from '../package.json';
 import SetupScreen from './setup/SetupScreen';
 import Home from './home/Home';
 import Participants from './participants/Participants';
+import Judges from './judges/Judges';
 import { Speaker } from './types/Speaker';
 import { Team } from './types/Team';
 import { Judge } from './types/Judge';
@@ -285,13 +286,13 @@ class App extends React.Component<AppProps, AppState> {
                                 importTournament={this.importTournament} />
                         </Tab.Pane>
                         {participants_panes}
-                        {/* <Tab.Pane eventKey="judges">
+                        <Tab.Pane eventKey="judges">
                             <Judges
                                 judges={this.state.judges}
                                 updateJudges={this.updateJudges}
                                 getTotalTeams={this.getTotalTeams} />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="draw">
+                        {/* <Tab.Pane eventKey="draw">
                             <Draw
                                 config={this.state.config}
                                 speakers_one={this.state.speakers_one}

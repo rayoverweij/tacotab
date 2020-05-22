@@ -6,5 +6,6 @@ export type Judge = {
     atRound1: boolean,
     atRound2: boolean,
     atRound3: boolean,
-    hasChaired: number[]
+    hasChaired: number[],
+    [key: string]: number|string|boolean|number[]
 }
