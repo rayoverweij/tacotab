@@ -152,7 +152,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                 Export data
                             </Button>
                         </section>
-                        <section>
+                        <section id="section-cleardata">
                             <h3>Clear tournament data</h3>
                             <p>Warning: this will delete <strong>all</strong> entered data. Save your data using the Export function first.</p>
                             <Button
