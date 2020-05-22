@@ -21,7 +21,7 @@ type SpeakersProps = {
 
 type SpeakersState = {
     addSpeakerForm: {
-        name: string,
+        speakerName: string,
         school: string,
         [key: string]: string
     }
@@ -33,7 +33,7 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
 
         this.state = {
             addSpeakerForm: {
-                name: "",
+                speakerName: "",
                 school: ""
             }
         }
@@ -60,7 +60,7 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
 
         const newSpeaker: Speaker = {
             speakerID: counter++,
-            name: this.state.addSpeakerForm.name,
+            name: this.state.addSpeakerForm.speakerName,
             school: this.state.addSpeakerForm.school,
             scores: [0, 0, 0],
             ranks: [0, 0, 0],
@@ -73,7 +73,7 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
         this.props.updateSpeakers(speakers);
 
         let blankForm = {...this.state.addSpeakerForm};
-        blankForm.name = "";
+        blankForm.speakerName = "";
         this.setState({addSpeakerForm: blankForm});
     }
 
@@ -159,7 +159,7 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
                                         name="name"
                                         type="text"
                                         placeholder="Name"
-                                        value={this.state.addSpeakerForm.name}
+                                        value={this.state.addSpeakerForm.speakerName}
                                         onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
                                 <Col md={4}>
