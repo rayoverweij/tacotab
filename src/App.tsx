@@ -112,6 +112,8 @@ class App extends React.Component<AppProps, AppState> {
         this.initializeTournament = this.initializeTournament.bind(this);
         this.importTournament = this.importTournament.bind(this);
         this.getTotalTeams = this.getTotalTeams.bind(this);
+
+        document.title = `${JSON.parse(localStorage.getItem("tournamentName")!)} - TacoTab`;
     }
 
 
