@@ -8,6 +8,22 @@ export const importTournament = (files: FileList) => {
     fr.onload = event => {
         const result = JSON.parse(event.target!.result as string);
 
+        // CHECK IF PROPER TOURNAMENT EXPORT
+        if(!("init" in result)
+            || !(("tournamentName" in result) || ("tournament_name" in result))
+            || !("config" in result)
+            || !(("speakersOne" in result) || ("speakers_one" in result))
+            || !(("speakersTwo" in result) || ("speakers_two" in result))
+            || !(("teamsOne" in result) || ("teams_one" in result))
+            || !(("teamsTwo" in result) || ("teams_two" in result))
+            || !(("speakerCounter" in result) || ("speakers_counter" in result))
+            || !("judges" in result)
+            || !(("judgeCounter" in result) || ("judges_counter" in result))
+            || !("draws" in result))
+            {
+                return false;
+            }
+
         localStorage.setItem("init", s(result.init));
         // COMPATIBILITY WITH EXPORTS BEFORE VERSION 0.3.0
         if(!result.config.version) {
