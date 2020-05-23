@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import './Settings.scss';
 import GitHubLogo from '../images/icon-github.svg';
 import { Config } from '../types/Config';
+import { importTournament } from '../utils/importTournament';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -14,8 +15,7 @@ type SettingsProps = {
     config: Config,
     tournamentName: string,
     updateTournamentName: (name: string) => void,
-    updateConfig: (config: Config) => void,
-    importTournament: (files: FileList) => void
+    updateConfig: (config: Config) => void
 }
 
 type SettingsState = {
@@ -56,7 +56,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         event.preventDefault();
         const files = (document.getElementById("import-settings") as HTMLInputElement).files;
         if (files === null) return false;
-        this.props.importTournament(files);
+        importTournament(files);
     }
 
     exportData() {

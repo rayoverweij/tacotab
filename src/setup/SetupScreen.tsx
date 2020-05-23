@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import './SetupScreen.scss';
 import logo from '../images/logo.svg';
-
+import { importTournament } from '../utils/importTournament';
 import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -13,8 +13,7 @@ import Button from 'react-bootstrap/Button';
 
 type SetupScreenProps = {
     init: boolean,
-    initializeTournament: (tournamentName: string, numDivisions: number, divisionNames: string[]) => void,
-    importTournament: (files: FileList) => void
+    initializeTournament: (tournamentName: string, numDivisions: number, divisionNames: string[]) => void
 }
 
 type SetupScreenState = {
@@ -72,7 +71,7 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
         event.preventDefault();
         const files = (document.getElementById("import-setup") as HTMLInputElement).files;
         if(files === null) return false;
-        this.props.importTournament(files);
+        importTournament(files);
     }
 
 

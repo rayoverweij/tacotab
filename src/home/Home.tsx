@@ -13,8 +13,7 @@ type HomeProps = {
     config: Config,
     tournamentName: string,
     updateTournamentName: (name: string) => void,
-    updateConfig: (config: Config) => void,
-    importTournament: (files: FileList) => void
+    updateConfig: (config: Config) => void
 }
 
 class Home extends React.Component<HomeProps> {
@@ -48,8 +47,7 @@ class Home extends React.Component<HomeProps> {
                                     config={this.props.config}
                                     tournamentName={this.props.tournamentName}
                                     updateTournamentName={this.props.updateTournamentName}
-                                    updateConfig={this.props.updateConfig}
-                                    importTournament={this.props.importTournament} />
+                                    updateConfig={this.props.updateConfig} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
