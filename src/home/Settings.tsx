@@ -132,7 +132,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                                 name="import"
                                                 id="import-settings"
                                                 className="custom-file-input"
-                                                type="file" />
+                                                type="file"
+                                                accept=".json" />
                                             <label className="custom-file-label" htmlFor="customFile">Choose file</label>
                                         </div>
                                     </Col>
