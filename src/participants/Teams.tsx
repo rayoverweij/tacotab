@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import TeamTable from './TeamTable';
+import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
 import Button from 'react-bootstrap/Button';
@@ -203,13 +204,14 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-3`}>
                                 <Form.Label>Speaker 3</Form.Label>
+                                <TwoPersonTeamTooltip />
                                 <Form.Control
                                     as="select"
                                     name="speaker3"
                                     value={this.state.addTeamForm.speaker3}
                                     onChange={this.handleAddTeamFormChange}>
                                         <option>-- pick a speaker --</option>
-                                        <option value="avg">[no third speaker]</option>
+                                        <option value="avg">[averaged third speaker]</option>
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>

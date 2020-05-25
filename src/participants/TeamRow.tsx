@@ -2,6 +2,7 @@ import React, { FormEvent } from 'react';
 import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
+import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
 import Modal from 'react-bootstrap/Modal';
@@ -258,6 +259,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
             return (
                 <div key={`teamSpeakerSelectRow-team-${team.teamID}-speaker-${speakerPos}`} className="form-update-team-speaker">
                     <p>Speaker {speakerPos + 1}</p>
+                    {speakerPos === 2 ? <TwoPersonTeamTooltip /> : ""}
                     <Form.Row>
                         {
                             [1, 2, 3].map(round => {

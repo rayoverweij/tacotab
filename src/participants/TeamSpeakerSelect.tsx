@@ -55,7 +55,7 @@ class TeamSpeakerSelect extends React.Component<TeamSpeakerSelectProps, TeamSpea
                         name={`speaker-${this.props.speakerPos}-round-${this.props.round}`}
                         value={this.state.value}
                         onChange={this.handleFormChange}>
-                            {this.props.speakerPos === 2 ? <option value={-1}>[no third speaker]</option> : ""}
+                            {this.props.speakerPos === 2 ? <option value={-1}>[averaged third speaker]</option> : ""}
                             {this.props.speakerPicker}
                     </Form.Control>
                 </Form.Group>
