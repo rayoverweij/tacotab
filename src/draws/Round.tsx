@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
-import { Bullseye, ArrowRepeat, ArrowsAngleExpand } from 'react-bootstrap-icons';
+import { Bullseye, ArrowRepeat, Trash, ArrowsAngleExpand } from 'react-bootstrap-icons';
 
 
 type RoundProps = {
@@ -47,6 +47,7 @@ class Round extends React.Component<RoundProps, RoundState> {
         }
 
         this.generateDraw = this.generateDraw.bind(this);
+        this.deleteDraw = this.deleteDraw.bind(this);
         this.updateRooms = this.updateRooms.bind(this);
         this.fullScreenDraw = this.fullScreenDraw.bind(this);
         this.modalHide = this.modalHide.bind(this);
@@ -59,20 +60,20 @@ class Round extends React.Component<RoundProps, RoundState> {
 
         // Check whether previous or next draws have happened
         if(round === 1) {
-            if(draws[1].generated === true || draws[2].generated === true) {
+            if(draws[1].generated || draws[2].generated) {
                 alert("You can't regenerate a draw after you've generated the next one.");
                 return false;
             }
         } else if(round === 2) {
-            if(draws[0].generated !== true) {
+            if(!draws[0].generated) {
                 alert("You can't generate the draw for round 2 before generating the draw for round 1.");
                 return false;
-            } else if(draws[2].generated === true) {
+            } else if(draws[2].generated) {
                 alert("You can't regenerate a draw after you've generated the next one.");
                 return false;
             }
         } else if(round === 3) {
-            if(draws[0].generated !== true || draws[1].generated !== true) {
+            if(!draws[0].generated || !draws[1].generated) {
                 alert("You can't generate the draw for round 3 before generating the draws for rounds 1 and 2.");
                 return false;
             }
@@ -363,6 +364,40 @@ class Round extends React.Component<RoundProps, RoundState> {
         localStorage.setItem("roomCounter", JSON.stringify(roomCounter));
     }
 
+    deleteDraw() {
+        const round = this.props.round;
+        let draws = this.props.draws;
+
+        if(round === 1 && (draws[1].generated || draws[2].generated)) {
+            alert("You can't delete a draw after you've generated the next one.");
+            return false;
+        } else if(round === 2 && draws[2].generated) {
+            alert("You can't delete a draw after you've generated the next one.");
+            return false;
+        }
+
+        let conf = window.confirm(`Are you sure you want to delete the draw for round ${round}?`);
+        if(!conf) return false;
+
+        const draw: Draw = {
+            generated: false,
+            roomsOne: [],
+            roomsTwo: []
+        }
+        if(round === 1) {
+            draws[0] = draw;
+        } else if(round === 2) {
+            draws[1] = draw;
+        } else {
+            draws[2] = draw;
+        }
+        localStorage.setItem("draws", JSON.stringify(draws));
+
+        this.setState({roomsOne: []});
+        this.setState({roomsTwo: []});
+        this.setState({generated: false});
+    }
+
 
     updateRooms(room: Room, div: number) {
         const draws = JSON.parse(localStorage.getItem("draws")!);
@@ -483,6 +518,13 @@ class Round extends React.Component<RoundProps, RoundState> {
                             className={!this.state.generated ? "hidden" : ""}>
                             <ArrowRepeat className="btn-icon" />
                             Regenerate draw
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={this.deleteDraw}
+                            className={!this.state.generated ? "hidden" : ""}>
+                            <Trash className="btn-icon" />
+                            Delete draw
                         </Button>
                         <Button
                             variant="primary"

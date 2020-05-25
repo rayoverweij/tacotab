@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import bsCustomFileInput from 'bs-custom-file-input';
-import { Download, TrashFill } from 'react-bootstrap-icons';
+import { Download, Trash } from 'react-bootstrap-icons';
 
 
 type SettingsProps = {
@@ -159,7 +159,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             <Button
                                 variant="danger"
                                 onClick={this.clearData}>
-                                <TrashFill className="btn-icon" />
+                                <Trash className="btn-icon" />
                                 Clear data
                             </Button>
                         </section>
