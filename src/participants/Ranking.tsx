@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 
 
 type RankingProps = {
@@ -84,7 +85,7 @@ class Ranking extends React.Component<RankingProps> {
                 }
             }
             return (
-                <tr key={`speaker_rank_${index + 1}`}>
+                <tr key={`speaker-rank-${index + 1}`}>
                     <td>{index + 1}</td>
                     <td>{speaker.name}</td>
                     <td>{speaker.school}</td>
@@ -122,10 +123,35 @@ class Ranking extends React.Component<RankingProps> {
         });
 
         const team_ranking = teams_ranked.map((team, index) => {
+            const speakerIDs = getDistinctSpeakers(team);
+            const speakerNames: string[] = [];
+            for(let speakerID of speakerIDs) {
+                let currSpeaker = speakers.find(sp => sp.speakerID === speakerID);
+                if(currSpeaker === undefined) continue;
+                speakerNames.push(currSpeaker.name);
+            }
+            const speakerElements = speakerNames.map((speaker, index) => {
+                if(index < speakerNames.length - 1) {
+                    return <>{speaker}, </>;
+                } else {
+                    return <>{speaker}</>;
+                }
+            });
+
             return (
-                <tr key={`team_rank_${index + 1}`}>
+                <tr key={`team-rank-${index + 1}`}>
                     <td>{index + 1}</td>
-                    <td>{team.name}</td>
+                    <td>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={
+                                <Tooltip id={`tooltip-rank-teamName-${index + 1}`}>
+                                    {speakerElements}
+                                </Tooltip>
+                            }>
+                            <abbr title="">{team.name}</abbr>
+                        </OverlayTrigger>
+                    </td>
                     <td>{team.totalWins}</td>
                     <td>{team.totalPoints}</td>
                 </tr>

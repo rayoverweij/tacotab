@@ -3,6 +3,7 @@ import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
+import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
 import Modal from 'react-bootstrap/Modal';
@@ -35,7 +36,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         super(props);
         
         this.state = {
-            speakers: this.getDistinctSpeakers(),
+            speakers: getDistinctSpeakers(this.props.team),
             updateTeamForm: [
                 [this.props.team.round1[0], this.props.team.round2[0], this.props.team.round3[0]],
                 [this.props.team.round1[1], this.props.team.round2[1], this.props.team.round3[1]],
@@ -59,16 +60,6 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
     }
 
 
-    getDistinctSpeakers() {
-        let sp = []
-        for(let s = 0; s < 3; s++) {
-            sp.push(this.props.team.round1[s]);
-            sp.push(this.props.team.round2[s]);
-            sp.push(this.props.team.round3[s]);
-        }
-        return [...new Set(sp)];
-    }
-    
     modalShow() {
         this.setState({showModal: true});
     }
@@ -110,7 +101,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         team.round3 = [this.state.updateTeamForm[0][2], this.state.updateTeamForm[1][2], this.state.updateTeamForm[2][2]];
 
         this.props.updateTeam(team);
-        this.setState({speakers: this.getDistinctSpeakers()});
+        this.setState({speakers: getDistinctSpeakers(this.props.team)});
         this.modalHide();
     }
 
