@@ -168,14 +168,15 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         <section id="section-about">
                             <h3>About</h3>
                             <p>
-                                TacoTab β version 0.3.0<br />
+                                TacoTab β version 0.4.0<br />
+                                &copy; {new Date().getFullYear()} Rayo Verweij<br />
                                 <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
                                 <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
                                     GitHub
                                 </a>
                             </p>
                             <p>
-                                Built by <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Rayo Verweij</a> for the <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">Bard Debate Union</a>&mdash;Bard's best sports team.
+                                <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Check out more of Rayo's work</a> or <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">visit the Bard Debate Union</a>&mdash;Bard's best sports team!
                             </p>
                         </section>
                     </Col>
