@@ -126,6 +126,11 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
 
     
     render() {
+        let noTeams = false;
+        if(this.props.teams.length === 0) {
+            noTeams = true;
+        }
+
         let speakerPicker = this.props.speakers.map(speaker => {
             return (
                 <option value={speaker.speakerID} key={`option-${speaker.speakerID}`}>{speaker.name}</option>
@@ -133,7 +138,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
         });
 
         let teamTable;
-        if(this.props.teams.length === 0) {
+        if(noTeams) {
             teamTable = <p className="none-yet">No teams yet!</p>;
         } else {
             teamTable = <TeamTable
@@ -151,6 +156,11 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                 <h2>
                     Teams
                     <Button onClick={this.modalShow}>Add team</Button>
+                    <div className={`hint-add-team ${noTeams ? "" : "hidden"}`}>
+                        <span>&gt;</span>
+                        <span>&gt;</span>
+                        <span>&gt;</span>
+                    </div>
                 </h2>
                 {teamTable}
 

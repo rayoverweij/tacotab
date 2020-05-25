@@ -156,7 +156,7 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
                             <Form.Row>
                                 <Col md={4}>
                                     <Form.Control
-                                        name="name"
+                                        name="speakerName"
                                         type="text"
                                         placeholder="Name"
                                         value={this.state.addSpeakerForm.speakerName}

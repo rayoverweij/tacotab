@@ -13,6 +13,19 @@ body, .popover {
 }
 
 
+// Animations
+@keyframes bumping-arrows {
+    0% {
+        color: white;
+        transform: translateX(-5px)
+    }
+    100% {
+        color: black;
+        transform: translateX(5px);
+    }
+}
+
+
 // Basic styles
 ::selection {
     background-color: var(--primary);
@@ -42,6 +55,24 @@ h2 {
     font-weight: 900;
     text-transform: uppercase;
     z-index: 30;
+
+    .hint-add-team {
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+        font-size: 1rem;
+        font-weight: 200;
+        color: $gray;
+        transform: translateX(-5px);
+
+        span {
+            display: inline-block;
+            animation-name: bumping-arrows;
+            animation-duration: 500ms;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+        }
+    }
 
     .btn-primary {
         float: right;
