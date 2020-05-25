@@ -12,8 +12,10 @@ type SpeakerRowProps = {
 
 type SpeakerRowState = {
     name: string,
+    school: string,
     disqualified: boolean,
-    trashFill: boolean
+    trashFill: boolean,
+    [key: string]: string|boolean
 }
 
 class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
@@ -22,26 +24,31 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
 
         this.state = {
             name: this.props.speaker.name,
+            school: this.props.speaker.school,
             disqualified: this.props.speaker.disqualified,
             trashFill: false
         }
 
-        this.handleSpeakerNameEdit = this.handleSpeakerNameEdit.bind(this);
-        this.handleSpeakerNameUpdate = this.handleSpeakerNameUpdate.bind(this);
+        this.handleTextEdit = this.handleTextEdit.bind(this);
+        this.handleTextUpdate = this.handleTextUpdate.bind(this);
         this.handleDisqUpdate = this.handleDisqUpdate.bind(this);
         this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
         this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
-    handleSpeakerNameEdit(event: ChangeEvent<HTMLTextAreaElement>) {
-        this.setState({name: event.target.value});
+    handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
+        const {name, value} = event.target;
+        let state = {...this.state};
+        state[name] = value;
+        this.setState(state);
     }
     
-    handleSpeakerNameUpdate(event: FocusEvent<HTMLTextAreaElement>) {
+    handleTextUpdate(event: FocusEvent<HTMLTextAreaElement>) {
         event.preventDefault();
-        const name = this.state.name;
+        const name = event.target.name;
+        const value = this.state[name];
         const speaker = this.props.speaker;
-        speaker.name = name;
+        speaker[name] = value;
         this.props.updateSpeaker(speaker);
     }
 
@@ -69,16 +76,26 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                 <td className="editable">
                     <textarea
                         className="cell-valupdate"
+                        name="name"
                         rows={1}
                         cols={this.state.name.length}
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}
-                        onChange={this.handleSpeakerNameEdit}
-                        onBlur={this.handleSpeakerNameUpdate} />
+                        onChange={this.handleTextEdit}
+                        onBlur={this.handleTextUpdate} />
                 </td>
-                <td>
-                    {speaker.school}
+                <td className="editable">
+                    <textarea
+                        className="cell-valupdate"
+                        name="school"
+                        rows={1}
+                        cols={this.state.school.length}
+                        autoComplete="off"
+                        spellCheck="false"
+                        value={this.state.school}
+                        onChange={this.handleTextEdit}
+                        onBlur={this.handleTextUpdate} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Check

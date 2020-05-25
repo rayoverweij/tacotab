@@ -5,5 +5,6 @@ export type Speaker = {
     scores: number[],
     ranks: number[],
     wins: number,
-    disqualified: boolean
+    disqualified: boolean,
+    [key: string]: number|string|number[]|boolean
 }

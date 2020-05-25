@@ -12,6 +12,7 @@ type JudgeRowProps = {
 
 type JudgeRowState = {
     name: string,
+    school: string,
     canChair: boolean,
     atRound1: boolean,
     atRound2: boolean,
@@ -26,6 +27,7 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
 
         this.state = {
             name: this.props.judge.name,
+            school: this.props.judge.school,
             canChair: this.props.judge.canChair,
             atRound1: this.props.judge.atRound1,
             atRound2: this.props.judge.atRound2,
@@ -33,28 +35,31 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
             trashFill: false
         }
 
-        this.handleJudgeNameEdit = this.handleJudgeNameEdit.bind(this);
-        this.handleJudgeNameUpdate = this.handleJudgeNameUpdate.bind(this);
+        this.handleTextEdit = this.handleTextEdit.bind(this);
+        this.handleTextUpdate = this.handleTextUpdate.bind(this);
         this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
         this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
         this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
-    handleJudgeNameEdit(event: ChangeEvent<HTMLTextAreaElement>) {
-        this.setState({name: event.target.value});
+    handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
+        const {name, value} = event.target;
+        let state = {...this.state};
+        state[name] = value;
+        this.setState(state);
     }
 
-    handleJudgeNameUpdate(event: FocusEvent<HTMLTextAreaElement>) {
+    handleTextUpdate(event: FocusEvent<HTMLTextAreaElement>) {
         event.preventDefault();
-        const name = this.state.name;
+        const name = event.target.name;
+        const value = this.state[name];
         const judge = this.props.judge;
-        judge.name = name;
+        judge[name] = value;
         this.props.updateJudge(judge);
     }
 
     handleJudgeToggle(event: ChangeEvent<HTMLInputElement>) {
-        const name: keyof Judge = event.target.name;
-        const checked = event.target.checked;
+        const {name, checked} = event.target;
         const judge = this.props.judge;
 
         judge[name] = checked;
@@ -80,15 +85,27 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
                 <td className="judge-table-name editable">
                     <textarea
                         className="cell-valupdate"
+                        name="name"
                         rows={1}
                         cols={this.state.name.length}
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}
-                        onChange={this.handleJudgeNameEdit}
-                        onBlur={this.handleJudgeNameUpdate} />
+                        onChange={this.handleTextEdit}
+                        onBlur={this.handleTextUpdate} />
                 </td>
-                <td className="judge-table-school">{judge.school}</td>
+                <td className="judge-table-school editable">
+                <textarea
+                        className="cell-valupdate"
+                        name="school"
+                        rows={1}
+                        cols={this.state.school.length}
+                        autoComplete="off"
+                        spellCheck="false"
+                        value={this.state.school}
+                        onChange={this.handleTextEdit}
+                        onBlur={this.handleTextUpdate} />
+                </td>
                 <td className="judge-table-toggle cell-low-padding">
                     <Form.Check
                         id={`judge-canchair-${judge.judgeID}`}
