@@ -19,7 +19,7 @@ type HomeProps = {
 class Home extends React.Component<HomeProps> {
     render() {
         return (
-            <Tab.Container id="home-view" defaultActiveKey="welcome">
+            <Tab.Container id="home-view" defaultActiveKey="welcome" transition={false}>
                 <Row>
                     <Col md={3} lg={2}>
                         <Nav variant="pills" className="sub-nav">

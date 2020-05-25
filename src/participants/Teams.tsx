@@ -2,8 +2,6 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import TeamTable from './TeamTable';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';

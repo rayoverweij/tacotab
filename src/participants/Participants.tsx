@@ -22,7 +22,7 @@ type ParticipantsProps = {
 class Participants extends React.Component<ParticipantsProps> {
     render() {
         return (
-            <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
+            <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers" transition={false}>
                 <Row>
                     <Col md={3} lg={2}>
                         <Nav variant="pills" className="sub-nav">

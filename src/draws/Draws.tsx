@@ -25,7 +25,7 @@ type DrawsProps = {
 class Draws extends React.Component<DrawsProps> {
     render() {
         return (
-            <Tab.Container id={`draw-view`} defaultActiveKey="round-1">
+            <Tab.Container id={`draw-view`} defaultActiveKey="round-1" transition={false}>
                 <Row>
                     <Col md={3} lg={2}>
                         <Nav variant="pills" className="sub-nav">

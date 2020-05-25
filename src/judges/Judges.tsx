@@ -160,7 +160,7 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
         const chairsR3 = judges.filter(el => el.canChair && el.atRound3).length;
 
         return (
-            <Tab.Container id={`judges-view`} defaultActiveKey="judges">
+            <Tab.Container id={`judges-view`} defaultActiveKey="judges" transition={false}>
                 <Row>
                     <Col md={3} lg={2}>
                         <Nav variant="pills" className="sub-nav no-show-sm">

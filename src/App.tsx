@@ -242,7 +242,7 @@ class App extends React.Component<AppProps, AppState> {
                         aria-expanded={this.state.showMenu} />
                 </div>
 
-                <Tab.Container id="app-nav" defaultActiveKey="home">
+                <Tab.Container id="app-nav" defaultActiveKey="home" transition={false}>
                     <Collapse in={this.state.showMenu}>
                         <Nav className="main-nav">
                             <Nav.Item>
