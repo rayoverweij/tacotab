@@ -91,6 +91,7 @@ abbr[title] {
 
 .red {
     color: var(--red);
+    fill: var(--red);
 }
 
 .orange {
@@ -317,7 +318,7 @@ textarea {
     }
 
     & ~ & {
-        margin-left: 5px;
+        margin-left: 15px;
     }
 }
 

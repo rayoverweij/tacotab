@@ -1,10 +1,6 @@
 @import '../vars';
 
-.table {
-    tbody + tbody {
-        border-top-width: 3px;
-    }
-
+.table.team-table {
     th, td {
         &.disabled {
             textarea {
@@ -13,12 +9,16 @@
         }
     }
 
+    .editable textarea {
+        margin-left: -7px;
+    }
+
     .row-total {
         font-style: italic;
     }
 
-    .row-wins {
-        border-top: 2px solid $gray;;
+    .row-wins td {
+        border-top: 2px solid $gray !important;
     }
 }
 
@@ -28,6 +28,11 @@
     background-color: white;
     border-bottom: 1px solid $gray !important;
     vertical-align: top !important;
+
+    .cell-valupdate {
+        margin-left: -5px;
+        margin-top: -5px;
+    }
 }
 
 .form-update-team-speaker {

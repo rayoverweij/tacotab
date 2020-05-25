@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, ChangeEvent, FocusEvent } from 'react';
 import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
@@ -24,6 +24,7 @@ type TeamRowProps = {
 }
 
 type TeamRowState = {
+    name: string,
     speakers: number[],
     updateTeamForm: Array<number[]>,
     showModal: boolean,
@@ -36,6 +37,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         super(props);
         
         this.state = {
+            name: this.props.team.name,
             speakers: getDistinctSpeakers(this.props.team),
             updateTeamForm: [
                 [this.props.team.round1[0], this.props.team.round2[0], this.props.team.round3[0]],
@@ -47,6 +49,8 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
             peopleFill: false
         }
 
+        this.handleTeamNameEdit = this.handleTeamNameEdit.bind(this);
+        this.handleTeamNameUpdate = this.handleTeamNameUpdate.bind(this);
         this.setScore = this.setScore.bind(this);
         this.setRank = this.setRank.bind(this);
         this.modalShow = this.modalShow.bind(this);
@@ -60,6 +64,18 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
     }
 
 
+    handleTeamNameEdit(event: ChangeEvent<HTMLTextAreaElement>) {
+        this.setState({name: event.target.value});
+    }
+    
+    handleTeamNameUpdate(event: FocusEvent<HTMLTextAreaElement>) {
+        event.preventDefault();
+        const name = this.state.name;
+        const team = this.props.team;
+        team.name = name;
+        this.props.updateTeam(team);
+    }
+    
     modalShow() {
         this.setState({showModal: true});
     }
@@ -276,7 +292,15 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
             <tbody>
                 <tr>
                     <td rowSpan={this.state.speakers.length + 3} className="cell-teamname">
-                        {team.name}
+                        <textarea
+                            className="cell-valupdate"
+                            rows={1}
+                            cols={this.state.name.length}
+                            autoComplete="off"
+                            spellCheck="false"
+                            value={this.state.name}
+                            onChange={this.handleTeamNameEdit}
+                            onBlur={this.handleTeamNameUpdate} />
                         <br />
                         {this.state.peopleFill ?
                             <PeopleFill
@@ -296,7 +320,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                         {this.state.trashFill ? 
                             <TrashFill
                                 role="button"
-                                className="icon"
+                                className="icon red"
                                 onMouseEnter={this.trashOnMouseEnter}
                                 onMouseLeave={this.trashOnMouseLeave}
                                 onClick={() => this.props.deleteTeam(team)} />
