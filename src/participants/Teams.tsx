@@ -24,7 +24,8 @@ type TeamsState = {
         speaker3: number,
         [key: string]: string|number
     },
-    showModal: boolean
+    showModal: boolean,
+    showWarning: boolean
 }
 
 class Teams extends React.Component<TeamsProps, TeamsState> {
@@ -38,7 +39,8 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                 speaker2: 0,
                 speaker3: 0
             },
-            showModal: false
+            showModal: false,
+            showWarning: false
         }
 
         this.modalShow = this.modalShow.bind(this);
@@ -70,13 +72,19 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
     handleAddTeamFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        const team = {...this.state.addTeamForm}
+        if (team.speaker1 === team.speaker2 || team.speaker1 === team.speaker3 || team.speaker2 === team.speaker3) {
+            this.setState({showWarning: true});
+            return false;
+        }
+
         let teams = this.props.teams;
         let counter = JSON.parse(localStorage.getItem("teamCounter")!);
 
-        const memberList = [this.state.addTeamForm.speaker1, this.state.addTeamForm.speaker2, this.state.addTeamForm.speaker3]
+        const memberList = [team.speaker1, team.speaker2, team.speaker3]
         const newTeam: Team = {
             teamID: counter++,
-            name: this.state.addTeamForm.teamName,
+            name: team.teamName,
             round1: memberList,
             round2: memberList,
             round3: memberList,
@@ -91,6 +99,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
         localStorage.setItem("teamCounter", JSON.stringify(counter));
         this.props.updateTeams(teams);
 
+        this.setState({showWarning: false});
         this.modalHide();
     }
 
@@ -215,6 +224,9 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                                         {speakerPicker}
                                 </Form.Control>
                             </Form.Group>
+                            <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
+                                You can't add a speaker to a team more than once!
+                            </p>
                             <Button
                                 variant="primary"
                                 className="btn-submit"

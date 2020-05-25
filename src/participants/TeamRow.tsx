@@ -28,6 +28,7 @@ type TeamRowState = {
     speakers: number[],
     updateTeamForm: Array<number[]>,
     showModal: boolean,
+    showWarning: boolean,
     trashFill: boolean,
     peopleFill: boolean
 }
@@ -45,6 +46,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                 [this.props.team.round1[2], this.props.team.round2[2], this.props.team.round3[2]]
             ],
             showModal: false,
+            showWarning: false,
             trashFill: false,
             peopleFill: false
         }
@@ -111,13 +113,22 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
     handleTeamUpdate(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        const newTeam = [...this.state.updateTeamForm];
+        if((newTeam[0][0] === newTeam[1][0] || newTeam[0][0] === newTeam[2][0] || newTeam[1][0] === newTeam[2][0])
+            || (newTeam[0][1] === newTeam[1][1] || newTeam[0][1] === newTeam[2][1] || newTeam[1][1] === newTeam[2][1])
+            || (newTeam[0][2] === newTeam[1][2] || newTeam[0][2] === newTeam[2][2] || newTeam[1][2] === newTeam[2][2])) {
+                this.setState({showWarning: true});
+                return false;
+            }
+
         let team = this.props.team;
-        team.round1 = [this.state.updateTeamForm[0][0], this.state.updateTeamForm[1][0], this.state.updateTeamForm[2][0]];
-        team.round2 = [this.state.updateTeamForm[0][1], this.state.updateTeamForm[1][1], this.state.updateTeamForm[2][1]];
-        team.round3 = [this.state.updateTeamForm[0][2], this.state.updateTeamForm[1][2], this.state.updateTeamForm[2][2]];
+        team.round1 = [newTeam[0][0], newTeam[1][0], newTeam[2][0]];
+        team.round2 = [newTeam[0][1], newTeam[1][1], newTeam[2][1]];
+        team.round3 = [newTeam[0][2], newTeam[1][2], newTeam[2][2]];
 
         this.props.updateTeam(team);
         this.setState({speakers: getDistinctSpeakers(this.props.team)});
+        this.setState({showWarning: false});
         this.modalHide();
     }
 
@@ -183,7 +194,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
             if (isInR3) totalRanks += speaker.ranks[2];
 
             return (
-                <tr key={`${speaker.name}_row`}>
+                <tr key={`${speaker.name}-${this.props.div}-row`}>
                     <td>{speaker.name}</td>
                     {
                         [isInR1, isInR2, isInR3].map((isInR, i) => {
@@ -370,6 +381,9 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                     <Modal.Body>
                         <Form onSubmit={this.handleTeamUpdate}>
                             {teamSpeakerSelects}
+                            <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
+                                You can't add a speaker to the same round more than once!
+                            </p>
                             <Button
                                 variant="primary"
                                 className="btn-submit"
