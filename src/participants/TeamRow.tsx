@@ -282,7 +282,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         return (
             <tbody>
                 <tr>
-                    <th rowSpan={this.state.speakers.length + 3} className="cell-teamname">
+                    <td rowSpan={this.state.speakers.length + 3} className="cell-teamname">
                         {team.name}
                         <br />
                         {this.state.peopleFill ?
@@ -315,7 +315,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                                 onMouseLeave={this.trashOnMouseLeave}
                                 onClick={() => this.props.deleteTeam(team)} />
                         }
-                    </th>
+                    </td>
                 </tr>
                 {speakerRows}
                 <tr className="row-total">

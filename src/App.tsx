@@ -179,7 +179,7 @@ class App extends React.Component<AppProps, AppState> {
         if(this.state.config.numDivisions !== 2) {
             participants_nav = (
                 <Nav.Item>
-                    <Nav.Link eventKey="participants">Participants</Nav.Link>
+                    <Nav.Link eventKey="participants" title="Participants">Participants</Nav.Link>
                 </Nav.Item>
             );
             participants_panes = (
@@ -196,10 +196,10 @@ class App extends React.Component<AppProps, AppState> {
             participants_nav = (
                 <>
                     <Nav.Item>
-                        <Nav.Link eventKey="divone">{this.state.config.divisionNames![0]}</Nav.Link>
+                        <Nav.Link eventKey="divone" title={this.state.config.divisionNames![0]}>{this.state.config.divisionNames![0]}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="divtwo">{this.state.config.divisionNames![1]}</Nav.Link>
+                        <Nav.Link eventKey="divtwo" title={this.state.config.divisionNames![1]}>{this.state.config.divisionNames![1]}</Nav.Link>
                     </Nav.Item>
                 </>
             );
@@ -246,14 +246,14 @@ class App extends React.Component<AppProps, AppState> {
                     <Collapse in={this.state.showMenu}>
                         <Nav className="main-nav">
                             <Nav.Item>
-                                <Nav.Link eventKey="home">Home</Nav.Link>
+                                <Nav.Link eventKey="home" title="Home">Home</Nav.Link>
                             </Nav.Item>
                             {participants_nav}
                             <Nav.Item>
-                                <Nav.Link eventKey="judges">Judges</Nav.Link>
+                                <Nav.Link eventKey="judges" title="Judges">Judges</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="draw">Draw</Nav.Link>
+                                <Nav.Link eventKey="draw" title="Draw">Draw</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Collapse>

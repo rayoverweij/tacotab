@@ -20,7 +20,6 @@ body, .popover {
 }
 
 body {
-    background-color: #F7F7F7;
     overflow: hidden;
 }
 
@@ -30,6 +29,23 @@ a {
     &:hover {
         color: var(--primary);
         text-decoration: underline;
+    }
+}
+
+h2 {
+    position: sticky;
+    top: 0;
+    padding: 5px 0;
+    background-color: white;
+    border-bottom: 3px solid var(--primary);
+    color: black;
+    font-weight: 900;
+    text-transform: uppercase;
+    z-index: 30;
+
+    .btn-primary {
+        float: right;
+        margin-right: 15px;
     }
 }
 
@@ -147,12 +163,40 @@ textarea {
 
 // General table styling
 .table {
+    position: relative;
     margin-top: 30px;
     margin-bottom: 100px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: none;
 
+    tr:last-child > td {
+        border-bottom: 1px solid $gray;
+    }
+    
     th, thead th, td {
-        vertical-align: middle;
         padding: 10px 5px;
+        vertical-align: middle;
+        border: none;
+        border-top: 1px solid $gray;
+    }
+    
+    th, thead th {
+        position: sticky;
+        top: 47px;
+        z-index: 25;
+        background-color: white;
+        border-bottom: 1px solid $gray;
+    }
+
+    &.table-bordered {
+        th, td {
+            border-right: 1px solid $gray;
+            
+            &:first-child {
+                border-left: 1px solid $gray;
+            }
+        }
     }
 
     .cell-low-padding {

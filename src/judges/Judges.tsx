@@ -163,7 +163,7 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
             <Tab.Container id={`judges-view`} defaultActiveKey="judges">
                 <Row>
                     <Col md={3} lg={2}>
-                        <Nav variant="pills" className="no-show-sm">
+                        <Nav variant="pills" className="sub-nav no-show-sm">
                             <Nav.Item>
                                 <Nav.Link eventKey="judges" className="sub-nav-link">
                                     <AwardFill className="btn-icon" />
@@ -175,9 +175,9 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
                     <Col md={9} lg={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="judges">
+                                <h2>Judges</h2>
                                 <Row>
                                     <Col>
-                                        <h2>Judges</h2>
                                         <Form onSubmit={this.handleAddJudgeFormSubmit}>
                                             <Form.Row>
                                                 <Col md={4}>

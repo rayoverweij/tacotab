@@ -28,7 +28,7 @@ class Draws extends React.Component<DrawsProps> {
             <Tab.Container id={`draw-view`} defaultActiveKey="round-1">
                 <Row>
                     <Col md={3} lg={2}>
-                        <Nav variant="pills">
+                        <Nav variant="pills" className="sub-nav">
                             {[1, 2, 3].map(round => {
                                 return (
                                     <Nav.Item key={`draw-nav-${round}`}>

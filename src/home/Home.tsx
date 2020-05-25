@@ -22,7 +22,7 @@ class Home extends React.Component<HomeProps> {
             <Tab.Container id="home-view" defaultActiveKey="welcome">
                 <Row>
                     <Col md={3} lg={2}>
-                        <Nav variant="pills">
+                        <Nav variant="pills" className="sub-nav">
                             <Nav.Item>
                                 <Nav.Link eventKey="welcome" className="sub-nav-link">
                                     <HouseDoorFill className="btn-icon"/>

@@ -1,3 +1,5 @@
+@import '../vars';
+
 .table {
     tbody + tbody {
         border-top-width: 3px;
@@ -16,11 +18,15 @@
     }
 
     .row-wins {
-        border-top: 2px solid #DEE2E6;
+        border-top: 2px solid $gray;;
     }
 }
 
 .cell-teamname {
+    position: sticky;
+    top: 92px;
+    background-color: white;
+    border-bottom: 1px solid $gray !important;
     vertical-align: top !important;
 }
 

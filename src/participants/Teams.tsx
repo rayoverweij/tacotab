@@ -150,17 +150,11 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
 
         return (
             <div>
-                <Row>
-                    <Col>
-                        <h2>Teams</h2>
-                        <Button onClick={this.modalShow}>Add team</Button>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        {teamTable}
-                    </Col>
-                </Row>
+                <h2>
+                    Teams
+                    <Button onClick={this.modalShow}>Add team</Button>
+                </h2>
+                {teamTable}
 
                 <Modal show={this.state.showModal} onHide={this.modalHide}>
                     <Modal.Header closeButton>

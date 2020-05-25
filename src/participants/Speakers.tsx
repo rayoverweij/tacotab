@@ -148,9 +148,9 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
 
         return (
             <div>
+                <h2>Speakers</h2>
                 <Row>
                     <Col>
-                    <h2>Speakers</h2>
                     
                         <Form onSubmit={this.handleAddSpeakerFormSubmit}>
                             <Form.Row>

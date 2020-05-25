@@ -19,7 +19,7 @@ type TeamTableProps = {
 class TeamTable extends React.Component<TeamTableProps> {
     render() {
         return (
-            <Table hover>
+            <Table hover className="table-no-top-margin">
                 <thead>
                     <tr>
                         <th>Team Name</th>

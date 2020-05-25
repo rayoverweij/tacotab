@@ -1,3 +1,7 @@
+.col-settings {
+    padding-left: 0;
+}
+
 #section-cleardata {
     @media(min-width: 992px) {
         margin-bottom: 100px;
@@ -9,6 +13,7 @@
 
     @media(min-width: 992px) {
         margin-top: 0.5rem; // same baseline as page h2
+        position: fixed;
     }
 }
 

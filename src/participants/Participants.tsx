@@ -25,7 +25,7 @@ class Participants extends React.Component<ParticipantsProps> {
             <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers">
                 <Row>
                     <Col md={3} lg={2}>
-                        <Nav variant="pills">
+                        <Nav variant="pills" className="sub-nav">
                             <Nav.Item>
                                 <Nav.Link eventKey="speakers" className="sub-nav-link">
                                     <PersonFill className="btn-icon" />

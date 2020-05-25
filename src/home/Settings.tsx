@@ -95,9 +95,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
     render() {
         return (
             <div>
+                <h2>Settings</h2>
                 <Row>
-                    <Col lg={8}>
-                        <h2>Settings</h2>
+                    <Col lg={8} className="col-settings">
                         <p>Manage your tournament.</p>
                         <section>
                             <h3>Change tournament name</h3>
@@ -164,7 +164,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             </Button>
                         </section>
                     </Col>
-                    <Col lg={4}>
+                    <Col lg={4} className="col-settings">
                         <section id="section-about">
                             <h3>About</h3>
                             <p>

@@ -135,11 +135,7 @@ class Ranking extends React.Component<RankingProps> {
 
         return (
             <div>
-                <Row>
-                    <Col>
-                        <h2>Ranking</h2>
-                    </Col>
-                </Row>
+                <h2>Ranking</h2>
                 <Row>
                     <Col lg={7} className="table-col">
                         <h3>Speakers</h3>
@@ -165,7 +161,7 @@ class Ranking extends React.Component<RankingProps> {
                                             placement="top"
                                             overlay={
                                                 <Tooltip id="tooltip-totalspeakerranks">
-                                                    Total speaker ranks (lower is better)
+                                                    Total speaker ranks<br />(lower is better)
                                                 </Tooltip>
                                             }>
                                             <abbr title="">ΣSR</abbr>

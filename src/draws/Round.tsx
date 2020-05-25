@@ -468,9 +468,9 @@ class Round extends React.Component<RoundProps, RoundState> {
 
         return (
             <div>
+                <h2>Round {this.props.round}</h2>
                 <Row className="draw-header">
                     <Col>
-                        <h2>Round {this.props.round}</h2>
                         <Button
                             onClick={this.generateDraw}
                             className={this.state.generated ? "hidden" : ""}>

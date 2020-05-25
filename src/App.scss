@@ -19,7 +19,9 @@
         display: inline-block;
         vertical-align: top;
         font-size: 2rem;
-        font-weight: 700;
+        font-weight: 900;
+        font-style: italic;
+        color: black;
         line-height: 1;
         margin-top: 1rem;
         margin-left: 10px;
@@ -39,6 +41,8 @@
 
     svg {
         height: 3rem;
+        width: 3rem;
+        padding: 8px;
         transition: $transition;
 
         &:hover {
@@ -52,15 +56,20 @@
 .main-nav {
     flex-direction: column;
     flex-wrap: nowrap;
-    border-bottom: 0;
+    border-bottom: 2px solid black;
 
     @media(min-width: 768px) {
         height: 4rem;
         flex-direction: row;
         flex-wrap: wrap;
         margin-top: -4rem;
-        margin-left: 220px;
+        margin-left: 25%;
         margin-bottom: 0;
+        border-bottom: none;
+    }
+
+    @media(min-width: 992px) {
+        margin-left: 16.666667%;
     }
 
     &.collapse:not(.show) {
@@ -71,70 +80,72 @@
 
     .nav-item {
         margin-bottom: 20px;
+        padding: 18px 18px;
 
         @media(min-width: 768px) {
             margin-bottom: 0;
             z-index: 20;
         }
+
+        &:first-child {
+            padding-left: 12px;
+        }
     }
 
     .nav-link {
         position: relative;
+        padding: 0;
         text-align: center;
         border: none;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         transition: $transition;
 
-        &.active {
-            background-color: transparent;
-            color: black;
+        &::before {
+            display: block;
+            content: attr(title);
+            font-weight: bold;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
         }
 
-        &:hover:not(.active) {
-            text-decoration: underline;
+        @media(min-width: 768px) {
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                bottom: -2px;
+                left: 0;
+                background-color: var(--primary);
+                visibility: hidden;
+                transform: scaleX(0);
+                transition: $transition;
+            }
+        }
+
+
+        &:hover, &.active {
+            background-color: transparent;
+            font-weight: bolder;
+
+            &::after {
+                visibility: visible;
+                transform: scaleX(1);
+            }
+        }
+
+        &.active {
+            color: black;
+
+            &::after {
+                color: black;
+            }
         }
 
         &:focus {
             outline: none;
-            text-decoration: underline;
-        }
-
-        @media(min-width: 768px) {
-            padding: 1.25rem;
-    
-            &.active {
-                background-color: white;
-
-                &::before {
-                    box-shadow: -5px 0 5px -5px rgba(0,0,0,0.16) inset, -5px 0 5px -5px rgba(0,0,0,0.23) inset;
-                    content: "";
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: -5px;
-                    width: 5px;
-                }
-
-                &::after {
-                    box-shadow: 5px 0 5px -5px rgba(0,0,0,0.16) inset, 5px 0 5px -5px rgba(0,0,0,0.23) inset;
-                    content: "";
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    right: -5px;
-                    width: 5px;
-                }
-            }
-    
-            &:focus {
-                text-decoration: none;
-                box-shadow: inset $focus;
-    
-                &.active {
-                    box-shadow: inset $focus;
-                }
-            }
         }
     }
 }
@@ -143,9 +154,7 @@
 .app > .tab-content {
     height: calc(100vh - 4rem);
     background-color: white;
-    box-shadow: $card;
     overflow-y: scroll;
-    padding-top: 15px;
 
     .nav-pills {
         flex-direction: row;
@@ -175,15 +184,23 @@
 }
 
 
-.sub-nav-link {
-    transition: $transition;
-
-    &:hover:not(.active) {
-        text-decoration: underline;
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: $focus;
+.sub-nav {
+    margin-top: 10px;
+    
+    .sub-nav-link {
+        transition: $transition;
+        
+        @media(min-width: 768px) {
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+    
+        &:hover:not(.active) {
+            background-color: $primary-light;
+        }
+    
+        &:focus {
+            outline: none;
+        }
     }
 }
