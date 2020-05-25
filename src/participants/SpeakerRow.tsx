@@ -70,7 +70,7 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                     <textarea
                         className="cell-valupdate"
                         rows={1}
-                        cols={25}
+                        cols={this.state.name.length}
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}
@@ -94,7 +94,7 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                     {this.state.trashFill ? 
                         <TrashFill
                             role="button"
-                            className="icon"
+                            className="icon red"
                             onMouseEnter={this.trashOnMouseEnter}
                             onMouseLeave={this.trashOnMouseLeave}
                             onClick={() => this.props.deleteSpeaker(speaker)} />

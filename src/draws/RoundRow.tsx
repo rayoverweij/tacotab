@@ -126,7 +126,7 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                     <textarea
                         className="cell-valupdate"
                         rows={1}
-                        cols={12}
+                        cols={this.state.roomName.length}
                         autoComplete="off"
                         placeholder="room"
                         value={this.state.roomName}
