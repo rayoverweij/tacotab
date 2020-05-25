@@ -128,6 +128,7 @@ class Ranking extends React.Component<RankingProps> {
             for(let speakerID of speakerIDs) {
                 let currSpeaker = speakers.find(sp => sp.speakerID === speakerID);
                 if(currSpeaker === undefined) continue;
+                if(currSpeaker.disqualified === true) continue;
                 speakerNames.push(currSpeaker.name);
             }
             const speakerElements = speakerNames.map((speaker, index) => {
