@@ -29,7 +29,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         super(props);
 
         this.state = {
-            nameForm: this.props.tournamentName,
+            nameForm: "",
             showModal: false
         }
 
@@ -55,6 +55,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         event.preventDefault();
         const name = this.state.nameForm;
         this.props.updateTournamentName(name);
+        this.setState({nameForm: ""});
     }
 
     importData(event: FormEvent<HTMLFormElement>) {
