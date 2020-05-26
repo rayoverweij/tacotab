@@ -81,9 +81,13 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
         data += encodeURIComponent("}");
         
+        let name = this.props.tournamentName;
+        name = name.replace(/\s+/g, '-').toLowerCase();
+        name += ".tournament";
+
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", data);
-        downloadAnchorNode.setAttribute("download", "tournament.json");
+        downloadAnchorNode.setAttribute("download", name);
         document.body.appendChild(downloadAnchorNode);
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
@@ -142,7 +146,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                                     id="import-settings"
                                                     className="custom-file-input"
                                                     type="file"
-                                                    accept=".json" />
+                                                    accept=".tournament,.json" />
                                                 <label className="custom-file-label" htmlFor="customFile">Choose file</label>
                                             </div>
                                         </Col>

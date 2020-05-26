@@ -173,7 +173,7 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                                 id="import-setup"
                                                 className="custom-file-input"
                                                 type="file"
-                                                accept=".json" />
+                                                accept=".tournament,.json" />
                                             <label className="custom-file-label" htmlFor="customFile">Choose file</label>
                                         </div>
                                     </Col>
