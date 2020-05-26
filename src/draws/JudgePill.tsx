@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import './JudgePill.scss';
+import './Pill.scss';
 import { Judge } from '../types/Judge';
 import { Room } from '../types/Room';
 import { Draw } from '../types/Draw';
@@ -15,11 +15,11 @@ type JudgePillProps = {
     hasConflict: boolean,
     room: Room,
     draw: Draw,
-    updateRoom: (room: Room, judgeID: number, isChair: boolean, newRoomName: string) => void
+    updateRoom: (judgeID: number, isChair: boolean, newRoomID: number) => void
 }
 
 type JudgePillState = {
-    roomName: string
+    roomID: number
 }
 
 class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
@@ -27,7 +27,7 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
         super(props);
 
         this.state = {
-            roomName: this.props.room.name
+            roomID: this.props.room.roomID
         }
 
         this.handleRoomFormChange = this.handleRoomFormChange.bind(this);
@@ -36,12 +36,12 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
 
 
     handleRoomFormChange(event: ChangeEvent<HTMLInputElement>) {
-        this.setState({roomName: event.target.value});
+        this.setState({roomID: parseInt(event.target.value)});
     }
 
     handleRoomFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        this.props.updateRoom(this.props.room, this.props.judge.judgeID, this.props.isChair, this.state.roomName);
+        this.props.updateRoom(this.props.judge.judgeID, this.props.isChair, this.state.roomID);
         document.body.click();
     }
 
@@ -61,12 +61,12 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                                 return (
                                     <Form.Check custom
                                         key={`room-check-${index}`}
-                                        id={`room-check-${Math.floor(Math.random() * 1000000)}`}
+                                        id={`room-check-one-${room.roomID}-${index}`}
                                         name="room"
                                         type="radio"
                                         label={room.name}
-                                        value={room.name}
-                                        checked={this.state.roomName === room.name}
+                                        value={room.roomID}
+                                        checked={this.state.roomID === room.roomID}
                                         onChange={this.handleRoomFormChange} />
                                 );
                             })}
@@ -74,12 +74,12 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                                 return (
                                     <Form.Check custom
                                         key={`room-check-${index}`}
-                                        id={`room-check-${Math.floor(Math.random() * 1000000)}`}
+                                        id={`room-check-two-${room.roomID}-${index}`}
                                         name="room"
                                         type="radio"
                                         label={room.name}
-                                        value={room.name}
-                                        checked={this.state.roomName === room.name}
+                                        value={room.roomID}
+                                        checked={this.state.roomID === room.roomID}
                                         onChange={this.handleRoomFormChange} />
                                 );
                             })}
@@ -91,7 +91,7 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
 
         return (
             <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose>
-                <div className={`judgepill ${this.props.hasConflict ? "red" : ""}`}>
+                <div className={`pill ${this.props.hasConflict ? "red" : ""}`}>
                     {this.props.judge.name}{this.props.isChair ? "\u00A9" : ""}
                 </div>
             </OverlayTrigger>

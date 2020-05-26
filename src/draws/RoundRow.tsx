@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import TeamPill from './TeamPill';
 import JudgePill from './JudgePill';
 import { Room } from '../types/Room';
 import { Speaker } from '../types/Speaker';
@@ -31,7 +32,8 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         }
 
         this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.updateRoom = this.updateRoom.bind(this);
+        this.updateRoomTeam = this.updateRoomTeam.bind(this);
+        this.updateRoomJudge = this.updateRoomJudge.bind(this);
     }
 
     componentDidUpdate(prevProps: RoundRowProps) {
@@ -49,18 +51,54 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         this.props.updateRooms(room, this.props.div);
     }
 
-    updateRoom(room: Room, judgeID: number, isChair: boolean, newRoomName: string) {
+    updateRoomTeam(thisTeamID: number, swapTeamID: number) {
+        const div = this.props.div;
         let draw = this.props.draw;
-        const roomlistOne = draw.roomsOne.map(r => r.name);
-        const nextDiv = roomlistOne.includes(newRoomName) ? 1 : 2;
+        let thisRoom = this.props.room;
 
         let rooms;
-        if(nextDiv === 1) {
-            rooms = draw.roomsOne;
-        } else {
-            rooms = draw.roomsTwo;
+        if(div === 1) rooms = draw.roomsOne;
+        else rooms = draw.roomsTwo;
+
+        let thisTeamPos = "prop";
+        if(thisRoom.opp === thisTeamID) thisTeamPos = "opp";
+
+        let newRoomIndex: number;
+        for(let newRoom of rooms) {
+            if(newRoom.prop === swapTeamID) {
+                if(thisTeamPos === "prop") {
+                    [thisRoom.prop, newRoom.prop] = [newRoom.prop, thisRoom.prop]
+                } else {
+                    [thisRoom.opp, newRoom.prop] = [newRoom.prop, thisRoom.opp]
+                }
+                newRoomIndex = newRoom.roomID;
+                break;
+            } else if(newRoom.opp === swapTeamID) {
+                if(thisTeamPos === "prop") {
+                    [thisRoom.prop, newRoom.opp] = [newRoom.opp, thisRoom.prop]
+                } else {
+                    [thisRoom.opp, newRoom.opp] = [newRoom.opp, thisRoom.opp]
+                }
+                newRoomIndex = newRoom.roomID;
+                break;
+            }
         }
-        const newPair = rooms.findIndex(r => r.name === newRoomName);
+        
+        this.props.updateRooms(rooms[newRoomIndex!], div);
+        this.props.updateRooms(thisRoom, div);
+    }
+
+    updateRoomJudge(judgeID: number, isChair: boolean, newRoomID: number) {
+        let room = this.props.room;
+        let draw = this.props.draw;
+        const roomlistOne = draw.roomsOne.map(r => r.roomID);
+        const nextDiv = roomlistOne.includes(newRoomID) ? 1 : 2;
+
+        let rooms;
+        if(nextDiv === 1) rooms = draw.roomsOne;
+        else rooms = draw.roomsTwo;
+
+        const newPair = rooms.findIndex(r => r.roomID === newRoomID);
 
         if(!isChair) {
             rooms[newPair].wings.push(judgeID);
@@ -111,12 +149,12 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         if(speakerSchools.includes(chair.school)) chairConflict = true;
 
         // Check whether the teams have met before
-        let team_conflict = false;
+        let teamConflict = false;
         if(round === 2) {
-            if(prop.opponents[0] === opp.teamID) team_conflict = true;
+            if(prop.opponents[0] === opp.teamID) teamConflict = true;
         }
         if(round === 3) {
-            if(prop.opponents[0] === opp.teamID || prop.opponents[1] === opp.teamID) team_conflict = true;
+            if(prop.opponents[0] === opp.teamID || prop.opponents[1] === opp.teamID) teamConflict = true;
         }
 
 
@@ -133,14 +171,18 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                         onChange={this.handleRoomChange} />
                 </td>
                 <td className="draw-table-team-cell">
-                    <span className={team_conflict ? "orange" : ""}>
-                        {prop.name}
-                    </span>
+                    <TeamPill 
+                        team={prop}
+                        hasConflict={teamConflict}
+                        teams={this.props.teams}
+                        updateRoom={this.updateRoomTeam} />
                 </td>
                 <td className="draw-table-team-cell">
-                    <span className={team_conflict ? "orange" : ""}>
-                        {opp.name}
-                    </span>
+                    <TeamPill 
+                        team={opp}
+                        hasConflict={teamConflict}
+                        teams={this.props.teams}
+                        updateRoom={this.updateRoomTeam} />
                 </td>
                 <td>
                     <div className="judgepill-container">
@@ -150,7 +192,7 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                             hasConflict={chairConflict}
                             room={room}
                             draw={this.props.draw}
-                            updateRoom={this.updateRoom} />
+                            updateRoom={this.updateRoomJudge} />
                     </div>
                     {room.wings.length !== 0 ? ",\u00A0" : ""}
                     {room.wings.map((el, index) => {
@@ -163,7 +205,7 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                                     hasConflict={speakerSchools.includes(wing.school)}
                                     room={room}
                                     draw={this.props.draw}
-                                    updateRoom={this.updateRoom} />
+                                    updateRoom={this.updateRoomJudge} />
                                 {index < room.wings.length - 1 ? ",\u00A0" : ""}
                             </div>
                         );
