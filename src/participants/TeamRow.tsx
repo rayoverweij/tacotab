@@ -306,7 +306,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                         <textarea
                             className="cell-valupdate"
                             rows={1}
-                            cols={this.state.name.length}
+                            cols={this.state.name.length > 8 ? this.state.name.length : 8}
                             autoComplete="off"
                             spellCheck="false"
                             value={this.state.name}

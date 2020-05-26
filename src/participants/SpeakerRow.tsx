@@ -78,7 +78,7 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                         className="cell-valupdate"
                         name="name"
                         rows={1}
-                        cols={this.state.name.length}
+                        cols={this.state.name.length > 8 ? this.state.name.length : 8}
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.name}
@@ -90,7 +90,7 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                         className="cell-valupdate"
                         name="school"
                         rows={1}
-                        cols={this.state.school.length}
+                        cols={this.state.school.length > 8 ? this.state.school.length : 8}
                         autoComplete="off"
                         spellCheck="false"
                         value={this.state.school}
