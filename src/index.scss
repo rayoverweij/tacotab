@@ -36,12 +36,13 @@ body {
     overflow: hidden;
 }
 
-a {
+a, .fake-anchor {
     color: var(--primary);
 
     &:hover {
         color: var(--primary);
         text-decoration: underline;
+        cursor: pointer;
     }
 }
 
