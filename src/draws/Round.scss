@@ -1,3 +1,37 @@
+@import '../vars';
+
+.draw-legend {
+    position: relative;
+    margin-top: 20px;
+    
+    @media(min-width: 992px) {
+        display: inline-block;
+        border-left: 2px solid black;
+        padding-left: 7px;
+        margin-top: 0;
+        margin-left: 5px;
+    }
+
+    p {
+        margin-top: 6px;
+        margin-bottom: 10px;
+        
+        span {
+            border-bottom: 1px dotted black;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+}
+
+#draw-legend-popover {
+    max-width: 100%;
+    border: none;
+    box-shadow: $card;
+}
+
 .draw-header {
     margin-bottom: 30px;
 }
@@ -66,5 +100,15 @@
         th {
             font-weight: bold;
         }
+    }
+}
+
+.draw-modal-table {
+    .red {
+        color: black;
+    }
+
+    .orange {
+        color: black;
     }
 }

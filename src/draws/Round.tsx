@@ -12,7 +12,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
-import { Bullseye, ArrowRepeat, Trash, ArrowsAngleExpand } from 'react-bootstrap-icons';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import { Bullseye, ArrowRepeat, Trash, ArrowsAngleExpand, InfoCircle } from 'react-bootstrap-icons';
 
 
 type RoundProps = {
@@ -533,6 +535,26 @@ class Round extends React.Component<RoundProps, RoundState> {
                             <ArrowsAngleExpand className="btn-icon" />
                             Display fullscreen
                         </Button>
+                        <div className={`draw-legend ${!this.state.generated ? "hidden" : ""}`}>
+                            <OverlayTrigger
+                                trigger={["hover", "focus"]}
+                                placement="bottom-start"
+                                overlay={
+                                    <Popover id="draw-legend-popover">
+                                        <Popover.Content>
+                                            Teams in <span className="orange">orange</span> have already debated each other before.<br />
+                                            Judges in <span className="red">red</span> clash with one of the teams in their room.<br />
+                                            Note that these colors do not show up when the draw is displayed fullscreen.
+                                        </Popover.Content>
+                                    </Popover>
+                                } 
+                                rootClose>
+                                <abbr title=""><p>
+                                    <InfoCircle className="icon-info" />
+                                    &nbsp;&nbsp;<span>Legend</span>
+                                </p></abbr>
+                            </OverlayTrigger>
+                        </div>
                     </Col>
                 </Row>
                 <Row>
@@ -553,7 +575,9 @@ class Round extends React.Component<RoundProps, RoundState> {
                         Draw Round {this.props.round}
                     </Modal.Header>
                     <Modal.Body>
-                        {tables}
+                        <div className="draw-modal-table">
+                            {tables}
+                        </div>
                     </Modal.Body>
                 </Modal>
             </div>

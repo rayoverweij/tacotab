@@ -54,7 +54,7 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                     {(this.props.draw.roomsOne.map(room => room.name).includes("") ||
                       this.props.draw.roomsTwo.map(room => room.name).includes("") )
                         ?
-                        <p>You need to assign each round to a room before you can switch judges.</p>
+                        <p>You need to assign each debate to a room before you can switch judges.</p>
                         :
                         <Form onSubmit={this.handleRoomFormSubmit}>
                             {this.props.draw.roomsOne.map((room, index) => {
