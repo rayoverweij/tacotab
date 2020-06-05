@@ -12,8 +12,13 @@
     margin-bottom: 100px; // for small screens
 
     @media(min-width: 992px) {
-        margin-top: 0.5rem; // same baseline as page h2
-        position: fixed;
+        margin-top: 0; // same baseline as page h2
+        border-left: 2px solid black;
+        padding-left: 10px;
+
+        h3 {
+            font-weight: bolder;
+        }
     }
 }
 

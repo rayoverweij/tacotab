@@ -47,19 +47,17 @@ a, .fake-anchor {
 }
 
 h2 {
-    position: sticky;
-    top: 0;
     padding: 5px 0;
     background-color: white;
-    border-bottom: 3px solid var(--primary);
     color: black;
     font-weight: 900;
+    font-size: 2.75rem;
     text-transform: uppercase;
     z-index: 30;
 
     .hint-add-team {
         float: right;
-        margin-top: 10px;
+        margin-top: 15px;
         margin-right: 10px;
         font-size: 1rem;
         font-weight: 200;
@@ -78,6 +76,7 @@ h2 {
     .btn-primary {
         float: right;
         margin-right: 15px;
+        margin-top: 5px;
     }
 }
 
@@ -128,7 +127,8 @@ section {
 }
 
 .none-yet {
-    margin-top: 30px;
+    margin-top: 10px;
+    font-style: italic;
 }
 
 
@@ -221,7 +221,7 @@ textarea {
     
     th, thead th {
         position: sticky;
-        top: 47px;
+        top: -1px;
         z-index: 25;
         background-color: white;
         border-bottom: 1px solid $gray;
