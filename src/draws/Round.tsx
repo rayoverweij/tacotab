@@ -351,12 +351,12 @@ class Round extends React.Component<RoundProps, RoundState> {
             const i = teamsOne.indexOf(team);
             teamsOne[i] = team;
         });
-        localStorage.setItem("teams_one", JSON.stringify(teamsOne));
+        localStorage.setItem("teamsOne", JSON.stringify(teamsOne));
         t2.forEach(team => {
             const i = teamsTwo.indexOf(team);
             teamsTwo[i] = team;
         });
-        localStorage.setItem("teams_two", JSON.stringify(teamsTwo));
+        localStorage.setItem("teamsTwo", JSON.stringify(teamsTwo));
 
         // Update local state
         this.setState({roomsOne: roomsOne});

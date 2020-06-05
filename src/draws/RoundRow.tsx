@@ -129,8 +129,7 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         const opp = teams.find(el => el.teamID === room.opp)!;
         const chair = judges.find(el => el.judgeID === room.chair)!;
 
-        // Look for institutional judge conflicts
-        let chairConflict = false;
+        // Compile a list of speakers' schools for determining judge conflicts
         let speakersInTeams: Speaker[] = [];
         if(round === 1) {
             prop.round1.forEach(sp => speakersInTeams.push(speakers.find(el => el.speakerID === sp)!));
@@ -146,7 +145,6 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         speakersInTeams
             .filter(sp => sp !== undefined)
             .forEach(sp => speakerSchools.push(sp.school));
-        if(speakerSchools.includes(chair.school)) chairConflict = true;
 
         // Check whether the teams have met before
         let teamConflict = false;
@@ -189,7 +187,7 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                         <JudgePill
                             judge={chair}
                             isChair={true}
-                            hasConflict={chairConflict}
+                            hasConflict={speakerSchools.includes(chair.school)}
                             room={room}
                             draw={this.props.draw}
                             updateRoom={this.updateRoomJudge} />
