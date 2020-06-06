@@ -335,18 +335,6 @@ class Round extends React.Component<RoundProps, RoundState> {
         }
         localStorage.setItem("draws", JSON.stringify(draws));
 
-        // Update team values
-        t1.forEach(team => {
-            const i = teamsOne.indexOf(team);
-            teamsOne[i] = team;
-        });
-        localStorage.setItem("teamsOne", JSON.stringify(teamsOne));
-        t2.forEach(team => {
-            const i = teamsTwo.indexOf(team);
-            teamsTwo[i] = team;
-        });
-        localStorage.setItem("teamsTwo", JSON.stringify(teamsTwo));
-
         // Update local state
         this.setState({roomsOne: roomsOne});
         this.setState({roomsTwo: roomsTwo});

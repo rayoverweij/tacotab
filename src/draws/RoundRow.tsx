@@ -54,16 +54,12 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
     updateRoomTeam(thisTeamID: number, swapTeamID: number) {
         const div = this.props.div;
         const round = this.props.round - 1;
-        const teams = this.props.teams;
         let draw = this.props.draws[round];
         let thisRoom = this.props.room;
 
         let rooms;
         if(div === 1) rooms = draw.roomsOne;
         else rooms = draw.roomsTwo;
-
-        let thisTeam = teams.find(t => t.teamID === thisTeamID)!;
-        let swapTeam = teams.find(t => t.teamID === swapTeamID)!;
 
         let thisTeamPos = "prop";
         if(thisRoom.opp === thisTeamID) thisTeamPos = "opp";
@@ -87,17 +83,6 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         newRoom = newRoom!;
         this.props.updateRooms(newRoom, div);
         this.props.updateRooms(thisRoom, div);
-
-        // Update team values
-        const indexOne = teams.findIndex(t => t.teamID === thisTeamID);
-        const indexTwo = teams.findIndex(t => t.teamID === swapTeamID);
-        teams[indexOne] = thisTeam;
-        teams[indexTwo] = swapTeam;
-        if(div === 1) {
-            localStorage.setItem("teamsOne", JSON.stringify(teams));
-        } else {
-            localStorage.setItem("teamsTwo", JSON.stringify(teams));
-        }
     }
 
     updateRoomJudge(judgeID: number, isChair: boolean, newRoomID: number) {
