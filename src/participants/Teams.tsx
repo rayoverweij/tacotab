@@ -90,9 +90,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
             round3: memberList,
             totalPoints: 0,
             wins: [false, false, false],
-            totalWins: 0,
-            sideRound1: "",
-            opponents: []
+            totalWins: 0
             };
         teams.push(newTeam);
 

@@ -214,7 +214,13 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             New in version 0.4.1:
                             <ul>
                                 <li>General: last update's design refresh has been refined, with clearer headings and more space to work</li>
+                                <li>Draw: chairs that have already chaired one of the teams in their room before are marked in orange</li>
+                                <li>Draw: a new legend explains the colors that teams and judges get when there is a clash</li>
+                                <li>Fixed some bugs with team swapping</li>
+                                <li>Fixed a bug where teams didn't properly remember their opponents for checking in later draws</li>
+                                <li>Under-the-hood: information that can be gathered from looking at previous round (e.g. a team's previous opponents, or a chair's previous rooms) is now only stored in the draw, and not duplicated in the team and judge objects</li>
                             </ul>
+                            For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>
                     </Modal.Body>
                 </Modal>

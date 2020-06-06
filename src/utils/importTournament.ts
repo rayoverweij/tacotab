@@ -55,8 +55,7 @@ export const importTournament = (files: FileList) => {
                     name: team.teamName,
                     round1: team.round1.map((sp: string) => parseInt(sp)),
                     round2: team.round2.map((sp: string) => parseInt(sp)),
-                    round3: team.round2.map((sp: string) => parseInt(sp)),
-                    sideRound1: team.sideR1
+                    round3: team.round2.map((sp: string) => parseInt(sp))
                 }
                 delete newTeam.teamName
                 delete newTeam.sideR1
@@ -80,8 +79,7 @@ export const importTournament = (files: FileList) => {
                     name: team.teamName,
                     round1: team.round1.map((sp: string) => parseInt(sp)),
                     round2: team.round2.map((sp: string) => parseInt(sp)),
-                    round3: team.round2.map((sp: string) => parseInt(sp)),
-                    sideRound1: team.sideR1
+                    round3: team.round2.map((sp: string) => parseInt(sp))
                 }
                 delete newTeam.teamName
                 delete newTeam.sideR1

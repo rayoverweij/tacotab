@@ -115,17 +115,18 @@ class Round extends React.Component<RoundProps, RoundState> {
         }
 
         // Select only the judges that are available this round
+        let availableJudges: Judge[];
         if(round === 1) {
-            judges = judges.filter(el => el.atRound1 === true);
+            availableJudges = judges.filter(el => el.atRound1 === true);
         } else if(round === 2) {
-            judges = judges.filter(el => el.atRound2 === true);
+            availableJudges = judges.filter(el => el.atRound2 === true);
         } else {
-            judges = judges.filter(el => el.atRound3 === true);
+            availableJudges = judges.filter(el => el.atRound3 === true);
         }
 
         // Split chairs and wings
-        const chairs = judges.filter(el => el.canChair === true);
-        let wings = judges.filter(el => el.canChair === false);
+        const chairs = availableJudges.filter(el => el.canChair === true);
+        let wings = availableJudges.filter(el => el.canChair === false);
 
         // Check whether there are enough chairs
         const totalTeams = len1 + len2;
@@ -198,17 +199,29 @@ class Round extends React.Component<RoundProps, RoundState> {
 
         // For round 2, make sure everyone is on another side
         if(round === 2) {
+            const roundOneRoomsOne = draws[0].roomsOne;
+            const roundOneRoomsTwo = draws[0].roomsTwo;
+            const propsOne = roundOneRoomsOne.map(r => r.prop);
+            const propsTwo = roundOneRoomsTwo.map(r => r.opp);
+
             t1.forEach((team, index) => {
-                if(index % 2 === 0 && team.sideRound1 === "prop") {
+                let wasProp = false;
+                if(propsOne.includes(team.teamID)) wasProp = true;
+
+                if(index % 2 === 0 && wasProp) {
                     for(let i = index + 1; i < len1; i++) {
-                        if(t1[i].sideRound1 === "opp") {
+                        let iWasProp = false;
+                        if(propsOne.includes(t1[i].teamID)) iWasProp = true;
+                        if(!iWasProp) {
                             [t1[index], t1[i]] = [t1[i], t1[index]];
                             break;
                         }
                     }
-                } else if(index % 2 === 1 && team.sideRound1 === "opp") {
+                } else if(index % 2 === 1 && !wasProp) {
                     for(let i = index + 1; i < len1; i++) {
-                        if(t1[i].sideRound1 === "prop") {
+                        let iWasProp = false;
+                        if(propsOne.includes(t1[i].teamID)) iWasProp = true;
+                        if(iWasProp) {
                             [t1[index], t1[i]] = [t1[i], t1[index]];
                             break;
                         }
@@ -216,16 +229,23 @@ class Round extends React.Component<RoundProps, RoundState> {
                 }
             });
             t2.forEach((team, index) => {
-                if(index % 2 === 0 && team.sideRound1 === "prop") {
+                let wasProp = false;
+                if(propsTwo.includes(team.teamID)) wasProp = true;
+
+                if(index % 2 === 0 && wasProp) {
                     for(let i = index + 1; i < len2; i++) {
-                        if(t2[i].sideRound1 === "opp") {
+                        let iWasProp = false;
+                        if(propsTwo.includes(t2[i].teamID)) iWasProp = true;
+                        if(!iWasProp) {
                             [t2[index], t2[i]] = [t2[i], t2[index]];
                             break;
                         }
                     }
-                } else if(index % 2 === 1 && team.sideRound1 === "opp") {
+                } else if(index % 2 === 1 && !wasProp) {
                     for(let i = index + 1; i < len2; i++) {
-                        if(t2[i].sideRound1 === "prop") {
+                        let iWasProp = false;
+                        if(propsTwo.includes(t2[i].teamID)) iWasProp = true;
+                        if(iWasProp) {
                             [t2[index], t2[i]] = [t2[i], t2[index]];
                             break;
                         }
@@ -234,69 +254,38 @@ class Round extends React.Component<RoundProps, RoundState> {
             });
         }
 
-        // For round 3, make sure teams don't get the same opponent
-        // CURRENTLY MAKES THE DRAW CRASH <3
-        // if(round === 3) {
-        //     for(let i = 0; i < t1.length; i += 2) {
-        //         if(t1[i].opponents[1] === t1[i + 1].teamID) {
-        //             [t1[i], t1[i - 1]] = [t1[i - 1], t1[i]];
-        //             break;
-        //         }
-        //     }
-        //     for(let i = 1; i < t2.length; i += 2) {
-        //         if(t2[i].opponents[1] === t2[i + 1].teamID) {
-        //             [t2[i], t2[i - 1]] = [t2[i - 1], t2[i]];
-        //             break;
-        //         }
-        //     }
-        // }
-
         // Distribute teams and chairs
-        let currProp, currOpp, currChair;
+        let currPropID, currOppID, currChair, currChairID;
         for (let i = 0; i < len1; i += 2) {
-            if(round === 1) {
-                t1[i].sideRound1 = "prop";
-                t1[i + 1].sideRound1 = "opp";
-            }
+            currPropID = t1[i].teamID;
+            currOppID = t1[i + 1].teamID;
 
-            currProp = t1[i].teamID;
-            currOpp = t1[i + 1].teamID;
-
-            t1[i].opponents[round - 1] = currOpp;
-            t1[i + 1].opponents[round - 1] = currProp;
-
-            currChair = chairs.pop()!.judgeID;
+            currChair = chairs.pop()!;
+            currChairID = currChair.judgeID;
 
             const newRoom: Room = {
                 roomID: roomCounter++,
                 name: "",
-                prop: currProp,
-                opp: currOpp,
-                chair: currChair,
+                prop: currPropID,
+                opp: currOppID,
+                chair: currChairID,
                 wings: []
             }
             roomsOne[i / 2] = newRoom;
         }
         for (let i = 0; i < len2; i += 2) {
-            if(round === 1) {
-                t2[i].sideRound1 = "prop";
-                t2[i + 1].sideRound1 = "opp";
-            }
+            currPropID = t2[i].teamID;
+            currOppID = t2[i + 1].teamID;
 
-            currProp = t2[i].teamID;
-            currOpp = t2[i + 1].teamID;
-
-            t2[i].opponents[round - 1] = currOpp;
-            t2[i + 1].opponents[round - 1] = currProp;
-
-            currChair = chairs.pop()!.judgeID;
+            currChair = chairs.pop()!;
+            currChairID = currChair.judgeID;
 
             const newRoom: Room = {
                 roomID: roomCounter++,
                 name: "",
-                prop: currProp,
-                opp: currOpp,
-                chair: currChair,
+                prop: currPropID,
+                opp: currOppID,
+                chair: currChairID,
                 wings: []
             }
             roomsTwo[i / 2] = newRoom;
@@ -410,7 +399,7 @@ class Round extends React.Component<RoundProps, RoundState> {
             rooms = this.state.roomsTwo;
         }
 
-        const index = rooms.indexOf(room);
+        const index = rooms.findIndex(r => r.roomID === room.roomID);
         rooms[index] = room;
 
         if(div === 1) {
@@ -465,7 +454,7 @@ class Round extends React.Component<RoundProps, RoundState> {
                                             speakers={this.props.speakersOne}
                                             teams={this.props.teamsOne}
                                             judges={this.props.judges}
-                                            draw={this.props.draws[this.props.round - 1]}
+                                            draws={this.props.draws}
                                             updateRooms={this.updateRooms} />;
                                 })
                             }
@@ -493,7 +482,7 @@ class Round extends React.Component<RoundProps, RoundState> {
                                             speakers={this.props.speakersTwo}
                                             teams={this.props.teamsTwo}
                                             judges={this.props.judges}
-                                            draw={this.props.draws[this.props.round - 1]}
+                                            draws={this.props.draws}
                                             updateRooms={this.updateRooms} />;
                                 })
                             }
@@ -543,6 +532,7 @@ class Round extends React.Component<RoundProps, RoundState> {
                                     <Popover id="draw-legend-popover">
                                         <Popover.Content>
                                             Teams in <span className="orange">orange</span> have already debated each other before.<br />
+                                            Chairs in <span className="orange">orange</span> have already chaired one of the teams in their room before.<br />
                                             Judges in <span className="red">red</span> clash with one of the teams in their room.<br />
                                             Note that these colors do not show up when the draw is displayed fullscreen.
                                         </Popover.Content>

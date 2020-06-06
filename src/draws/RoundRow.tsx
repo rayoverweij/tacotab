@@ -15,7 +15,7 @@ type RoundRowProps = {
     speakers: Speaker[],
     teams: Team[],
     judges: Judge[],
-    draw: Draw,
+    draws: Draw[],
     updateRooms: (room: Room, div: number) => void
 }
 
@@ -53,44 +53,57 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
 
     updateRoomTeam(thisTeamID: number, swapTeamID: number) {
         const div = this.props.div;
-        let draw = this.props.draw;
+        const round = this.props.round - 1;
+        const teams = this.props.teams;
+        let draw = this.props.draws[round];
         let thisRoom = this.props.room;
 
         let rooms;
         if(div === 1) rooms = draw.roomsOne;
         else rooms = draw.roomsTwo;
 
+        let thisTeam = teams.find(t => t.teamID === thisTeamID)!;
+        let swapTeam = teams.find(t => t.teamID === swapTeamID)!;
+
         let thisTeamPos = "prop";
         if(thisRoom.opp === thisTeamID) thisTeamPos = "opp";
 
-        let newRoomIndex: number;
-        for(let newRoom of rooms) {
-            if(newRoom.prop === swapTeamID) {
-                if(thisTeamPos === "prop") {
-                    [thisRoom.prop, newRoom.prop] = [newRoom.prop, thisRoom.prop]
-                } else {
-                    [thisRoom.opp, newRoom.prop] = [newRoom.prop, thisRoom.opp]
-                }
-                newRoomIndex = newRoom.roomID;
+        let newRoom: Room;
+        for(let checkRoom of rooms) {
+            if(checkRoom.prop === swapTeamID) {
+                if(thisTeamPos === "prop") [thisRoom.prop, checkRoom.prop] = [checkRoom.prop, thisRoom.prop];
+                else [thisRoom.opp, checkRoom.prop] = [checkRoom.prop, thisRoom.opp];
+                newRoom = checkRoom;
                 break;
-            } else if(newRoom.opp === swapTeamID) {
-                if(thisTeamPos === "prop") {
-                    [thisRoom.prop, newRoom.opp] = [newRoom.opp, thisRoom.prop]
-                } else {
-                    [thisRoom.opp, newRoom.opp] = [newRoom.opp, thisRoom.opp]
-                }
-                newRoomIndex = newRoom.roomID;
+
+            } else if(checkRoom.opp === swapTeamID) {
+                if(thisTeamPos === "prop") [thisRoom.prop, checkRoom.opp] = [checkRoom.opp, thisRoom.prop];
+                else [thisRoom.opp, checkRoom.opp] = [checkRoom.opp, thisRoom.opp];
+                newRoom = checkRoom;
                 break;
             }
         }
-        
-        this.props.updateRooms(rooms[newRoomIndex!], div);
+
+        newRoom = newRoom!;
+        this.props.updateRooms(newRoom, div);
         this.props.updateRooms(thisRoom, div);
+
+        // Update team values
+        const indexOne = teams.findIndex(t => t.teamID === thisTeamID);
+        const indexTwo = teams.findIndex(t => t.teamID === swapTeamID);
+        teams[indexOne] = thisTeam;
+        teams[indexTwo] = swapTeam;
+        if(div === 1) {
+            localStorage.setItem("teamsOne", JSON.stringify(teams));
+        } else {
+            localStorage.setItem("teamsTwo", JSON.stringify(teams));
+        }
     }
 
     updateRoomJudge(judgeID: number, isChair: boolean, newRoomID: number) {
+        const round = this.props.round - 1;
         let room = this.props.room;
-        let draw = this.props.draw;
+        let draw = this.props.draws[round];
         const roomlistOne = draw.roomsOne.map(r => r.roomID);
         const nextDiv = roomlistOne.includes(newRoomID) ? 1 : 2;
 
@@ -98,22 +111,23 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         if(nextDiv === 1) rooms = draw.roomsOne;
         else rooms = draw.roomsTwo;
 
-        const newPair = rooms.findIndex(r => r.roomID === newRoomID);
+        const newRoom = rooms.findIndex(r => r.roomID === newRoomID);
 
         if(!isChair) {
-            rooms[newPair].wings.push(judgeID);
+            rooms[newRoom].wings.push(judgeID);
             const oldIndex = room.wings.indexOf(judgeID);
             room.wings.splice(oldIndex, 1);
         } else {
-            const swapChair = rooms[newPair].chair;
-            if(swapChair === judgeID) return false;
-            const conf = window.confirm(`You are about to swap the chairs ${this.props.judges.find(j => j.judgeID === judgeID)!.name} and ${this.props.judges.find(j => j.judgeID === swapChair)!.name}. Do you wish to continue?`);
+            const swapChairID = rooms[newRoom].chair;
+            if(swapChairID === judgeID) return false;
+
+            const conf = window.confirm(`You are about to swap the chairs ${this.props.judges.find(j => j.judgeID === judgeID)!.name} and ${this.props.judges.find(j => j.judgeID === swapChairID)!.name}. Do you wish to continue?`);
             if(conf) {
-                rooms[newPair].chair = judgeID;
-                room.chair = swapChair;
+                rooms[newRoom].chair = judgeID;
+                room.chair = swapChairID;
             } else return false;
         }
-        this.props.updateRooms(rooms[newPair], nextDiv);
+        this.props.updateRooms(rooms[newRoom], nextDiv);
         this.props.updateRooms(room, this.props.div);
     }
 
@@ -124,10 +138,13 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
         const judges = this.props.judges;
         const room = this.props.room;
         const round = this.props.round;
+        const draws = this.props.draws;
+        const div = this.props.div;
 
         const prop = teams.find(el => el.teamID === room.prop)!;
         const opp = teams.find(el => el.teamID === room.opp)!;
         const chair = judges.find(el => el.judgeID === room.chair)!;
+
 
         // Compile a list of speakers' schools for determining judge conflicts
         let speakersInTeams: Speaker[] = [];
@@ -146,13 +163,74 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
             .filter(sp => sp !== undefined)
             .forEach(sp => speakerSchools.push(sp.school));
 
+
+        // Initialize values for next checks
+        let roomNum: string;
+        if(div === 1) roomNum = "roomsOne";
+        else roomNum = "roomsTwo";
+
+
         // Check whether the teams have met before
         let teamConflict = false;
-        if(round === 2) {
-            if(prop.opponents[0] === opp.teamID) teamConflict = true;
+        if(round === 2 || round === 3) {
+            let propsR1: number[];
+
+            const rooms: Room[] = draws[0][roomNum] as Room[];
+            propsR1 = rooms.map(r => r.prop);
+
+            if(propsR1.includes(prop.teamID)) {
+                const roomR1 = rooms.find(r => r.prop === prop.teamID)!;
+                if(roomR1.opp === opp.teamID) teamConflict = true;
+            } else {
+                const roomR1 = rooms.find(r => r.opp === prop.teamID)!;
+                if(roomR1.prop === opp.teamID) teamConflict = true;
+            }
         }
         if(round === 3) {
-            if(prop.opponents[0] === opp.teamID || prop.opponents[1] === opp.teamID) teamConflict = true;
+            let propsR2: number[];
+
+            const rooms: Room[] = draws[1][roomNum] as Room[];
+            propsR2 = rooms.map(r => r.prop);
+
+            if(propsR2.includes(prop.teamID)) {
+                const roomR1 = rooms.find(r => r.prop === prop.teamID)!;
+                if(roomR1.opp === opp.teamID) teamConflict = true;
+            } else {
+                const roomR1 = rooms.find(r => r.opp === prop.teamID)!;
+                if(roomR1.prop === opp.teamID) teamConflict = true;
+            }
+        }
+
+
+        // Check whether the chair has chaires the teams before
+        let hasChairedBefore = false;
+        if(round === 2 || round === 3) {
+            let chairsR1: number[];
+
+            const rooms: Room[] = draws[0][roomNum] as Room[];
+            chairsR1 = rooms.map(r => r.chair);
+
+            if(chairsR1.includes(chair.judgeID)) {
+                const roomR1 = rooms.find(r => r.chair === chair.judgeID)!;
+                if(roomR1.prop === prop.teamID || roomR1.prop === opp.teamID
+                    || roomR1.opp === prop.teamID || roomR1.opp === opp.teamID) {
+                        hasChairedBefore = true;
+                }
+            }
+        }
+        if(round === 3) {
+            let chairsR2: number[];
+
+            const rooms: Room[] = draws[1][roomNum] as Room[];
+            chairsR2 = rooms.map(r => r.chair);
+
+            if(chairsR2.includes(chair.judgeID)) {
+                const roomR1 = rooms.find(r => r.chair === chair.judgeID)!;
+                if(roomR1.prop === prop.teamID || roomR1.prop === opp.teamID
+                    || roomR1.opp === prop.teamID || roomR1.opp === opp.teamID) {
+                        hasChairedBefore = true;
+                }
+            }
         }
 
 
@@ -188,8 +266,9 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                             judge={chair}
                             isChair={true}
                             hasConflict={speakerSchools.includes(chair.school)}
+                            hasChairedBefore={hasChairedBefore}
                             room={room}
-                            draw={this.props.draw}
+                            draw={draws[round - 1]}
                             updateRoom={this.updateRoomJudge} />
                     </div>
                     {room.wings.length !== 0 ? ",\u00A0" : ""}
@@ -201,8 +280,9 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
                                     judge={wing}
                                     isChair={false}
                                     hasConflict={speakerSchools.includes(wing.school)}
+                                    hasChairedBefore={false}
                                     room={room}
-                                    draw={this.props.draw}
+                                    draw={draws[round - 1]}
                                     updateRoom={this.updateRoomJudge} />
                                 {index < room.wings.length - 1 ? ",\u00A0" : ""}
                             </div>

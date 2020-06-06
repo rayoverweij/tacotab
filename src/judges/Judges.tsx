@@ -62,8 +62,7 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
             name: this.state.addJudgeForm.judgeName,
             school: this.state.addJudgeForm.school,
             canChair: false,
-            atRound1: true, atRound2: true, atRound3: true,
-            hasChaired: []
+            atRound1: true, atRound2: true, atRound3: true
         }
         judges.push(newJudge);
 

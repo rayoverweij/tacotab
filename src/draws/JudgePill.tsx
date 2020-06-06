@@ -13,6 +13,7 @@ type JudgePillProps = {
     judge: Judge,
     isChair: boolean,
     hasConflict: boolean,
+    hasChairedBefore: boolean,
     room: Room,
     draw: Draw,
     updateRoom: (judgeID: number, isChair: boolean, newRoomID: number) => void
@@ -91,7 +92,11 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
 
         return (
             <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose>
-                <div className={`pill ${this.props.hasConflict ? "red" : ""}`}>
+                <div className={`
+                    pill
+                    ${this.props.hasConflict ? "red" : ""}
+                    ${this.props.hasChairedBefore ? "orange" : ""}
+                `}>
                     {this.props.judge.name}{this.props.isChair ? "\u00A9" : ""}
                 </div>
             </OverlayTrigger>

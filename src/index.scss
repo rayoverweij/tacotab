@@ -89,13 +89,13 @@ abbr[title] {
     border-bottom: 1px dotted black;
 }
 
+.orange {
+    color: var(--orange);
+}
+
 .red {
     color: var(--red);
     fill: var(--red);
-}
-
-.orange {
-    color: var(--orange);
 }
 
 .hidden {

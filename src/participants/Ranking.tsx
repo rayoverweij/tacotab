@@ -79,9 +79,7 @@ class Ranking extends React.Component<RankingProps> {
                     round3: [],
                     totalPoints: 0,
                     wins: [],
-                    totalWins: 0,
-                    sideRound1: "",
-                    opponents: []
+                    totalWins: 0
                 }
             }
             return (
