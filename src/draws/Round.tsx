@@ -514,10 +514,9 @@ class Round extends React.Component<RoundProps, RoundState> {
                         </Button>
                         <div className={`draw-legend ${!this.state.generated ? "hidden" : ""}`}>
                             <OverlayTrigger
-                                trigger={["hover", "focus"]}
                                 placement="bottom-start"
                                 overlay={
-                                    <Popover id="draw-legend-popover">
+                                    <Popover className="popover-explainer" id="draw-legend-popover">
                                         <Popover.Content>
                                             Teams in <span className="orange">orange</span> have already debated each other before.<br />
                                             Chairs in <span className="orange">orange</span> have already chaired one of the teams in their room before.<br />

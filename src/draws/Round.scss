@@ -1,5 +1,3 @@
-@import '../vars';
-
 .draw-legend {
     position: relative;
     margin-top: 20px;
@@ -28,8 +26,6 @@
 
 #draw-legend-popover {
     max-width: 100%;
-    border: none;
-    box-shadow: $card;
 }
 
 .draw-header {
