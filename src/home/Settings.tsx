@@ -188,7 +188,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             <section id="section-about">
                                 <h3>About</h3>
                                 <p>
-                                    TacoTab β version 0.4.1<br />
+                                    TacoTab β version 0.4.2<br />
                                     &copy; {new Date().getFullYear()} Rayo Verweij<br />
                                     <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
@@ -218,7 +218,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
                     <Modal.Body>
                         <p>
-                            New in version 0.4.1:
+                            New in version 0.4.2:
                             <ul>
                                 <li>General: last update's design refresh has been refined, with clearer headings and more space to work</li>
                                 <li>General: a new privacy policy, explaining that we never collect any data, has been added to the Settings page</li>
