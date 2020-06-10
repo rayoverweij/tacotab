@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5caca0a4c681dbb1c9538f047ffac851",
+    "revision": "f674ed68d879ed7b72b793d82d29d650",
     "url": "/tacotab/index.html"
   },
   {
-    "revision": "9bd375354200be254084",
-    "url": "/tacotab/static/css/main.c0f3bced.chunk.css"
+    "revision": "ab31cbd309d8d2aa5572",
+    "url": "/tacotab/static/css/main.697a6715.chunk.css"
   },
   {
-    "revision": "8342a7d8b8e0536914cf",
-    "url": "/tacotab/static/js/2.fd574139.chunk.js"
+    "revision": "8e41557526ce2e71361b",
+    "url": "/tacotab/static/js/2.43645a2e.chunk.js"
   },
   {
     "revision": "226cb6491056a6a9a4dd6fe6cc73cac9",
-    "url": "/tacotab/static/js/2.fd574139.chunk.js.LICENSE.txt"
+    "url": "/tacotab/static/js/2.43645a2e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9bd375354200be254084",
-    "url": "/tacotab/static/js/main.46468002.chunk.js"
+    "revision": "ab31cbd309d8d2aa5572",
+    "url": "/tacotab/static/js/main.c4f7564c.chunk.js"
   },
   {
     "revision": "d651502a462fa1319c0b",
