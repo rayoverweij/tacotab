@@ -21,7 +21,8 @@ type SettingsProps = {
 
 type SettingsState = {
     nameForm: string,
-    showModal: boolean
+    showWhatsNew: boolean,
+    showPrivacy: boolean
 }
 
 class Settings extends React.Component<SettingsProps, SettingsState> {
@@ -30,7 +31,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
         this.state = {
             nameForm: "",
-            showModal: false
+            showWhatsNew: false,
+            showPrivacy: false
         }
 
         this.handleNameFormChange = this.handleNameFormChange.bind(this);
@@ -38,8 +40,10 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         this.importData = this.importData.bind(this);
         this.exportData = this.exportData.bind(this);
         this.clearData = this.clearData.bind(this);
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
+        this.showWhatsNew = this.showWhatsNew.bind(this);
+        this.hideWhatsNew = this.hideWhatsNew.bind(this);
+        this.showPrivacy = this.showPrivacy.bind(this);
+        this.hidePrivacy = this.hidePrivacy.bind(this);
     }
 
     componentDidMount() {
@@ -101,8 +105,10 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         window.location.reload();
     }
 
-    showModal() { this.setState({showModal: true}); }
-    hideModal() { this.setState({showModal: false}); }
+    showWhatsNew() { this.setState({showWhatsNew: true}); }
+    hideWhatsNew() { this.setState({showWhatsNew: false}); }
+    showPrivacy() { this.setState({showPrivacy: true}); }
+    hidePrivacy() { this.setState({showPrivacy: false}); }
 
 
     render() {
@@ -188,7 +194,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
                                         GitHub
                                     </a>
-                                    &nbsp;&middot;&nbsp;<span className="fake-anchor" onClick={this.showModal}>What's new</span>
+                                    &nbsp;&middot;&nbsp;<span className="fake-anchor" onClick={this.showWhatsNew}>What's new</span>
+                                    &nbsp;&middot;&nbsp;<span className="fake-anchor" onClick={this.showPrivacy}>Privacy</span>
                                 </p>
                                 <p>
                                     <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Check out more of Rayo's work</a> or <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">visit the Bard Debate Union</a>&mdash;Bard's best sports team!
@@ -199,8 +206,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 </div>
 
                 <Modal
-                    show={this.state.showModal}
-                    onHide={this.hideModal}
+                    show={this.state.showWhatsNew}
+                    onHide={this.hideWhatsNew}
                     className="whatsnew-modal"
                     aria-labelledby="whatsnew-modal-title" >
                     <Modal.Header closeButton>
@@ -214,13 +221,42 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             New in version 0.4.1:
                             <ul>
                                 <li>General: last update's design refresh has been refined, with clearer headings and more space to work</li>
+                                <li>General: a new privacy policy, explaining that we never collect any data, has been added to the Settings page</li>
                                 <li>Draw: chairs that have already chaired one of the teams in their room before are marked in orange</li>
                                 <li>Draw: a new legend explains the colors that teams and judges get when there is a clash</li>
                                 <li>Fixed some bugs with team swapping</li>
                                 <li>Fixed a bug where teams didn't properly remember their opponents for checking in later draws</li>
                                 <li>Under-the-hood: information that can be gathered from looking at previous round (e.g. a team's previous opponents, or a chair's previous rooms) is now only stored in the draw, and not duplicated in the team and judge objects</li>
+                                <li>Under-the-hood: sharing TacoTab on social media such as Facebook and Twitter now gives a better preview of the app</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
+                        </p>
+                    </Modal.Body>
+                </Modal>
+
+                <Modal
+                    show={this.state.showPrivacy}
+                    onHide={this.hidePrivacy}
+                    className="privacy-modal"
+                    aria-labelledby="privacy-modal-title" >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="privacy-modal-title">
+                            Privacy Policy
+                        </Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>
+                            We don't collect or store any of your data.
+                        </p>
+                        <p>
+                            It is, quite frankly, impossible for us to do so. There are no servers, no accounts, and no analytics. All data that you enter is stored in the local storage of your browser, and never leaves the instance of the browser you are runnning right now. (In fact, you could download the app and use it without even needing an internet connection!)
+                        </p>
+                        <p>
+                            There are also no third-party services or scripts running in the background that might collect your data, or cookies of any kind. The only way for data to leave this app is if you <em>manually</em> use the "export" function on the Settings page.
+                        </p>
+                        <p>
+                            What happens on your computer stays on your computer!
                         </p>
                     </Modal.Body>
                 </Modal>
