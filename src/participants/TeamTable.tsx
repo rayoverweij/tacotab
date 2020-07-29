@@ -12,8 +12,7 @@ type TeamTableProps = {
     teams: Team[],
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeam: (team: Team) => void,
-    deleteTeam: (team: Team) => void,
-    speakerPicker: JSX.Element[]
+    deleteTeam: (team: Team) => void
 }
 
 class TeamTable extends React.Component<TeamTableProps> {
@@ -43,8 +42,7 @@ class TeamTable extends React.Component<TeamTableProps> {
                                 teams={this.props.teams}
                                 updateSpeakers={this.props.updateSpeakers}
                                 updateTeam={this.props.updateTeam}
-                                deleteTeam={this.props.deleteTeam}
-                                speakerPicker={this.props.speakerPicker} />;
+                                deleteTeam={this.props.deleteTeam} />;
                 })}
             </Table>
         );

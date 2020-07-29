@@ -9,8 +9,7 @@ type TeamSpeakerSelectProps = {
     speakerPos: number,
     round: number,
     value: Array<number[]>,
-    handleUpdateTeamFormChange: (value: number, speaker: number, round: number) => void,
-    speakerPicker: JSX.Element[]
+    handleUpdateTeamFormChange: (value: number, speaker: number, round: number) => void
 }
 
 type TeamSpeakerSelectState = {
@@ -56,7 +55,7 @@ class TeamSpeakerSelect extends React.Component<TeamSpeakerSelectProps, TeamSpea
                         value={this.state.value}
                         onChange={this.handleFormChange}>
                             {this.props.speakerPos === 2 ? <option value={-1}>[averaged third speaker]</option> : ""}
-                            {this.props.speakerPicker}
+                            {this.props.children}
                     </Form.Control>
                 </Form.Group>
             </Col>
