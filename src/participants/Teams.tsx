@@ -6,6 +6,7 @@ import { Team } from '../types/Team';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { SpeakerDropDown } from './SpeakerDropDown';
 
 
 type TeamsProps = {
@@ -195,7 +196,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                                     value={this.state.addTeamForm.speaker1}
                                     onChange={this.handleAddTeamFormChange}>
                                         <option>-- pick a speaker --</option>
-                                        {speakerPicker}
+                                        <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-2`}>
@@ -206,7 +207,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                                     value={this.state.addTeamForm.speaker2}
                                     onChange={this.handleAddTeamFormChange}>
                                         <option>-- pick a speaker --</option>
-                                        {speakerPicker}
+                                        <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-3`}>
@@ -219,7 +220,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                                     onChange={this.handleAddTeamFormChange}>
                                         <option>-- pick a speaker --</option>
                                         <option value="avg">[averaged third speaker]</option>
-                                        {speakerPicker}
+                                        <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
                             </Form.Group>
                             <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
