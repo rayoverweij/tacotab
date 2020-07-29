@@ -140,12 +140,6 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
             noTeams = true;
         }
 
-        let speakerPicker = this.props.speakers.map(speaker => {
-            return (
-                <option value={speaker.speakerID} key={`option-${speaker.speakerID}`}>{speaker.name}</option>
-            );
-        });
-
         let teamTable;
         if(noTeams) {
             teamTable = <p className="none-yet">No teams yet!</p>;
@@ -156,8 +150,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
                             teams={this.props.teams}
                             updateSpeakers={this.props.updateSpeakers}
                             updateTeam={this.updateTeam}
-                            deleteTeam={this.deleteTeam}
-                            speakerPicker={speakerPicker} />
+                            deleteTeam={this.deleteTeam} />
         }
 
         return (

@@ -3,6 +3,7 @@ import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
+import { SpeakerDropDown } from './SpeakerDropDown';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
@@ -19,8 +20,7 @@ type TeamRowProps = {
     teams: Team[],
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeam: (team: Team) => void,
-    deleteTeam: (team: Team) => void,
-    speakerPicker: JSX.Element[]
+    deleteTeam: (team: Team) => void
 }
 
 type TeamRowState = {
@@ -288,8 +288,9 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                                         speakerPos={speakerPos}
                                         round={round}
                                         value={this.state.updateTeamForm}
-                                        handleUpdateTeamFormChange={this.handleUpdateTeamFormChange}
-                                        speakerPicker={this.props.speakerPicker} />
+                                        handleUpdateTeamFormChange={this.handleUpdateTeamFormChange}>
+                                            <SpeakerDropDown speakers={this.props.speakers} />
+                                    </TeamSpeakerSelect>
                                 );
                             })
                         }
