@@ -188,7 +188,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                             <section id="section-about">
                                 <h3>About</h3>
                                 <p>
-                                    TacoTab β version 0.4.2<br />
+                                    TacoTab β version 0.4.3<br />
                                     &copy; {new Date().getFullYear()} Rayo Verweij<br />
                                     <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
@@ -218,16 +218,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
                     <Modal.Body>
                         <p>
-                            New in version 0.4.2:
+                            New in version 0.4.3:
                             <ul>
-                                <li>General: last update's design refresh has been refined, with clearer headings and more space to work</li>
-                                <li>General: a new privacy policy, explaining that we never collect any data, has been added to the Settings page</li>
-                                <li>Draw: chairs that have already chaired one of the teams in their room before are marked in orange</li>
-                                <li>Draw: a new legend explains the colors that teams and judges get when there is a clash</li>
-                                <li>Fixed some bugs with team swapping</li>
-                                <li>Fixed a bug where teams didn't properly remember their opponents for checking in later draws</li>
-                                <li>Under-the-hood: information that can be gathered from looking at previous round (e.g. a team's previous opponents, or a chair's previous rooms) is now only stored in the draw, and not duplicated in the team and judge objects</li>
-                                <li>Under-the-hood: sharing TacoTab on social media such as Facebook and Twitter now gives a better preview of the app</li>
+                                <li>General: stuff</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>
