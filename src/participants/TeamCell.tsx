@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 import { Speaker } from '../types/Speaker';
 
 
@@ -30,6 +30,10 @@ class TeamCell extends React.Component<TeamCellProps, TeamCellState> {
         this.setState({value: event.target.value});
     }
 
+    handleLoseFocus(event: KeyboardEvent<HTMLTextAreaElement>) {
+        if(event.which == 13) (event.target as HTMLTextAreaElement).blur();
+    }
+
     handleUpdate(event: ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault();
         let value: string = this.state.value;
@@ -49,6 +53,7 @@ class TeamCell extends React.Component<TeamCellProps, TeamCellState> {
                 autoComplete="off"
                 value={this.state.value}
                 onChange={this.handleEdit}
+                onKeyUp={this.handleLoseFocus}
                 onBlur={this.handleUpdate} />
         );
     }
