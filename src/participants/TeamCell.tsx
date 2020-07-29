@@ -13,7 +13,7 @@ type TeamCellState = {
     value: string
 }
 
-class TeamCell extends React.Component<TeamCellProps, TeamCellState> {
+class TeamCell extends React.PureComponent<TeamCellProps, TeamCellState> {
     constructor(props: TeamCellProps) {
         super(props);
 
@@ -31,7 +31,7 @@ class TeamCell extends React.Component<TeamCellProps, TeamCellState> {
     }
 
     handleLoseFocus(event: KeyboardEvent<HTMLTextAreaElement>) {
-        if(event.which == 13) (event.target as HTMLTextAreaElement).blur();
+        if(event.which === 13) (event.target as HTMLTextAreaElement).blur();
     }
 
     handleUpdate(event: ChangeEvent<HTMLTextAreaElement>) {
