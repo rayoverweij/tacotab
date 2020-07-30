@@ -19,10 +19,11 @@ type DrawsProps = {
     teamsOne: Team[],
     teamsTwo: Team[],
     judges: Judge[],
-    draws: Draw[]
+    draws: Draw[],
+    updateDraws: (draws: Draw[]) => void
 }
 
-class Draws extends React.Component<DrawsProps> {
+class Draws extends React.PureComponent<DrawsProps> {
     render() {
         return (
             <Tab.Container id={`draw-view`} defaultActiveKey="round-1" transition={false}>
@@ -54,7 +55,8 @@ class Draws extends React.Component<DrawsProps> {
                                             teamsOne={this.props.teamsOne}
                                             teamsTwo={this.props.teamsTwo}
                                             judges={this.props.judges}
-                                            draws={this.props.draws} />
+                                            draws={this.props.draws}
+                                            updateDraws={this.props.updateDraws} />
                                     </Tab.Pane>
                                 )
                             })}

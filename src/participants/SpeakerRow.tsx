@@ -17,7 +17,7 @@ type SpeakerRowState = {
     [key: string]: string|boolean
 }
 
-class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
+class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
     constructor(props: SpeakerRowProps) {
         super(props);
 
@@ -43,15 +43,14 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
         event.preventDefault();
         const name = event.target.name;
         const value = this.state[name];
-        const speaker = this.props.speaker;
+        let speaker = {...this.props.speaker};
         speaker[name] = value;
         this.props.updateSpeaker(speaker);
     }
 
     handleDisqUpdate(event: ChangeEvent<HTMLInputElement>) {
         const checked = event.target.checked;
-        const speaker = this.props.speaker;
-        speaker.disqualified = checked;
+        const speaker = {...this.props.speaker, disqualified: checked};
         this.setState({disqualified: checked});
         this.props.updateSpeaker(speaker);
     }

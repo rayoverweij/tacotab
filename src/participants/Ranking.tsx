@@ -14,7 +14,7 @@ type RankingProps = {
     teams: Team[]
 }
 
-class Ranking extends React.Component<RankingProps> {
+class Ranking extends React.PureComponent<RankingProps> {
     render() {
         const speakers = this.props.speakers;
         const teams = this.props.teams;

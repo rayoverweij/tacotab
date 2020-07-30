@@ -18,7 +18,7 @@ type TeamPillState = {
     swapTeamID: number
 }
 
-class TeamPill extends React.Component<TeamPillProps, TeamPillState> {
+class TeamPill extends React.PureComponent<TeamPillProps, TeamPillState> {
     constructor(props: TeamPillProps) {
         super(props);
 

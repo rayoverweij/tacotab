@@ -1,9 +1,9 @@
 import React from 'react';
-
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class Welcome extends React.Component {
+
+class Welcome extends React.PureComponent {
     render() {
         return (
             <Row>

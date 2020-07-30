@@ -26,7 +26,7 @@ type JudgesState = {
     }
 }
 
-class Judges extends React.Component<JudgesProps, JudgesState> {
+class Judges extends React.PureComponent<JudgesProps, JudgesState> {
     constructor(props: JudgesProps) {
         super(props);
 
@@ -54,7 +54,6 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
     handleAddJudgeFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        let judges = this.props.judges;
         let counter = JSON.parse(localStorage.getItem("judgeCounter")!);
 
         const newJudge: Judge = {
@@ -64,9 +63,9 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
             canChair: false,
             atRound1: true, atRound2: true, atRound3: true
         }
-        judges.push(newJudge);
+        const newJudges = [...this.props.judges, newJudge];
 
-        this.props.updateJudges(judges);
+        this.props.updateJudges(newJudges);
         localStorage.setItem("judgeCounter", JSON.stringify(counter));
 
         let blankForm = {...this.state.addJudgeForm};
@@ -75,11 +74,9 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
     }
 
     updateJudge(judge: Judge) {
-        let judges = this.props.judges;
-
-        const index = judges.indexOf(judge);
+        let judges = [...this.props.judges];
+        const index = judges.findIndex(el => el.judgeID === judge.judgeID);
         judges[index] = judge;
-
         this.props.updateJudges(judges);
     }
 
@@ -108,9 +105,9 @@ class Judges extends React.Component<JudgesProps, JudgesState> {
         // Confirm deletion
         const conf = window.confirm(`Are you sure you want to delete judge ${judge.name}?`);
         if(conf) {
-            let judges = this.props.judges;
+            let judges = [...this.props.judges];
 
-            const index = judges.indexOf(judge);
+            const index = judges.findIndex(el => el.judgeID === judge.judgeID);
             judges.splice(index, 1);
 
             this.props.updateJudges(judges);

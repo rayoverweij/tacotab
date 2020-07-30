@@ -108,6 +108,7 @@ class App extends React.Component<AppProps, AppState> {
         this.updateTeamsOne = this.updateTeamsOne.bind(this);
         this.updateTeamsTwo = this.updateTeamsTwo.bind(this);
         this.updateJudges = this.updateJudges.bind(this);
+        this.updateDraws = this.updateDraws.bind(this);
 
         this.initializeTournament = this.initializeTournament.bind(this);
         this.getTotalTeams = this.getTotalTeams.bind(this);
@@ -146,6 +147,7 @@ class App extends React.Component<AppProps, AppState> {
     updateTeamsOne = this.updateStorage("teamsOne");
     updateTeamsTwo = this.updateStorage("teamsTwo");
     updateJudges = this.updateStorage("judges");
+    updateDraws = this.updateStorage("draws");
 
 
     // Global helper methods
@@ -280,7 +282,8 @@ class App extends React.Component<AppProps, AppState> {
                                 teamsOne={this.state.teamsOne}
                                 teamsTwo={this.state.teamsTwo}
                                 judges={this.state.judges}
-                                draws={this.state.draws} />
+                                draws={this.state.draws}
+                                updateDraws={this.updateDraws} />
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>

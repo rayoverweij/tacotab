@@ -19,7 +19,7 @@ type ParticipantsProps = {
     updateTeams: (teams: Team[]) => void
 }
 
-class Participants extends React.Component<ParticipantsProps> {
+class Participants extends React.PureComponent<ParticipantsProps> {
     render() {
         return (
             <Tab.Container id={`part-view-${this.props.div}`} defaultActiveKey="speakers" transition={false}>

@@ -25,7 +25,7 @@ type SettingsState = {
     showPrivacy: boolean
 }
 
-class Settings extends React.Component<SettingsProps, SettingsState> {
+class Settings extends React.PureComponent<SettingsProps, SettingsState> {
     constructor(props: SettingsProps) {
         super(props);
 

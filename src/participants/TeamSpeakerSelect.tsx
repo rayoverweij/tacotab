@@ -16,7 +16,7 @@ type TeamSpeakerSelectState = {
     value: number
 }
 
-class TeamSpeakerSelect extends React.Component<TeamSpeakerSelectProps, TeamSpeakerSelectState> {
+class TeamSpeakerSelect extends React.PureComponent<TeamSpeakerSelectProps, TeamSpeakerSelectState> {
     constructor(props: TeamSpeakerSelectProps) {
         super(props);
 

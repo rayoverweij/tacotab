@@ -29,7 +29,7 @@ type TeamsState = {
     showWarning: boolean
 }
 
-class Teams extends React.Component<TeamsProps, TeamsState> {
+class Teams extends React.PureComponent<TeamsProps, TeamsState> {
     constructor(props: TeamsProps) {
         super(props);
 
@@ -79,7 +79,6 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
             return false;
         }
 
-        let teams = this.props.teams;
         let counter = JSON.parse(localStorage.getItem("teamCounter")!);
 
         const memberList = [team.speaker1, team.speaker2, team.speaker3]
@@ -93,17 +92,18 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
             wins: [false, false, false],
             totalWins: 0
             };
-        teams.push(newTeam);
+        
+        const newTeams = [...this.props.teams, newTeam];
 
         localStorage.setItem("teamCounter", JSON.stringify(counter));
-        this.props.updateTeams(teams);
+        this.props.updateTeams(newTeams);
 
         this.setState({showWarning: false});
         this.modalHide();
     }
 
     updateTeam(team: Team) {
-        let teams = this.props.teams;
+        let teams = [...this.props.teams];
         const index = teams.findIndex(el => el.teamID === team.teamID);
         teams[index] = team;
         this.props.updateTeams(teams);
@@ -127,8 +127,7 @@ class Teams extends React.Component<TeamsProps, TeamsState> {
 
         const conf = window.confirm(`Are you sure you want to delete team ${team.name}?`);
         if(conf) {
-            let teams = this.props.teams;
-            teams = teams.filter(el => el.teamID !== team.teamID);  
+            const teams = [...this.props.teams].filter(el => el.teamID !== team.teamID);  
             this.props.updateTeams(teams);
         }
     }
