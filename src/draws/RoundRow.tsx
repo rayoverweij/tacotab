@@ -37,12 +37,6 @@ class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
         this.updateRoomJudge = this.updateRoomJudge.bind(this);
     }
 
-    componentDidUpdate(prevProps: RoundRowProps) {
-        if(this.props.room.name !== prevProps.room.name) {
-            this.setState({roomName: this.props.room.name});
-        }
-    }
-
 
     handleRoomChange(event: ChangeEvent<HTMLTextAreaElement>) {
         const value = event.target.value;
