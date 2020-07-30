@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
 import TeamPill from './TeamPill';
 import JudgePill from './JudgePill';
 import { Room } from '../types/Room';
@@ -32,6 +32,7 @@ class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
         }
 
         this.handleRoomChange = this.handleRoomChange.bind(this);
+        this.handleRoomSubmit = this.handleRoomSubmit.bind(this);
         this.updateRoomTeam = this.updateRoomTeam.bind(this);
         this.updateRoomJudge = this.updateRoomJudge.bind(this);
     }
@@ -46,6 +47,11 @@ class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
     handleRoomChange(event: ChangeEvent<HTMLTextAreaElement>) {
         const value = event.target.value;
         this.setState({roomName: value});
+    }
+
+    handleRoomSubmit(event: FocusEvent<HTMLTextAreaElement>) {
+        event.preventDefault();
+        const value = this.state.roomName;
         const room = {...this.props.room, name: value};
         this.props.updateRooms(room, this.props.div);
     }
@@ -227,7 +233,8 @@ class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
                         autoComplete="off"
                         placeholder="room"
                         value={this.state.roomName}
-                        onChange={this.handleRoomChange} />
+                        onChange={this.handleRoomChange}
+                        onBlur={this.handleRoomSubmit} />
                 </td>
                 <td className="draw-table-team-cell">
                     <TeamPill 
