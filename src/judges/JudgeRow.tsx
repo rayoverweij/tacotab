@@ -20,7 +20,7 @@ type JudgeRowState = {
     [key: string]: string|boolean
 }
 
-class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
+class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
     constructor(props: JudgeRowProps) {
         super(props);
 
@@ -49,14 +49,14 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
         event.preventDefault();
         const name = event.target.name;
         const value = this.state[name];
-        const judge = this.props.judge;
+        const judge = {...this.props.judge};
         judge[name] = value;
         this.props.updateJudge(judge);
     }
 
     handleJudgeToggle(event: ChangeEvent<HTMLInputElement>) {
         const {name, checked} = event.target;
-        const judge = this.props.judge;
+        const judge = {...this.props.judge};
 
         judge[name] = checked;
         this.setState({[name]: checked});

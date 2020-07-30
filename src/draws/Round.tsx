@@ -25,30 +25,24 @@ type RoundProps = {
     teamsOne: Team[],
     teamsTwo: Team[],
     judges: Judge[],
-    draws: Draw[]
+    draws: Draw[],
+    updateDraws: (draws: Draw[]) => void
 }
 
 type RoundState = {
-    generated: boolean,
-    roomsOne: Room[],
-    roomsTwo: Room[],
     fullScreen: boolean
 }
 
-class Round extends React.Component<RoundProps, RoundState> {
+class Round extends React.PureComponent<RoundProps, RoundState> {
     constructor(props: RoundProps) {
         super(props);
 
-        const pairings = this.props.draws[this.props.round - 1];
-
         this.state = {
-            generated: pairings.generated,
-            roomsOne: pairings.roomsOne,
-            roomsTwo: pairings.roomsTwo,
             fullScreen: false
         }
 
         this.generateDraw = this.generateDraw.bind(this);
+        this.regenerateDraw = this.regenerateDraw.bind(this);
         this.deleteDraw = this.deleteDraw.bind(this);
         this.updateRooms = this.updateRooms.bind(this);
         this.fullScreenDraw = this.fullScreenDraw.bind(this);
@@ -58,7 +52,7 @@ class Round extends React.Component<RoundProps, RoundState> {
 
     generateDraw() {
         const round = this.props.round;
-        let draws = this.props.draws;
+        let draws = [...this.props.draws];
 
         // Check whether previous or next draws have happened
         if(round === 1) {
@@ -77,14 +71,6 @@ class Round extends React.Component<RoundProps, RoundState> {
         } else if(round === 3) {
             if(!draws[0].generated || !draws[1].generated) {
                 alert("You can't generate the draw for round 3 before generating the draws for rounds 1 and 2.");
-                return false;
-            }
-        }
-
-        // Check if regenerating
-        if(this.state.generated) {
-            const confGen = window.confirm("Do you really want to regenerate the draw?");
-            if(!confGen) {
                 return false;
             }
         }
@@ -333,19 +319,23 @@ class Round extends React.Component<RoundProps, RoundState> {
         } else {
             draws[2] = drawr;
         }
-        localStorage.setItem("draws", JSON.stringify(draws));
-
-        // Update local state
-        this.setState({roomsOne: roomsOne});
-        this.setState({roomsTwo: roomsTwo});
-        this.setState({generated: true});
+        this.props.updateDraws(draws);
 
         localStorage.setItem("roomCounter", JSON.stringify(roomCounter));
     }
 
+    regenerateDraw() {
+        const confGen = window.confirm("Do you really want to regenerate the draw?");
+        if(!confGen) {
+            return false;
+        }
+
+        this.generateDraw();
+    }
+
     deleteDraw() {
         const round = this.props.round;
-        let draws = this.props.draws;
+        let draws = [...this.props.draws];
 
         if(round === 1 && (draws[1].generated || draws[2].generated)) {
             alert("You can't delete a draw after you've generated the next one.");
@@ -370,34 +360,28 @@ class Round extends React.Component<RoundProps, RoundState> {
         } else {
             draws[2] = draw;
         }
-        localStorage.setItem("draws", JSON.stringify(draws));
-
-        this.setState({roomsOne: []});
-        this.setState({roomsTwo: []});
-        this.setState({generated: false});
+        this.props.updateDraws(draws);
     }
 
 
     updateRooms(room: Room, div: number) {
-        const draws = JSON.parse(localStorage.getItem("draws")!);
+        let draws = [...this.props.draws];
         let rooms;
         if(div === 1) {
-            rooms = this.state.roomsOne;
+            rooms = draws[this.props.round - 1].roomsOne;
         } else {
-            rooms = this.state.roomsTwo;
+            rooms = draws[this.props.round - 1].roomsTwo;
         }
 
         const index = rooms.findIndex(r => r.roomID === room.roomID);
         rooms[index] = room;
 
         if(div === 1) {
-            this.setState({roomsOne: rooms});
             draws[this.props.round - 1].roomsOne = rooms;
         } else {
-            this.setState({roomsTwo: rooms});
             draws[this.props.round - 1].roomsTwo = rooms;
         }
-        localStorage.setItem("draws", JSON.stringify(draws));
+        this.props.updateDraws(draws);
     }
 
 
@@ -415,8 +399,10 @@ class Round extends React.Component<RoundProps, RoundState> {
 
 
     render() {
+        const generated = this.props.draws[this.props.round - 1].generated;
+
         let tables;
-        if(!this.state.generated) {
+        if(!generated) {
             tables = <div className="draw-placeholder"></div>;
         } else {
             tables = (
@@ -433,7 +419,7 @@ class Round extends React.Component<RoundProps, RoundState> {
                         </thead>
                         <tbody>
                             {
-                                this.state.roomsOne.map((room, index) => {
+                                this.props.draws[this.props.round - 1].roomsOne.map((room, index) => {
                                     return <RoundRow 
                                             key={`one-room-${index}`}
                                             room={room}
@@ -461,7 +447,7 @@ class Round extends React.Component<RoundProps, RoundState> {
                         </thead>
                         <tbody>
                             {
-                                this.state.roomsTwo.map((room, index) => {
+                                this.props.draws[this.props.round - 1].roomsTwo.map((room, index) => {
                                     return <RoundRow 
                                             key={`two-room-${index}`}
                                             room={room}
@@ -487,32 +473,32 @@ class Round extends React.Component<RoundProps, RoundState> {
                     <Col>
                         <Button
                             onClick={this.generateDraw}
-                            className={this.state.generated ? "hidden" : ""}>
+                            className={generated ? "hidden" : ""}>
                             <Bullseye className="btn-icon"/>
                             Generate draw
                         </Button>
                         <Button
                             variant="secondary"
-                            onClick={this.generateDraw}
-                            className={!this.state.generated ? "hidden" : ""}>
+                            onClick={this.regenerateDraw}
+                            className={!generated ? "hidden" : ""}>
                             <ArrowRepeat className="btn-icon" />
                             Regenerate draw
                         </Button>
                         <Button
                             variant="danger"
                             onClick={this.deleteDraw}
-                            className={!this.state.generated ? "hidden" : ""}>
+                            className={!generated ? "hidden" : ""}>
                             <Trash className="btn-icon" />
                             Delete draw
                         </Button>
                         <Button
                             variant="primary"
                             onClick={this.fullScreenDraw}
-                            className={!this.state.generated ? "hidden" : ""}>
+                            className={!generated ? "hidden" : ""}>
                             <ArrowsAngleExpand className="btn-icon" />
                             Display fullscreen
                         </Button>
-                        <div className={`draw-legend ${!this.state.generated ? "hidden" : ""}`}>
+                        <div className={`draw-legend ${!generated ? "hidden" : ""}`}>
                             <OverlayTrigger
                                 placement="bottom-start"
                                 overlay={

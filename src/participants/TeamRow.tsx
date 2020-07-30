@@ -32,7 +32,7 @@ type TeamRowState = {
     showWarning: boolean
 }
 
-class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
+class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
     constructor(props: TeamRowProps) {
         super(props);
         
@@ -66,8 +66,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
     handleTeamNameUpdate(event: FocusEvent<HTMLTextAreaElement>) {
         event.preventDefault();
         const name = this.state.name;
-        const team = this.props.team;
-        team.name = name;
+        const team = {...this.props.team, name: name};
         this.props.updateTeam(team);
     }
     
@@ -80,18 +79,18 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
     }
     
     setScore(speaker: Speaker, no: number, value: number) {
-        let speakers = this.props.speakers;
+        let speakers = [...this.props.speakers];
         speakers
-            .find(el => el.speakerID.toString() === speaker.speakerID.toString())!
+            .find(el => el.speakerID === speaker.speakerID)!
             .scores[no] = value;
 
         this.props.updateSpeakers(speakers);
     }
 
     setRank(speaker: Speaker, no: number, value: number) {
-        let speakers = this.props.speakers;
+        let speakers = [...this.props.speakers];
         speakers
-            .find(el => el.speakerID.toString() === speaker.speakerID.toString())!
+            .find(el => el.speakerID === speaker.speakerID)!
             .ranks[no] = value;
         
         this.props.updateSpeakers(speakers);
@@ -114,7 +113,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                 return false;
             }
 
-        let team = this.props.team;
+        let team = {...this.props.team};
         team.round1 = [newTeam[0][0], newTeam[1][0], newTeam[2][0]];
         team.round2 = [newTeam[0][1], newTeam[1][1], newTeam[2][1]];
         team.round3 = [newTeam[0][2], newTeam[1][2], newTeam[2][2]];

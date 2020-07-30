@@ -16,7 +16,7 @@ type HomeProps = {
     updateConfig: (config: Config) => void
 }
 
-class Home extends React.Component<HomeProps> {
+class Home extends React.PureComponent<HomeProps> {
     render() {
         return (
             <Tab.Container id="home-view" defaultActiveKey="welcome" transition={false}>

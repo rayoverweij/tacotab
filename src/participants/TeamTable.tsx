@@ -15,7 +15,7 @@ type TeamTableProps = {
     deleteTeam: (team: Team) => void
 }
 
-class TeamTable extends React.Component<TeamTableProps> {
+class TeamTable extends React.PureComponent<TeamTableProps> {
     render() {
         return (
             <Table hover className="team-table table-no-top-margin">

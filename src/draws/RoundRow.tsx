@@ -23,7 +23,7 @@ type RoundRowState = {
     roomName: string
 }
 
-class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
+class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
     constructor(props: RoundRowProps) {
         super(props);
 
@@ -45,9 +45,8 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
 
     handleRoomChange(event: ChangeEvent<HTMLTextAreaElement>) {
         const value = event.target.value;
-        const room = this.props.room;
         this.setState({roomName: value});
-        room.name = value;
+        const room = {...this.props.room, name: value};
         this.props.updateRooms(room, this.props.div);
     }
 
@@ -80,21 +79,20 @@ class RoundRow extends React.Component<RoundRowProps, RoundRowState> {
             }
         }
 
-        newRoom = newRoom!;
-        this.props.updateRooms(newRoom, div);
+        this.props.updateRooms(newRoom!, div);
         this.props.updateRooms(thisRoom, div);
     }
 
     updateRoomJudge(judgeID: number, isChair: boolean, newRoomID: number) {
         const round = this.props.round - 1;
-        let room = this.props.room;
+        let room = {...this.props.room};
         let draw = this.props.draws[round];
         const roomlistOne = draw.roomsOne.map(r => r.roomID);
         const nextDiv = roomlistOne.includes(newRoomID) ? 1 : 2;
 
         let rooms;
-        if(nextDiv === 1) rooms = draw.roomsOne;
-        else rooms = draw.roomsTwo;
+        if(nextDiv === 1) rooms = [...draw.roomsOne];
+        else rooms = [...draw.roomsTwo];
 
         const newRoom = rooms.findIndex(r => r.roomID === newRoomID);
 

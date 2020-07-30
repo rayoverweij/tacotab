@@ -27,7 +27,7 @@ type SpeakersState = {
     }
 }
 
-class Speakers extends React.Component<SpeakersProps, SpeakersState> {
+class Speakers extends React.PureComponent<SpeakersProps, SpeakersState> {
     constructor(props: SpeakersProps) {
         super(props);
 
@@ -55,9 +55,8 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
     handleAddSpeakerFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        let speakers = this.props.speakers;
         let counter = JSON.parse(localStorage.getItem("speakerCounter")!);
-
+        
         const newSpeaker: Speaker = {
             speakerID: counter++,
             name: this.state.addSpeakerForm.speakerName,
@@ -67,10 +66,11 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
             wins: 0,
             disqualified: false
         };
-        speakers.push(newSpeaker);
-
+        
+        const newSpeakers = [...this.props.speakers, newSpeaker];
+        this.props.updateSpeakers(newSpeakers);
+        
         localStorage.setItem("speakerCounter", JSON.stringify(counter));
-        this.props.updateSpeakers(speakers);
 
         let blankForm = {...this.state.addSpeakerForm};
         blankForm.speakerName = "";
@@ -78,8 +78,8 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
     }
 
     updateSpeaker(speaker: Speaker) {
-        let speakers = this.props.speakers;
-        const index = speakers.indexOf(speaker);
+        let speakers = [...this.props.speakers];
+        const index = speakers.findIndex(el => el.speakerID === speaker.speakerID);
         speakers[index] = speaker;
         this.props.updateSpeakers(speakers);
     }
@@ -94,8 +94,8 @@ class Speakers extends React.Component<SpeakersProps, SpeakersState> {
 
         const conf = window.confirm(`Are you sure you want to delete speaker ${speaker.name}?`);
         if(conf) {
-            let speakers = this.props.speakers;
-            const index = speakers.indexOf(speaker);
+            let speakers = [...this.props.speakers];
+            const index = speakers.findIndex(el => el.speakerID === speaker.speakerID);
             speakers.splice(index, 1);
             this.props.updateSpeakers(speakers);
         }

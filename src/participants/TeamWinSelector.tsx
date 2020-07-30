@@ -13,7 +13,7 @@ type TeamWinSelectorState = {
     win: boolean
 }
 
-class TeamWinSelector extends React.Component<TeamWinSelectorProps, TeamWinSelectorState> {
+class TeamWinSelector extends React.PureComponent<TeamWinSelectorProps, TeamWinSelectorState> {
     constructor(props: TeamWinSelectorProps){
         super(props);
 
@@ -26,7 +26,7 @@ class TeamWinSelector extends React.Component<TeamWinSelectorProps, TeamWinSelec
 
 
     handleWinFormUpdate(event: ChangeEvent<HTMLInputElement>) {
-        let team = this.props.team;
+        let team = {...this.props.team};
 
         if(event.target.value === "true") {
             team.wins[this.props.round - 1] = true;
