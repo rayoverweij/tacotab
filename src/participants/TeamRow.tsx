@@ -4,13 +4,14 @@ import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
 import { SpeakerDropDown } from './SpeakerDropDown';
+import { TrashButton } from '../utils/TrashButton';
+import { PeopleButton } from '../utils/PeopleButton';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Trash, TrashFill, People, PeopleFill } from 'react-bootstrap-icons';
 
 
 type TeamRowProps = {
@@ -28,9 +29,7 @@ type TeamRowState = {
     speakers: number[],
     updateTeamForm: Array<number[]>,
     showModal: boolean,
-    showWarning: boolean,
-    trashFill: boolean,
-    peopleFill: boolean
+    showWarning: boolean
 }
 
 class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
@@ -46,9 +45,7 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                 [this.props.team.round1[2], this.props.team.round2[2], this.props.team.round3[2]]
             ],
             showModal: false,
-            showWarning: false,
-            trashFill: false,
-            peopleFill: false
+            showWarning: false
         }
 
         this.handleTeamNameEdit = this.handleTeamNameEdit.bind(this);
@@ -59,10 +56,6 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         this.modalHide = this.modalHide.bind(this);
         this.handleUpdateTeamFormChange = this.handleUpdateTeamFormChange.bind(this);
         this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
-        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
-        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
-        this.peopleOnMouseEnter = this.peopleOnMouseEnter.bind(this);
-        this.peopleOnMouseLeave = this.peopleOnMouseLeave.bind(this);
     }
 
 
@@ -131,11 +124,6 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
         this.setState({showWarning: false});
         this.modalHide();
     }
-
-    trashOnMouseEnter() { this.setState({trashFill: true}); }
-    trashOnMouseLeave() { this.setState({trashFill: false}); }
-    peopleOnMouseEnter() { this.setState({peopleFill: true}); }
-    peopleOnMouseLeave() { this.setState({peopleFill: false}); }
 
 
     render() {
@@ -314,36 +302,16 @@ class TeamRow extends React.Component<TeamRowProps, TeamRowState> {
                             onChange={this.handleTeamNameEdit}
                             onBlur={this.handleTeamNameUpdate} />
                         <br />
-                        {this.state.peopleFill ?
-                            <PeopleFill
-                                role="button"
-                                className="icon"
-                                onMouseEnter={this.peopleOnMouseEnter}
-                                onMouseLeave={this.peopleOnMouseLeave}
-                                onClick={this.modalShow} />
-                            :
-                            <People
-                                role="button"
-                                className="icon"
-                                onMouseEnter={this.peopleOnMouseEnter}
-                                onMouseLeave={this.peopleOnMouseLeave}
-                                onClick={this.modalShow} />
-                        }
-                        {this.state.trashFill ? 
-                            <TrashFill
-                                role="button"
-                                className="icon red"
-                                onMouseEnter={this.trashOnMouseEnter}
-                                onMouseLeave={this.trashOnMouseLeave}
-                                onClick={() => this.props.deleteTeam(team)} />
-                            :
-                            <Trash
-                                role="button"
-                                className="icon"
-                                onMouseEnter={this.trashOnMouseEnter}
-                                onMouseLeave={this.trashOnMouseLeave}
-                                onClick={() => this.props.deleteTeam(team)} />
-                        }
+                        <div
+                            className="icon-wrapper"
+                            onClick={this.modalShow}>
+                            <PeopleButton />
+                        </div>
+                        <div
+                            className="icon-wrapper"
+                            onClick={() => this.props.deleteTeam(team)}>
+                            <TrashButton />
+                        </div>
                     </td>
                 </tr>
                 {speakerRows}

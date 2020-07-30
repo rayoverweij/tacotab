@@ -317,10 +317,6 @@ textarea {
     &[role=button] {
         cursor: pointer;
     }
-
-    & ~ & {
-        margin-left: 15px;
-    }
 }
 
 .icon-info {
@@ -328,6 +324,14 @@ textarea {
     width: 1rem;
     margin-top: -3px;
     margin-left: 8px;
+}
+
+.icon-wrapper {
+    display: inline-block;
+
+    & ~ & {
+        margin-left: 15px;
+    }
 }
 
 

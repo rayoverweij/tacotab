@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FocusEvent } from 'react';
+import { TrashButton } from '../utils/TrashButton';
 import Form from 'react-bootstrap/Form';
-import { Trash, TrashFill } from 'react-bootstrap-icons';
 import { Speaker } from '../types/Speaker';
 
 
@@ -14,7 +14,6 @@ type SpeakerRowState = {
     name: string,
     school: string,
     disqualified: boolean,
-    trashFill: boolean,
     [key: string]: string|boolean
 }
 
@@ -25,15 +24,12 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
         this.state = {
             name: this.props.speaker.name,
             school: this.props.speaker.school,
-            disqualified: this.props.speaker.disqualified,
-            trashFill: false
+            disqualified: this.props.speaker.disqualified
         }
 
         this.handleTextEdit = this.handleTextEdit.bind(this);
         this.handleTextUpdate = this.handleTextUpdate.bind(this);
         this.handleDisqUpdate = this.handleDisqUpdate.bind(this);
-        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
-        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
     handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -58,14 +54,6 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
         speaker.disqualified = checked;
         this.setState({disqualified: checked});
         this.props.updateSpeaker(speaker);
-    }
-
-    trashOnMouseEnter() {
-        this.setState({trashFill: true});
-    }
-
-    trashOnMouseLeave() {
-        this.setState({trashFill: false});
     }
     
     render() {
@@ -108,21 +96,9 @@ class SpeakerRow extends React.Component<SpeakerRowProps, SpeakerRowState> {
                         className={this.state.disqualified ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    {this.state.trashFill ? 
-                        <TrashFill
-                            role="button"
-                            className="icon red"
-                            onMouseEnter={this.trashOnMouseEnter}
-                            onMouseLeave={this.trashOnMouseLeave}
-                            onClick={() => this.props.deleteSpeaker(speaker)} />
-                        :
-                        <Trash
-                            role="button"
-                            className="icon"
-                            onMouseEnter={this.trashOnMouseEnter}
-                            onMouseLeave={this.trashOnMouseLeave}
-                            onClick={() => this.props.deleteSpeaker(speaker)} />
-                    }
+                    <div onClick={() => this.props.deleteSpeaker(speaker)}>
+                        <TrashButton />
+                    </div>
                 </td>
             </tr>
         );

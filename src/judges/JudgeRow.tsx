@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FocusEvent } from 'react';
+import { TrashButton } from '../utils/TrashButton';
 import { Judge } from '../types/Judge';
 import Form from 'react-bootstrap/Form';
-import { Trash, TrashFill } from 'react-bootstrap-icons';
 
 
 type JudgeRowProps = {
@@ -17,7 +17,6 @@ type JudgeRowState = {
     atRound1: boolean,
     atRound2: boolean,
     atRound3: boolean,
-    trashFill: boolean,
     [key: string]: string|boolean
 }
 
@@ -31,15 +30,12 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
             canChair: this.props.judge.canChair,
             atRound1: this.props.judge.atRound1,
             atRound2: this.props.judge.atRound2,
-            atRound3: this.props.judge.atRound3,
-            trashFill: false
+            atRound3: this.props.judge.atRound3
         }
 
         this.handleTextEdit = this.handleTextEdit.bind(this);
         this.handleTextUpdate = this.handleTextUpdate.bind(this);
         this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
-        this.trashOnMouseEnter = this.trashOnMouseEnter.bind(this);
-        this.trashOnMouseLeave = this.trashOnMouseLeave.bind(this);
     }
 
     handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -66,14 +62,6 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
         this.setState({[name]: checked});
 
         this.props.updateJudge(judge);
-    }
-
-    trashOnMouseEnter() {
-        this.setState({trashFill: true});
-    }
-
-    trashOnMouseLeave() {
-        this.setState({trashFill: false});
     }
 
     
@@ -147,21 +135,9 @@ class JudgeRow extends React.Component<JudgeRowProps, JudgeRowState> {
                         className={this.state.atRound3 ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    {this.state.trashFill ? 
-                        <TrashFill
-                            role="button"
-                            className="icon red"
-                            onMouseEnter={this.trashOnMouseEnter}
-                            onMouseLeave={this.trashOnMouseLeave}
-                            onClick={() => this.props.deleteJudge(judge)} />
-                        :
-                        <Trash
-                            role="button"
-                            className="icon"
-                            onMouseEnter={this.trashOnMouseEnter}
-                            onMouseLeave={this.trashOnMouseLeave}
-                            onClick={() => this.props.deleteJudge(judge)} />
-                    }
+                    <div onClick={() => this.props.deleteJudge(judge)}>
+                        <TrashButton />
+                    </div>
                 </td>
             </tr>
         );
