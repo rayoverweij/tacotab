@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 type EditTextProps = {
     name: string,
     init: string,
-    cols: number | "auto",
+    cols?: number,
     maxLength?: number,
     placeholder?: string,
     fn: (name: string, value: string, baggage?: any) => void,
@@ -32,7 +32,7 @@ export const EditText = ({name, init, cols, maxLength, placeholder, fn, baggage}
             className="editText"
             name={name}
             rows={1}
-            cols={cols === "auto" ? (value.length > 8 ? value.length : 8) : cols}
+            cols={cols || (value.length > 8 ? value.length : 8)}
             maxLength={maxLength}
             value={value}
             autoComplete="off"

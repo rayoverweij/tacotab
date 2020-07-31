@@ -50,14 +50,12 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
                     <EditText
                         name="name"
                         init={this.props.speaker.name}
-                        cols="auto"
                         fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="editable">
                     <EditText
                         name="school"
                         init={this.props.speaker.school}
-                        cols="auto"
                         fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="cell-low-padding">

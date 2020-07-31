@@ -296,7 +296,6 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         <EditText
                             name="name"
                             init={team.name}
-                            cols="auto"
                             fn={this.handleTeamUpdate} />
                         <br />
                         <div
