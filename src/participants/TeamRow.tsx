@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
@@ -48,8 +47,6 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
         }
 
         this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
-        this.setScore = this.setScore.bind(this);
-        this.setRank = this.setRank.bind(this);
         this.modalShow = this.modalShow.bind(this);
         this.modalHide = this.modalHide.bind(this);
         this.handleUpdateTeamFormChange = this.handleUpdateTeamFormChange.bind(this);
@@ -57,9 +54,28 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
     }
 
 
-    handleTeamUpdate(name: string, value: string) {
-        const team = {...this.props.team, [name]: value};
-        this.props.updateTeam(team);
+    handleTeamUpdate(name: string, value: string, baggage?: [Speaker, number]) {
+        if(name === "score" || "rank") {
+            if(!value || isNaN(Number(value))) {
+                value = "0";
+            }
+            let numValue = Number(value);
+
+            let speakers = [...this.props.speakers];
+
+            if(name === "score") speakers
+                .find(el => el.speakerID === baggage![0].speakerID)!
+                .scores[baggage![1]] = numValue;
+
+            else speakers
+                .find(el => el.speakerID === baggage![0].speakerID)!
+                .ranks[baggage![1]] = numValue;
+
+            this.props.updateSpeakers(speakers);
+        } else {
+            const team = {...this.props.team, [name]: value};
+            this.props.updateTeam(team);
+        }
     }
     
     modalShow() {
@@ -68,24 +84,6 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
 
     modalHide() {
         this.setState({showModal: false});
-    }
-    
-    setScore(speaker: Speaker, no: number, value: number) {
-        let speakers = [...this.props.speakers];
-        speakers
-            .find(el => el.speakerID === speaker.speakerID)!
-            .scores[no] = value;
-
-        this.props.updateSpeakers(speakers);
-    }
-
-    setRank(speaker: Speaker, no: number, value: number) {
-        let speakers = [...this.props.speakers];
-        speakers
-            .find(el => el.speakerID === speaker.speakerID)!
-            .ranks[no] = value;
-        
-        this.props.updateSpeakers(speakers);
     }
 
     handleUpdateTeamFormChange(value: number, speakerPos: number, round: number) {
@@ -176,19 +174,31 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                 <tr key={`${speaker.name}-${this.props.div}-row`}>
                     <td>{speaker.name}</td>
                     {
-                        [isInR1, isInR2, isInR3].map((isInR, i) => {
-                            return ["score", "rank"].map(t => {
-                                return (
+                        [isInR1, isInR2, isInR3].map((isInR, r) => {
+                            return (
+                                <React.Fragment key={`cells-score-n-rank-${speaker!.speakerID}-${r}`}>
                                     <td className={isInR ? "editable" : "disabled"}>
-                                        <TeamCell
-                                            key={`teamcell-${speaker!.speakerID}-${i}-${t}`}
-                                            type={t}
-                                            speaker={speaker!}
-                                            round={i}
-                                            fn={t === "score" ? this.setScore : this.setRank} />
+                                        <EditText
+                                            name="score"
+                                            init={speaker!.scores[r].toString()}
+                                            cols={2}
+                                            maxLength={2}
+                                            placeholder="#"
+                                            fn={this.handleTeamUpdate}
+                                            baggage={[speaker!, r]} />
                                     </td>
-                                );
-                            })
+                                    <td className={isInR ? "editable" : "disabled"}>
+                                        <EditText
+                                            name="rank" 
+                                            init={speaker!.ranks[r].toString()}
+                                            cols={1}
+                                            maxLength={1}
+                                            placeholder="#"
+                                            fn={this.handleTeamUpdate}
+                                            baggage={[speaker!, r]} />
+                                    </td>
+                                </React.Fragment>
+                            );
                         })
                     }
                     <td>{totalScores}</td>

@@ -5,11 +5,13 @@ type EditTextProps = {
     name: string,
     init: string,
     cols: number | "auto",
+    maxLength?: number,
     placeholder?: string,
-    fn: (name: string, value: string) => void
+    fn: (name: string, value: string, baggage?: any) => void,
+    baggage?: any
 }
 
-export const EditText = ({name, init, cols, placeholder, fn}: EditTextProps) => {
+export const EditText = ({name, init, cols, maxLength, placeholder, fn, baggage}: EditTextProps) => {
     const [value, setValue] = useState(init);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,7 +24,7 @@ export const EditText = ({name, init, cols, placeholder, fn}: EditTextProps) => 
 
     const handleSubmit = (event: ChangeEvent<HTMLTextAreaElement>) => {
         event.preventDefault();
-        fn(name, value);
+        fn(name, value, baggage);
     }
 
     return (
@@ -31,6 +33,7 @@ export const EditText = ({name, init, cols, placeholder, fn}: EditTextProps) => 
             name={name}
             rows={1}
             cols={cols === "auto" ? (value.length > 8 ? value.length : 8) : cols}
+            maxLength={maxLength}
             value={value}
             autoComplete="off"
             spellCheck={false}
