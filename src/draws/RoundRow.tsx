@@ -208,7 +208,6 @@ class RoundRow extends React.PureComponent<RoundRowProps> {
                     <EditText
                         name="name"
                         init={room.name}
-                        cols="auto"
                         placeholder="room"
                         fn={this.handleRoomUpdate} />
                 </td>

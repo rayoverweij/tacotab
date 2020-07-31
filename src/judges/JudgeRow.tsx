@@ -60,14 +60,12 @@ class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
                     <EditText
                         name="name"
                         init={judge.name}
-                        cols="auto"
                         fn={this.handleJudgeUpdate} />
                 </td>
                 <td className="judge-table-school editable">
                     <EditText
                         name="school"
                         init={judge.school}
-                        cols="auto"
                         fn={this.handleJudgeUpdate} />
                 </td>
                 <td className="judge-table-toggle cell-low-padding">
