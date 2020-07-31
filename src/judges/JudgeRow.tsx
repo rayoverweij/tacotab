@@ -109,7 +109,8 @@ class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
                         className={this.state.atRound3 ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    <div onClick={() => this.props.deleteJudge(judge)}>
+                    <div title={`Remove ${judge.name}`}
+                        onClick={() => this.props.deleteJudge(judge)}>
                         <TrashButton />
                     </div>
                 </td>

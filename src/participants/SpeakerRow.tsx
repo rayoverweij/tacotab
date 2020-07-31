@@ -49,13 +49,13 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
                 <td className="editable">
                     <EditText
                         name="name"
-                        init={this.props.speaker.name}
+                        init={speaker.name}
                         fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="editable">
                     <EditText
                         name="school"
-                        init={this.props.speaker.school}
+                        init={speaker.school}
                         fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="cell-low-padding">
@@ -69,7 +69,8 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
                         className={this.state.disqualified ? "on" : "off"} />
                 </td>
                 <td className="table-delete">
-                    <div onClick={() => this.props.deleteSpeaker(speaker)}>
+                    <div title={`Remove ${speaker.name}`}
+                        onClick={() => this.props.deleteSpeaker(speaker)}>
                         <TrashButton />
                     </div>
                 </td>

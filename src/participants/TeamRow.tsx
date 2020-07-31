@@ -300,11 +300,13 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         <br />
                         <div
                             className="icon-wrapper"
+                            title={`Change team members of ${team.name}`}
                             onClick={this.modalShow}>
                             <PeopleButton />
                         </div>
                         <div
                             className="icon-wrapper"
+                            title={`Remove ${team.name}`}
                             onClick={() => this.props.deleteTeam(team)}>
                             <TrashButton />
                         </div>
