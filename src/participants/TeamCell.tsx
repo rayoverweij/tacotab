@@ -53,7 +53,7 @@ class TeamCell extends React.PureComponent<TeamCellProps, TeamCellState> {
                 autoComplete="off"
                 value={this.state.value}
                 onChange={this.handleEdit}
-                onKeyUp={this.handleLoseFocus}
+                onKeyDown={this.handleLoseFocus}
                 onBlur={this.handleUpdate} />
         );
     }

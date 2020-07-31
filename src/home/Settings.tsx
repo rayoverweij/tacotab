@@ -220,7 +220,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                         <p>
                             New in version 0.4.3:
                             <ul>
-                                <li>General: stuff</li>
+                                <li>General: in text fields, pressing 'Enter' now submits your input rather than entering a newline</li>
+                                <li>General: many performance improvements around editing text fields</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>

@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FocusEvent } from 'react';
+import React, { ChangeEvent } from 'react';
+import { EditText } from '../utils/EditText';
 import { TrashButton } from '../utils/TrashButton';
 import { Judge } from '../types/Judge';
 import Form from 'react-bootstrap/Form';
@@ -11,13 +12,11 @@ type JudgeRowProps = {
 }
 
 type JudgeRowState = {
-    name: string,
-    school: string,
     canChair: boolean,
     atRound1: boolean,
     atRound2: boolean,
     atRound3: boolean,
-    [key: string]: string|boolean
+    [key: string]: boolean
 }
 
 class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
@@ -25,32 +24,19 @@ class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
         super(props);
 
         this.state = {
-            name: this.props.judge.name,
-            school: this.props.judge.school,
             canChair: this.props.judge.canChair,
             atRound1: this.props.judge.atRound1,
             atRound2: this.props.judge.atRound2,
             atRound3: this.props.judge.atRound3
         }
 
-        this.handleTextEdit = this.handleTextEdit.bind(this);
-        this.handleTextUpdate = this.handleTextUpdate.bind(this);
+        this.handleJudgeUpdate = this.handleJudgeUpdate.bind(this);
         this.handleJudgeToggle = this.handleJudgeToggle.bind(this);
     }
 
-    handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
-        const {name, value} = event.target;
-        let state = {...this.state};
-        state[name] = value;
-        this.setState(state);
-    }
 
-    handleTextUpdate(event: FocusEvent<HTMLTextAreaElement>) {
-        event.preventDefault();
-        const name = event.target.name;
-        const value = this.state[name];
-        const judge = {...this.props.judge};
-        judge[name] = value;
+    handleJudgeUpdate(name: string, value: string) {
+        const judge = {...this.props.judge, [name]: value};
         this.props.updateJudge(judge);
     }
 
@@ -71,28 +57,18 @@ class JudgeRow extends React.PureComponent<JudgeRowProps, JudgeRowState> {
         return (
             <tr>
                 <td className="judge-table-name editable">
-                    <textarea
-                        className="cell-valupdate"
+                    <EditText
                         name="name"
-                        rows={1}
-                        cols={this.state.name.length > 8 ? this.state.name.length : 8}
-                        autoComplete="off"
-                        spellCheck="false"
-                        value={this.state.name}
-                        onChange={this.handleTextEdit}
-                        onBlur={this.handleTextUpdate} />
+                        init={judge.name}
+                        cols="auto"
+                        fn={this.handleJudgeUpdate} />
                 </td>
                 <td className="judge-table-school editable">
-                <textarea
-                        className="cell-valupdate"
+                    <EditText
                         name="school"
-                        rows={1}
-                        cols={this.state.school.length > 8 ? this.state.school.length : 8}
-                        autoComplete="off"
-                        spellCheck="false"
-                        value={this.state.school}
-                        onChange={this.handleTextEdit}
-                        onBlur={this.handleTextUpdate} />
+                        init={judge.school}
+                        cols="auto"
+                        fn={this.handleJudgeUpdate} />
                 </td>
                 <td className="judge-table-toggle cell-low-padding">
                     <Form.Check

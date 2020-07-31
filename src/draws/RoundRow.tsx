@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FocusEvent } from 'react';
+import React from 'react';
 import TeamPill from './TeamPill';
 import JudgePill from './JudgePill';
+import { EditText } from '../utils/EditText';
 import { Room } from '../types/Room';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
@@ -19,34 +20,18 @@ type RoundRowProps = {
     updateRooms: (room: Room, div: number) => void
 }
 
-type RoundRowState = {
-    roomName: string
-}
-
-class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
+class RoundRow extends React.PureComponent<RoundRowProps> {
     constructor(props: RoundRowProps) {
         super(props);
 
-        this.state = {
-            roomName: this.props.room.name
-        }
-
-        this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.handleRoomSubmit = this.handleRoomSubmit.bind(this);
+        this.handleRoomUpdate = this.handleRoomUpdate.bind(this);
         this.updateRoomTeam = this.updateRoomTeam.bind(this);
         this.updateRoomJudge = this.updateRoomJudge.bind(this);
     }
 
 
-    handleRoomChange(event: ChangeEvent<HTMLTextAreaElement>) {
-        const value = event.target.value;
-        this.setState({roomName: value});
-    }
-
-    handleRoomSubmit(event: FocusEvent<HTMLTextAreaElement>) {
-        event.preventDefault();
-        const value = this.state.roomName;
-        const room = {...this.props.room, name: value};
+    handleRoomUpdate(name: string, value: string) {
+        const room = {...this.props.room, [name]: value};
         this.props.updateRooms(room, this.props.div);
     }
 
@@ -220,15 +205,12 @@ class RoundRow extends React.PureComponent<RoundRowProps, RoundRowState> {
         return (
             <tr>
                 <td className="editable draw-table-room-cell">
-                    <textarea
-                        className="cell-valupdate"
-                        rows={1}
-                        cols={this.state.roomName.length > 8 ? this.state.roomName.length : 8}
-                        autoComplete="off"
+                    <EditText
+                        name="name"
+                        init={room.name}
+                        cols="auto"
                         placeholder="room"
-                        value={this.state.roomName}
-                        onChange={this.handleRoomChange}
-                        onBlur={this.handleRoomSubmit} />
+                        fn={this.handleRoomUpdate} />
                 </td>
                 <td className="draw-table-team-cell">
                     <TeamPill 
