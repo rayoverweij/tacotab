@@ -131,9 +131,17 @@ class Ranking extends React.PureComponent<RankingProps> {
             }
             const speakerElements = speakerNames.map((speaker, index) => {
                 if(index < speakerNames.length - 1) {
-                    return <>{speaker}, </>;
+                    return (
+                        <React.Fragment key={`speaker-${index}`}>
+                            {speaker},&nbsp;
+                        </React.Fragment>
+                    );
                 } else {
-                    return <>{speaker}</>;
+                    return (
+                        <React.Fragment key={`speaker-${index}`}>
+                            {speaker}
+                        </React.Fragment>
+                    );
                 }
             });
 
