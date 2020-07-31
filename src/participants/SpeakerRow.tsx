@@ -1,8 +1,8 @@
 import React from 'react';
 import { EditText } from '../utils/EditText';
 import { Toggle } from '../utils/Toggle';
-import { TrashButton } from '../utils/TrashButton';
 import { Speaker } from '../types/Speaker';
+import { Trash } from 'react-bootstrap-icons';
 
 
 type SpeakerRowProps = {
@@ -50,7 +50,9 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps> {
                 <td className="table-delete">
                     <div title={`Remove ${speaker.name}`}
                         onClick={() => this.props.deleteSpeaker(speaker)}>
-                        <TrashButton />
+                        <Trash
+                            role="button"
+                            className="icon trash" />
                     </div>
                 </td>
             </tr>

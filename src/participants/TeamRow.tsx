@@ -4,14 +4,13 @@ import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
 import { SpeakerDropDown } from './SpeakerDropDown';
 import { EditText } from '../utils/EditText';
-import { TrashButton } from '../utils/TrashButton';
-import { PeopleButton } from '../utils/PeopleButton';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 import { Speaker } from '../types/Speaker';
 import { Team } from '../types/Team';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { People, Trash } from 'react-bootstrap-icons';
 
 
 type TeamRowProps = {
@@ -302,13 +301,17 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                             className="icon-wrapper"
                             title={`Change team members of ${team.name}`}
                             onClick={this.modalShow}>
-                            <PeopleButton />
+                            <People
+                                role="button"
+                                className="icon people" />
                         </div>
                         <div
                             className="icon-wrapper"
                             title={`Remove ${team.name}`}
                             onClick={() => this.props.deleteTeam(team)}>
-                            <TrashButton />
+                            <Trash
+                                role="button"
+                                className="icon trash" />
                         </div>
                     </td>
                 </tr>

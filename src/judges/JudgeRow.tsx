@@ -1,8 +1,8 @@
 import React from 'react';
 import { EditText } from '../utils/EditText';
 import { Toggle } from '../utils/Toggle';
-import { TrashButton } from '../utils/TrashButton';
 import { Judge } from '../types/Judge';
+import { Trash } from 'react-bootstrap-icons';
 
 
 type JudgeRowProps = {
@@ -71,7 +71,9 @@ class JudgeRow extends React.PureComponent<JudgeRowProps> {
                 <td className="table-delete">
                     <div title={`Remove ${judge.name}`}
                         onClick={() => this.props.deleteJudge(judge)}>
-                        <TrashButton />
+                        <Trash
+                            role="button"
+                            className="icon trash" />
                     </div>
                 </td>
             </tr>
