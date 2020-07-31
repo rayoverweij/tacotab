@@ -1,9 +1,10 @@
-import React, { FormEvent, ChangeEvent, FocusEvent } from 'react';
+import React, { FormEvent } from 'react';
 import TeamCell from './TeamCell';
 import TeamSpeakerSelect from './TeamSpeakerSelect';
 import TeamWinSelector from './TeamWinSelector';
 import TwoPersonTeamTooltip from './TwoPersonTeamTooltip';
 import { SpeakerDropDown } from './SpeakerDropDown';
+import { EditText } from '../utils/EditText';
 import { TrashButton } from '../utils/TrashButton';
 import { PeopleButton } from '../utils/PeopleButton';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
@@ -25,7 +26,6 @@ type TeamRowProps = {
 }
 
 type TeamRowState = {
-    name: string,
     speakers: number[],
     updateTeamForm: Array<number[]>,
     showModal: boolean,
@@ -37,7 +37,6 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
         super(props);
         
         this.state = {
-            name: this.props.team.name,
             speakers: getDistinctSpeakers(this.props.team),
             updateTeamForm: [
                 [this.props.team.round1[0], this.props.team.round2[0], this.props.team.round3[0]],
@@ -48,25 +47,18 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
             showWarning: false
         }
 
-        this.handleTeamNameEdit = this.handleTeamNameEdit.bind(this);
-        this.handleTeamNameUpdate = this.handleTeamNameUpdate.bind(this);
+        this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
         this.setScore = this.setScore.bind(this);
         this.setRank = this.setRank.bind(this);
         this.modalShow = this.modalShow.bind(this);
         this.modalHide = this.modalHide.bind(this);
         this.handleUpdateTeamFormChange = this.handleUpdateTeamFormChange.bind(this);
-        this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
+        this.handleTeamMembersUpdate = this.handleTeamMembersUpdate.bind(this);
     }
 
 
-    handleTeamNameEdit(event: ChangeEvent<HTMLTextAreaElement>) {
-        this.setState({name: event.target.value});
-    }
-    
-    handleTeamNameUpdate(event: FocusEvent<HTMLTextAreaElement>) {
-        event.preventDefault();
-        const name = this.state.name;
-        const team = {...this.props.team, name: name};
+    handleTeamUpdate(name: string, value: string) {
+        const team = {...this.props.team, [name]: value};
         this.props.updateTeam(team);
     }
     
@@ -102,7 +94,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
         this.setState({updateTeamForm: updateTeamFormState});
     }
 
-    handleTeamUpdate(event: FormEvent<HTMLFormElement>) {
+    handleTeamMembersUpdate(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const newTeam = [...this.state.updateTeamForm];
@@ -291,15 +283,11 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
             <tbody>
                 <tr>
                     <td rowSpan={this.state.speakers.length + 3} className="cell-teamname">
-                        <textarea
-                            className="cell-valupdate"
-                            rows={1}
-                            cols={this.state.name.length > 8 ? this.state.name.length : 8}
-                            autoComplete="off"
-                            spellCheck="false"
-                            value={this.state.name}
-                            onChange={this.handleTeamNameEdit}
-                            onBlur={this.handleTeamNameUpdate} />
+                        <EditText
+                            name="name"
+                            init={team.name}
+                            cols="auto"
+                            fn={this.handleTeamUpdate} />
                         <br />
                         <div
                             className="icon-wrapper"
@@ -347,7 +335,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form onSubmit={this.handleTeamUpdate}>
+                        <Form onSubmit={this.handleTeamMembersUpdate}>
                             {teamSpeakerSelects}
                             <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
                                 You can't add a speaker to the same round more than once!

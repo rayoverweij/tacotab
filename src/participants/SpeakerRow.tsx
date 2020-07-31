@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FocusEvent } from 'react';
+import React, { ChangeEvent } from 'react';
+import { EditText } from '../utils/EditText';
 import { TrashButton } from '../utils/TrashButton';
 import Form from 'react-bootstrap/Form';
 import { Speaker } from '../types/Speaker';
@@ -11,10 +12,7 @@ type SpeakerRowProps = {
 }
 
 type SpeakerRowState = {
-    name: string,
-    school: string,
-    disqualified: boolean,
-    [key: string]: string|boolean
+    disqualified: boolean
 }
 
 class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
@@ -22,29 +20,16 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
         super(props);
 
         this.state = {
-            name: this.props.speaker.name,
-            school: this.props.speaker.school,
             disqualified: this.props.speaker.disqualified
         }
 
-        this.handleTextEdit = this.handleTextEdit.bind(this);
-        this.handleTextUpdate = this.handleTextUpdate.bind(this);
+        this.handleSpeakerUpdate = this.handleSpeakerUpdate.bind(this);
         this.handleDisqUpdate = this.handleDisqUpdate.bind(this);
     }
 
-    handleTextEdit(event: ChangeEvent<HTMLTextAreaElement>) {
-        const {name, value} = event.target;
-        let state = {...this.state};
-        state[name] = value;
-        this.setState(state);
-    }
-    
-    handleTextUpdate(event: FocusEvent<HTMLTextAreaElement>) {
-        event.preventDefault();
-        const name = event.target.name;
-        const value = this.state[name];
-        let speaker = {...this.props.speaker};
-        speaker[name] = value;
+
+    handleSpeakerUpdate(name: string, value: string) {
+        const speaker = {...this.props.speaker, [name]: value};
         this.props.updateSpeaker(speaker);
     }
 
@@ -55,34 +40,25 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps, SpeakerRowState> {
         this.props.updateSpeaker(speaker);
     }
     
+
     render() {
         const speaker = this.props.speaker;
 
         return (
             <tr key={`speaker-row-${speaker.speakerID}`}>
                 <td className="editable">
-                    <textarea
-                        className="cell-valupdate"
+                    <EditText
                         name="name"
-                        rows={1}
-                        cols={this.state.name.length > 8 ? this.state.name.length : 8}
-                        autoComplete="off"
-                        spellCheck="false"
-                        value={this.state.name}
-                        onChange={this.handleTextEdit}
-                        onBlur={this.handleTextUpdate} />
+                        init={this.props.speaker.name}
+                        cols="auto"
+                        fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="editable">
-                    <textarea
-                        className="cell-valupdate"
+                    <EditText
                         name="school"
-                        rows={1}
-                        cols={this.state.school.length > 8 ? this.state.school.length : 8}
-                        autoComplete="off"
-                        spellCheck="false"
-                        value={this.state.school}
-                        onChange={this.handleTextEdit}
-                        onBlur={this.handleTextUpdate} />
+                        init={this.props.speaker.school}
+                        cols="auto"
+                        fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="cell-low-padding">
                     <Form.Check
