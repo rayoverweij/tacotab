@@ -70,6 +70,11 @@ h2 {
             animation-duration: 500ms;
             animation-direction: alternate;
             animation-iteration-count: infinite;
+
+            @media(prefers-reduced-motion) {
+                animation: none;
+                color: black;
+            }
         }
     }
 

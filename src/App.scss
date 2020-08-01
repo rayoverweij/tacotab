@@ -126,6 +126,14 @@
             }
         }
 
+        @media(prefers-reduced-motion) {
+            transition: none;
+
+            &::after {
+                transition: none;
+            }
+        }
+
 
         &:hover, &.active {
             background-color: transparent;
