@@ -20,11 +20,12 @@ type TeamsProps = {
 type TeamsState = {
     addTeamForm: {
         teamName: string,
-        speaker1: number,
-        speaker2: number,
-        speaker3: number,
+        speaker1: number | "",
+        speaker2: number | "",
+        speaker3: number | "",
         [key: string]: string|number
     },
+    addTeamFormValidated: boolean,
     showModal: boolean,
     showWarning: boolean
 }
@@ -36,10 +37,11 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
         this.state = {
             addTeamForm: {
                 teamName: "",
-                speaker1: 0,
-                speaker2: 0,
-                speaker3: 0
+                speaker1: "",
+                speaker2: "",
+                speaker3: ""
             },
+            addTeamFormValidated: false,
             showModal: false,
             showWarning: false
         }
@@ -73,6 +75,13 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
     handleAddTeamFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        const form = event.currentTarget;
+        if(form.checkValidity() === false) {
+            event.stopPropagation();
+            this.setState({addTeamFormValidated: true});
+            return false;
+        }
+
         const team = {...this.state.addTeamForm}
         if (team.speaker1 === team.speaker2 || team.speaker1 === team.speaker3 || team.speaker2 === team.speaker3) {
             this.setState({showWarning: true});
@@ -81,7 +90,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
 
         let counter = JSON.parse(localStorage.getItem("teamCounter")!);
 
-        const memberList = [team.speaker1, team.speaker2, team.speaker3]
+        const memberList = [team.speaker1, team.speaker2, team.speaker3] as number[]
         const newTeam: Team = {
             teamID: counter++,
             name: team.teamName,
@@ -98,7 +107,14 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
         localStorage.setItem("teamCounter", JSON.stringify(counter));
         this.props.updateTeams(newTeams);
 
+        this.setState({addTeamForm: {
+            teamName: "",
+            speaker1: "",
+            speaker2: "",
+            speaker3: ""
+        }});
         this.setState({showWarning: false});
+        this.setState({addTeamFormValidated: false});
         this.modalHide();
     }
 
@@ -171,36 +187,51 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form onSubmit={this.handleAddTeamFormSubmit}>
+                        <Form
+                            noValidate
+                            validated={this.state.addTeamFormValidated}
+                            onSubmit={this.handleAddTeamFormSubmit}>
                             <Form.Group controlId={`form-add-team-${this.props.div}-name`}>
                                 <Form.Label>Team name</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="teamName"
+                                    required
                                     value={this.state.addTeamForm.teamName}
                                     onChange={this.handleAddTeamFormChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Please give the team a name.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-1`}>
                                 <Form.Label>Speaker 1</Form.Label>
                                 <Form.Control
                                     as="select"
                                     name="speaker1"
+                                    required
                                     value={this.state.addTeamForm.speaker1}
                                     onChange={this.handleAddTeamFormChange}>
-                                        <option>-- pick a speaker --</option>
+                                        <option value="" disabled hidden>-- pick a speaker --</option>
                                         <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a speaker from the list.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-2`}>
                                 <Form.Label>Speaker 2</Form.Label>
                                 <Form.Control
                                     as="select"
                                     name="speaker2"
+                                    required
                                     value={this.state.addTeamForm.speaker2}
                                     onChange={this.handleAddTeamFormChange}>
-                                        <option>-- pick a speaker --</option>
+                                        <option value="" disabled hidden>-- pick a speaker --</option>
                                         <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a speaker from the list.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId={`form-add-team-${this.props.div}-speaker-3`}>
                                 <Form.Label>Speaker 3</Form.Label>
@@ -208,15 +239,19 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
                                 <Form.Control
                                     as="select"
                                     name="speaker3"
+                                    required
                                     value={this.state.addTeamForm.speaker3}
                                     onChange={this.handleAddTeamFormChange}>
-                                        <option>-- pick a speaker --</option>
+                                        <option value="" disabled hidden>-- pick a speaker --</option>
                                         <option value="avg">[averaged third speaker]</option>
                                         <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a speaker from the list, or select [averaged third speaker] for a two-person team.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
-                                You can't add a speaker to a team more than once!
+                                You can't add a speaker to a team more than once.
                             </p>
                             <Button
                                 variant="primary"

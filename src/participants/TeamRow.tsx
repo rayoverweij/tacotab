@@ -352,7 +352,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         <Form onSubmit={this.handleTeamMembersUpdate}>
                             {teamSpeakerSelects}
                             <p className={`red ${this.state.showWarning ? "" : "hidden"}`}>
-                                You can't add a speaker to the same round more than once!
+                                You can't add a speaker to the same round more than once.
                             </p>
                             <Button
                                 variant="primary"
