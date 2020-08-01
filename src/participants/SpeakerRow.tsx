@@ -48,12 +48,11 @@ class SpeakerRow extends React.PureComponent<SpeakerRowProps> {
                         fn={this.handleSpeakerUpdate} />
                 </td>
                 <td className="table-delete">
-                    <div title={`Remove ${speaker.name}`}
+                    <button className="btn-none"
+                        title={`Remove ${speaker.name}`}
                         onClick={() => this.props.deleteSpeaker(speaker)}>
-                        <Trash
-                            role="button"
-                            className="icon trash" />
-                    </div>
+                        <Trash className="icon trash" />
+                    </button>
                 </td>
             </tr>
         );

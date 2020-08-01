@@ -33,6 +33,8 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
 
         this.handleRoomFormChange = this.handleRoomFormChange.bind(this);
         this.handleRoomFormSubmit = this.handleRoomFormSubmit.bind(this);
+        this.popFocus = this.popFocus.bind(this);
+        this.returnFocus = this.returnFocus.bind(this);
     }
 
 
@@ -46,8 +48,18 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
         document.body.click();
     }
 
+    popFocus() {
+        document.getElementById(`room-check-${this.props.room.roomID}`)?.focus();
+    }
+
+    returnFocus() {
+        document.getElementById(`judgepill-btn-${this.props.judge.judgeID}`)?.focus();
+    }
+
 
     render() {
+        const judge = this.props.judge;
+
         const popover = (
             <Popover id="judgepill-popover">
                 <Popover.Title as="h3">Switch rooms</Popover.Title>
@@ -58,11 +70,11 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                         <p>You need to assign each debate to a room before you can switch judges.</p>
                         :
                         <Form onSubmit={this.handleRoomFormSubmit}>
-                            {this.props.draw.roomsOne.map((room, index) => {
+                            {this.props.draw.roomsOne.map(room => {
                                 return (
                                     <Form.Check custom
-                                        key={`room-check-${index}`}
-                                        id={`room-check-one-${room.roomID}-${index}`}
+                                        key={`room-check-${room.roomID}`}
+                                        id={`room-check-${room.roomID}`}
                                         name="room"
                                         type="radio"
                                         label={room.name}
@@ -71,11 +83,11 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                                         onChange={this.handleRoomFormChange} />
                                 );
                             })}
-                            {this.props.draw.roomsTwo.map((room, index) => {
+                            {this.props.draw.roomsTwo.map(room => {
                                 return (
                                     <Form.Check custom
-                                        key={`room-check-${index}`}
-                                        id={`room-check-two-${room.roomID}-${index}`}
+                                        key={`room-check-${room.roomID}`}
+                                        id={`room-check-${room.roomID}`}
                                         name="room"
                                         type="radio"
                                         label={room.name}
@@ -84,21 +96,28 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                                         onChange={this.handleRoomFormChange} />
                                 );
                             })}
-                            <Button className="btn-popover" variant="primary" type="submit">Change</Button>
+                            <Button className="btn-popover" variant="primary" type="submit">
+                                Change
+                            </Button>
                         </Form>}
                 </Popover.Content>
             </Popover>
         );
 
         return (
-            <OverlayTrigger trigger="click" placement="right" overlay={popover} rootClose>
-                <div className={`
-                    pill
-                    ${this.props.hasConflict ? "red" : ""}
-                    ${this.props.hasChairedBefore ? "orange" : ""}
-                `}>
-                    {this.props.judge.name}{this.props.isChair ? "\u00A9" : ""}
-                </div>
+            <OverlayTrigger
+                trigger="click"
+                placement="right"
+                overlay={popover}
+                onEntered={this.popFocus}
+                onExited={this.returnFocus}
+                rootClose >
+                <button id={`judgepill-btn-${judge.judgeID}`}
+                    className={`pill btn-none
+                        ${this.props.hasConflict ? "red" : ""}
+                        ${this.props.hasChairedBefore ? "orange" : ""}`} >
+                    {judge.name}{this.props.isChair ? "\u00A9" : ""}
+                </button>
             </OverlayTrigger>
         );
     }

@@ -18,7 +18,7 @@ class TwoPersonTeamTooltip extends React.Component {
                         </Popover.Content>
                     </Popover>
                 }>    
-                <InfoCircle className="icon-info" />
+                <InfoCircle tabIndex={0} className="icon-info" />
             </OverlayTrigger>
         );
     }

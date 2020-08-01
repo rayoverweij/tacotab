@@ -69,12 +69,11 @@ class JudgeRow extends React.PureComponent<JudgeRowProps> {
                         fn={this.handleJudgeUpdate} />
                 </td>
                 <td className="table-delete">
-                    <div title={`Remove ${judge.name}`}
+                    <button className="btn-none"
+                        title={`Remove ${judge.name}`}
                         onClick={() => this.props.deleteJudge(judge)}>
-                        <Trash
-                            role="button"
-                            className="icon trash" />
-                    </div>
+                        <Trash className="icon trash" />
+                    </button>
                 </td>
             </tr>
         );

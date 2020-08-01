@@ -512,7 +512,7 @@ class Round extends React.PureComponent<RoundProps, RoundState> {
                                     </Popover>
                                 } 
                                 rootClose>
-                                <abbr title=""><p>
+                                <abbr title="" tabIndex={0}><p>
                                     <InfoCircle className="icon-info" />
                                     &nbsp;&nbsp;<span>Legend</span>
                                 </p></abbr>

@@ -156,7 +156,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                     {speakerElements}
                                 </Tooltip>
                             }>
-                            <abbr title="">{team.name}</abbr>
+                            <abbr title="" tabIndex={0}>{team.name}</abbr>
                         </OverlayTrigger>
                     </td>
                     <td>{team.totalWins}</td>
@@ -186,7 +186,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total speaker points
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣSP</abbr>
+                                            <abbr title="" tabIndex={0}>ΣSP</abbr>
                                         </OverlayTrigger>
                                     </th>
                                     <th>
@@ -197,7 +197,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total speaker ranks<br />(lower is better)
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣSR</abbr>
+                                            <abbr title="" tabIndex={0}>ΣSR</abbr>
                                         </OverlayTrigger>
                                     </th>
                                     <th>
@@ -208,7 +208,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total team wins
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣTW</abbr>
+                                            <abbr title="" tabIndex={0}>ΣTW</abbr>
                                         </OverlayTrigger>
                                     </th>
                                     <th>
@@ -219,7 +219,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total team points
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣTP</abbr>
+                                            <abbr title="" tabIndex={0}>ΣTP</abbr>
                                         </OverlayTrigger>
                                     </th>
                                 </tr>
@@ -244,7 +244,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total team wins
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣTW</abbr>
+                                            <abbr title="" tabIndex={0}>ΣTW</abbr>
                                         </OverlayTrigger>
                                     </th>
                                     <th>
@@ -255,7 +255,7 @@ class Ranking extends React.PureComponent<RankingProps> {
                                                     Total team points
                                                 </Tooltip>
                                             }>
-                                            <abbr title="">ΣTP</abbr>
+                                            <abbr title="" tabIndex={0}>ΣTP</abbr>
                                         </OverlayTrigger>
                                     </th>
                                 </tr>
