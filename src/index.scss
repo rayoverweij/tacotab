@@ -198,6 +198,16 @@ textarea {
     }
 }
 
+form.was-validated {
+    select {
+        &.form-control:valid, &.form-control:invalid {
+            background-position: right 20px center;
+            padding-right: 48px;
+        }
+    }
+}
+
+
 
 // General table styling
 .table {
