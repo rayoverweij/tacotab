@@ -134,7 +134,6 @@
             }
         }
 
-
         &:hover, &.active {
             background-color: transparent;
             font-weight: bolder;
@@ -145,16 +144,8 @@
             }
         }
 
-        &.active {
+        &:active, &.active {
             color: black;
-
-            &::after {
-                color: black;
-            }
-        }
-
-        &:focus {
-            outline: none;
         }
     }
 }

@@ -194,8 +194,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
                                         GitHub
                                     </a>
-                                    &nbsp;&middot;&nbsp;<span className="fake-anchor" onClick={this.showWhatsNew}>What's new</span>
-                                    &nbsp;&middot;&nbsp;<span className="fake-anchor" onClick={this.showPrivacy}>Privacy</span>
+                                    &nbsp;&middot;&nbsp;<Button variant="link" onClick={this.showWhatsNew}>What's new</Button>
+                                    &nbsp;&middot;&nbsp;<Button variant="link" onClick={this.showPrivacy}>Privacy</Button>
                                 </p>
                                 <p>
                                     <a href="https://rayo.dev" rel="noopener noreferrer" target="_blank">Check out more of Rayo's work</a> or <a href="https://debate.bard.edu" rel="noopener noreferrer" target="_blank">visit the Bard Debate Union</a>&mdash;Bard's best sports team!
@@ -221,7 +221,10 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                             New in version 0.4.3:
                             <ul>
                                 <li>General: in text fields, pressing 'Enter' now submits your input rather than entering a newline</li>
-                                <li>General: many performance improvements around editing text fields</li>
+                                <li>General: many performance improvements, especially around editing text fields</li>
+                                <li>Teams: when trying to add a team without any speakers, now the app tells you this is impossible, instead of simply crashing</li>
+                                <li>Accessibility: removed transitions and animations when prefers-reduced-motion is set</li>
+                                <li>Accessibility: each interactive element is now properly focusable</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>

@@ -36,13 +36,23 @@ body {
     overflow: hidden;
 }
 
-a, .fake-anchor {
+a {
     color: var(--primary);
 
     &:hover {
         color: var(--primary);
         text-decoration: underline;
         cursor: pointer;
+    }
+
+    &:focus {
+        text-decoration: underline;
+        outline: 0;
+        box-shadow: $focus;
+    }
+
+    &:active:focus {
+        box-shadow: none;
     }
 }
 
@@ -92,6 +102,11 @@ h3 {
 abbr[title] {
     text-decoration: none;
     border-bottom: 1px dotted black;
+
+    &:focus, &:focus span {
+        outline: none;
+        border-bottom-style: solid;
+    }
 }
 
 .orange {
@@ -140,6 +155,48 @@ section {
 // General button styling
 .btn ~ .btn {
     margin-right: 10px;
+}
+
+.btn-link {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    vertical-align: baseline;
+    transition: none;
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+.btn-none {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+
+    &:focus {
+        outline: none;
+
+        svg {
+            &.trash path {
+                fill: var(--red);
+
+                &:first-child {
+                    display: none;
+                }
+
+                &:last-child {
+                    d: path("M2.5 1a1 1 0 00-1 1v1a1 1 0 001 1H3v9a2 2 0 002 2h6a2 2 0 002-2V4h.5a1 1 0 001-1V2a1 1 0 00-1-1H10a1 1 0 00-1-1H7a1 1 0 00-1 1H2.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM8 5a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 018 5zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z");
+                }
+            }
+
+            &.people path {
+                d: path("M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 100-6 3 3 0 000 6zm-5.784 6A2.238 2.238 0 015 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 005 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z");
+            }
+        }
+    }
 }
 
 .btn-icon {
@@ -363,6 +420,11 @@ form.was-validated {
     margin-top: -3px;
     margin-left: 8px;
     cursor: help;
+
+    &:focus {
+        outline: none;
+        color: var(--primary);
+    }
 }
 
 .icon-wrapper {

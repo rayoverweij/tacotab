@@ -62,13 +62,15 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
 
             let speakers = [...this.props.speakers];
 
-            if(name === "score") speakers
-                .find(el => el.speakerID === baggage![0].speakerID)!
-                .scores[baggage![1]] = numValue;
-
-            else speakers
-                .find(el => el.speakerID === baggage![0].speakerID)!
-                .ranks[baggage![1]] = numValue;
+            if(name === "score") {
+                speakers
+                    .find(el => el.speakerID === baggage![0].speakerID)!
+                    .scores[baggage![1]] = numValue;
+            } else if(name === "rank") {
+                speakers
+                    .find(el => el.speakerID === baggage![0].speakerID)!
+                    .ranks[baggage![1]] = numValue;
+            }
 
             this.props.updateSpeakers(speakers);
         } else {
@@ -297,22 +299,18 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                             init={team.name}
                             fn={this.handleTeamUpdate} />
                         <br />
-                        <div
-                            className="icon-wrapper"
+                        <button
+                            className="icon-wrapper btn-none"
                             title={`Change team members of ${team.name}`}
                             onClick={this.modalShow}>
-                            <People
-                                role="button"
-                                className="icon people" />
-                        </div>
-                        <div
-                            className="icon-wrapper"
+                            <People className="icon people" />
+                        </button>
+                        <button
+                            className="icon-wrapper btn-none"
                             title={`Remove ${team.name}`}
                             onClick={() => this.props.deleteTeam(team)}>
-                            <Trash
-                                role="button"
-                                className="icon trash" />
-                        </div>
+                            <Trash className="icon trash" />
+                        </button>
                     </td>
                 </tr>
                 {speakerRows}
