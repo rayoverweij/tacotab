@@ -60,6 +60,7 @@ class TeamPill extends React.PureComponent<TeamPillProps, TeamPillState> {
                 <Popover.Title as="h3">Switch teams</Popover.Title>
                 <Popover.Content>
                     <Form onSubmit={this.handleRoomFormSubmit}>
+                        <Form.Label srOnly>Team to swap with</Form.Label>
                         {this.props.teams.map(mappedTeam => {
                             return (
                                 <Form.Check custom

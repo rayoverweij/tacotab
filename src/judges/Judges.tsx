@@ -177,6 +177,7 @@ class Judges extends React.PureComponent<JudgesProps, JudgesState> {
                                         <Form onSubmit={this.handleAddJudgeFormSubmit}>
                                             <Form.Row>
                                                 <Col md={4}>
+                                                    <Form.Label srOnly>Judge name</Form.Label>
                                                     <Form.Control
                                                         name="judgeName"
                                                         type="text"
@@ -185,6 +186,7 @@ class Judges extends React.PureComponent<JudgesProps, JudgesState> {
                                                         onChange={this.handleAddJudgeFormChange} />
                                                 </Col>
                                                 <Col md={4}>
+                                                    <Form.Label srOnly>Judge school</Form.Label>
                                                     <Form.Control
                                                         name="school"
                                                         type="text"

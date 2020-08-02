@@ -154,6 +154,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                     onSubmit={this.handleNameFormSubmit}>
                                     <Form.Row>
                                         <Col sm={9} xl={6}>
+                                            <Form.Label srOnly>Tournament name</Form.Label>
                                             <Form.Control
                                                 name="tournamentName"
                                                 type="text"
@@ -187,6 +188,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                     <Form.Row>
                                         <Col xs={9} xl={6}>
                                             <div className="custom-file">
+                                                <Form.Label srOnly>Select tournament file</Form.Label>
                                                 <Form.Control
                                                     name="import"
                                                     id="import-settings"

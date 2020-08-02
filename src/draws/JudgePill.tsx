@@ -70,6 +70,7 @@ class JudgePill extends React.Component<JudgePillProps, JudgePillState> {
                         <p>You need to assign each debate to a room before you can switch judges.</p>
                         :
                         <Form onSubmit={this.handleRoomFormSubmit}>
+                            <Form.Label srOnly>Room</Form.Label>
                             {this.props.draw.roomsOne.map(room => {
                                 return (
                                     <Form.Check custom
