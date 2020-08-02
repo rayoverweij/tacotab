@@ -45,6 +45,7 @@ class TeamWinSelector extends React.PureComponent<TeamWinSelectorProps, TeamWinS
     render() {
         return (
             <Form>
+                <Form.Label srOnly>Win or loss round {this.props.round}</Form.Label>
                 <Form.Control
                     as="select"
                     name={`win-form-${this.props.team.teamID}-round-${this.props.round}`}

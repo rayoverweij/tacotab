@@ -155,6 +155,7 @@ class Speakers extends React.PureComponent<SpeakersProps, SpeakersState> {
                         <Form onSubmit={this.handleAddSpeakerFormSubmit}>
                             <Form.Row>
                                 <Col md={4}>
+                                    <Form.Label srOnly>Speaker name</Form.Label>
                                     <Form.Control
                                         name="speakerName"
                                         type="text"
@@ -163,6 +164,7 @@ class Speakers extends React.PureComponent<SpeakersProps, SpeakersState> {
                                         onChange={this.handleAddSpeakerFormChange} />
                                 </Col>
                                 <Col md={4}>
+                                    <Form.Label srOnly>Speaker school</Form.Label>
                                     <Form.Control
                                         name="school"
                                         type="text"
