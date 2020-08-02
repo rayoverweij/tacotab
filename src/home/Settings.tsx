@@ -272,6 +272,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                 <li>Accessibility: removed transitions and animations when prefers-reduced-motion is set</li>
                                 <li>Accessibility: each interactive element is now properly focusable</li>
                                 <li>Accessibility: each form input should now be properly labeled for screen readers</li>
+                                <li>Minor visual tweaks and bug fixes</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>
