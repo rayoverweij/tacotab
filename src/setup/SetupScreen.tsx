@@ -23,7 +23,9 @@ type SetupScreenState = {
         divisionOneName: string,
         divisionTwoName: string,
         [key: string]: string|number
-    }
+    },
+    setupFormValidated: boolean,
+    importFormValidated: boolean
 }
 
 class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
@@ -36,7 +38,9 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                 numDivisions: 1,
                 divisionOneName: "",
                 divisionTwoName: ""
-            }
+            },
+            setupFormValidated: false,
+            importFormValidated: false
         }
 
         this.handleSetupFormChange = this.handleSetupFormChange.bind(this);
@@ -57,20 +61,35 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
     handleSetupFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        const name = this.state.setupForm.tournamentName;
-        if (name === "") return false;
+        const form = event.currentTarget;
+        if(form.checkValidity() === false) {
+            event.stopPropagation();
+            this.setState({setupFormValidated: true});
+            return false;
+        }
 
         const numDivisions = this.state.setupForm.numDivisions;
         const divisionNames =[this.state.setupForm.divisionOneName, this.state.setupForm.divisionTwoName];
         if(numDivisions === 2 && (divisionNames[0] === "" || divisionNames[1] === "")) return false;
 
-        this.props.initializeTournament(name, numDivisions, divisionNames);
+        this.setState({setupFormValidated: false});
+        this.props.initializeTournament(this.state.setupForm.tournamentName, numDivisions, divisionNames);
     }
 
     importData(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const files = (document.getElementById("import-setup") as HTMLInputElement).files;
-        if(files === null) return false;
+
+        const form = event.currentTarget;
+        if(form.checkValidity() === false) {
+            event.stopPropagation();
+            this.setState({importFormValidated: true});
+            return false;
+        }
+
+        const files = (document.getElementById("importSetup") as HTMLInputElement).files;
+        if (files === null) return false;
+
+        this.setState({importFormValidated: false});
         importTournament(files);
     }
 
@@ -98,15 +117,22 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                     
                     <Tabs defaultActiveKey="createnew" id="setup-tabs">
                         <Tab eventKey="createnew" title="New tournament">
-                            <Form onSubmit={this.handleSetupFormSubmit}>
-                                <h5>Tournament name</h5>
+                            <Form
+                                noValidate
+                                validated={this.state.setupFormValidated}
+                                onSubmit={this.handleSetupFormSubmit}>
                                 <Form.Group controlId="setupFormTournamentName">
+                                    <Form.Label className="h5">Tournament name</Form.Label>
                                     <Form.Control
                                         name="tournamentName"
                                         type="text"
+                                        required
                                         placeholder="e.g. 'Bard MS-HS 2020'"
                                         value={this.state.setupForm.name}
                                         onChange={this.handleSetupFormChange} />
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a name for the tournament.
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <h5 id="setup-form-div-h5">Speaker divisions</h5>
@@ -136,20 +162,30 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                             <Form.Label>Give both divisions a name for easy identification.</Form.Label>
                                             <Form.Row>
                                                 <Col md={6}>
+                                                    <Form.Label srOnly>Name for division one</Form.Label>
                                                     <Form.Control
                                                         name="divisionOneName"
                                                         type="text"
                                                         placeholder="e.g. 'Novice'"
+                                                        required={this.state.setupForm.numDivisions === 2}
                                                         value={this.state.setupForm.divisionOneName}
                                                         onChange={this.handleSetupFormChange} />
+                                                    <Form.Control.Feedback type="invalid">
+                                                        Please enter a name.
+                                                    </Form.Control.Feedback>
                                                 </Col>
                                                 <Col md={6}>
+                                                    <Form.Label srOnly>Name for division two</Form.Label>
                                                     <Form.Control
                                                         name="divisionTwoName"
                                                         type="text"
                                                         placeholder="e.g. 'Open'"
+                                                        required={this.state.setupForm.numDivisions === 2}
                                                         value={this.state.setupForm.divisionTwoName}
                                                         onChange={this.handleSetupFormChange} />
+                                                    <Form.Control.Feedback type="invalid">
+                                                        Please enter a name.
+                                                    </Form.Control.Feedback>
                                                 </Col>
                                             </Form.Row>
                                         </Form.Group>
@@ -164,17 +200,24 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
 
                         <Tab eventKey="importnew" title="Import tournament">
                             <p>Open files generated with the Export function.</p>
-                            <Form onSubmit={this.importData}>
+                            <Form
+                                noValidate
+                                validated={this.state.importFormValidated}
+                                onSubmit={this.importData}>
                                 <Form.Row>
                                     <Col md={9}>
                                         <div className="custom-file">
                                             <Form.Control
                                                 name="import"
-                                                id="import-setup"
+                                                id="importSetup"
                                                 className="custom-file-input"
                                                 type="file"
+                                                required
                                                 accept=".tournament,.json" />
-                                            <label className="custom-file-label" htmlFor="customFile">Choose file</label>
+                                            <label className="custom-file-label" htmlFor="importSetup">Choose file</label>
+                                            <Form.Control.Feedback type="invalid">
+                                                Please select a file from your computer.
+                                            </Form.Control.Feedback>
                                         </div>
                                     </Col>
                                     <Col md={3}>

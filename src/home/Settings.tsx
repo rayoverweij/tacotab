@@ -23,6 +23,7 @@ type SettingsState = {
     nameForm: string,
     nameFormValidated: boolean,
     nameSaved: boolean,
+    importFormValidated: boolean,
     showWhatsNew: boolean,
     showPrivacy: boolean
 }
@@ -35,6 +36,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
             nameForm: "",
             nameFormValidated: false,
             nameSaved: false,
+            importFormValidated: false,
             showWhatsNew: false,
             showPrivacy: false
         }
@@ -79,8 +81,18 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
 
     importData(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
+        const form = event.currentTarget;
+        if(form.checkValidity() === false) {
+            event.stopPropagation();
+            this.setState({importFormValidated: true});
+            return false;
+        }
+
         const files = (document.getElementById("import-settings") as HTMLInputElement).files;
         if (files === null) return false;
+
+        this.setState({importFormValidated: false});
         importTournament(files);
     }
 
@@ -168,7 +180,10 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                             <section>
                                 <h3>Import tournament data</h3>
                                 <p>Open files generated with the Export function below. <strong>Note:</strong> this will override all current data!</p>
-                                <Form onSubmit={this.importData}>
+                                <Form
+                                    noValidate
+                                    validated={this.state.importFormValidated}
+                                    onSubmit={this.importData}>
                                     <Form.Row>
                                         <Col xs={9} xl={6}>
                                             <div className="custom-file">
@@ -177,8 +192,12 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                                     id="import-settings"
                                                     className="custom-file-input"
                                                     type="file"
+                                                    required
                                                     accept=".tournament,.json" />
                                                 <label className="custom-file-label" htmlFor="customFile">Choose file</label>
+                                                <Form.Control.Feedback type="invalid">
+                                                    Please select a file from your computer.
+                                                </Form.Control.Feedback>
                                             </div>
                                         </Col>
                                         <Col>
@@ -245,10 +264,12 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                             New in version 0.4.3:
                             <ul>
                                 <li>General: in text fields, pressing 'Enter' now submits your input rather than entering a newline</li>
+                                <li>General: if a form can't be submitted, for example because you left crucial fields empty, the app will now give you feedback</li>
                                 <li>General: many performance improvements, especially around editing text fields</li>
                                 <li>Teams: when trying to add a team without any speakers, now the app tells you this is impossible, instead of simply crashing</li>
                                 <li>Accessibility: removed transitions and animations when prefers-reduced-motion is set</li>
                                 <li>Accessibility: each interactive element is now properly focusable</li>
+                                <li>Accessibility: each form input should now be properly labeled for screen readers</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>
