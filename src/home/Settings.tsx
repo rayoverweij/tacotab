@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import bsCustomFileInput from 'bs-custom-file-input';
-import { Download, Trash } from 'react-bootstrap-icons';
+import { Download, Trash, CheckCircleFill } from 'react-bootstrap-icons';
 
 
 type SettingsProps = {
@@ -21,6 +21,8 @@ type SettingsProps = {
 
 type SettingsState = {
     nameForm: string,
+    nameFormValidated: boolean,
+    nameSaved: boolean,
     showWhatsNew: boolean,
     showPrivacy: boolean
 }
@@ -31,6 +33,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
 
         this.state = {
             nameForm: "",
+            nameFormValidated: false,
+            nameSaved: false,
             showWhatsNew: false,
             showPrivacy: false
         }
@@ -57,9 +61,20 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
 
     handleNameFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
+        const form = event.currentTarget;
+        if(form.checkValidity() === false) {
+            event.stopPropagation();
+            this.setState({nameFormValidated: true});
+            return false;
+        }
+
         const name = this.state.nameForm;
         this.props.updateTournamentName(name);
         this.setState({nameForm: ""});
+        this.setState({nameFormValidated: false});
+        this.setState({nameSaved: true});
+        setTimeout(() => this.setState({nameSaved: false}), 3000);
     }
 
     importData(event: FormEvent<HTMLFormElement>) {
@@ -121,21 +136,30 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                             <p>Manage your tournament.</p>
                             <section>
                                 <h3>Change tournament name</h3>
-                                <Form onSubmit={this.handleNameFormSubmit}>
+                                <Form
+                                    noValidate
+                                    validated={this.state.nameFormValidated}
+                                    onSubmit={this.handleNameFormSubmit}>
                                     <Form.Row>
                                         <Col sm={9} xl={6}>
                                             <Form.Control
-                                                name="tournament-name"
+                                                name="tournamentName"
                                                 type="text"
                                                 placeholder="New name"
+                                                required
                                                 value={this.state.nameForm}
                                                 onChange={this.handleNameFormChange} />
+                                            <Form.Control.Feedback type="invalid">
+                                                Please enter a name for the tournament.
+                                            </Form.Control.Feedback>
                                         </Col>
                                         <Col>
                                             <Button
-                                                variant="primary"
+                                                variant={this.state.nameSaved ? "success" : "primary"}
+                                                disabled={this.state.nameSaved}
+                                                id="btn-save-tournament-name"
                                                 type="submit">
-                                                Save
+                                                {this.state.nameSaved ? <CheckCircleFill /> : "Save"}
                                             </Button>
                                         </Col>
                                     </Form.Row>
