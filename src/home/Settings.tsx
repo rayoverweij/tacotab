@@ -265,6 +265,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                         <p>
                             New in version 0.4.3:
                             <ul>
+                                <li>General: from now on, when a new update to TacoTab is available, a message will tell you and let you reload</li>
                                 <li>General: in text fields, pressing 'Enter' now submits your input rather than entering a newline</li>
                                 <li>General: if a form can't be submitted, for example because you left crucial fields empty, the app will now give you feedback</li>
                                 <li>General: many performance improvements, especially around editing text fields</li>
