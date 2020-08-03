@@ -9,7 +9,7 @@
   "license": "MIT",
   "description": "A tabbing app for small World Schools-like debating tournaments",
   "private": true,
-  "homepage": "https://rayo.dev/tacotab",
+  "homepage": ".",
   "dependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.41",

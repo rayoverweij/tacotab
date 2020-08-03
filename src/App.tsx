@@ -16,7 +16,8 @@ import Container from 'react-bootstrap/Container';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Collapse from 'react-bootstrap/Collapse';
-import { List } from 'react-bootstrap-icons';
+import Alert from 'react-bootstrap/Alert';
+import { List, ExclamationTriangle } from 'react-bootstrap-icons';
 
 
 type AppProps = {}
@@ -288,6 +289,14 @@ class App extends React.Component<AppProps, AppState> {
                     </Tab.Content>
                 </Tab.Container>
             </Container>
+
+            <Alert
+                variant="primary"
+                className="alert-global"
+                id="alert-new-version-available">
+                    <ExclamationTriangle />&nbsp;&nbsp;
+                    A new version of TacoTab is available! <Alert.Link onClick={() => window.location.reload()}>Click to reload.</Alert.Link>
+            </Alert>
 
             <SetupScreen
                 init={this.state.init}
