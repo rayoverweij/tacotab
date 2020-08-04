@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/tacotab/static/css/main.697a6715.chunk.css",
-    "main.js": "/tacotab/static/js/main.3aa64167.chunk.js",
-    "main.js.map": "/tacotab/static/js/main.3aa64167.chunk.js.map",
-    "runtime-main.js": "/tacotab/static/js/runtime-main.9c0e3cf5.js",
-    "runtime-main.js.map": "/tacotab/static/js/runtime-main.9c0e3cf5.js.map",
-    "static/js/2.43645a2e.chunk.js": "/tacotab/static/js/2.43645a2e.chunk.js",
-    "static/js/2.43645a2e.chunk.js.map": "/tacotab/static/js/2.43645a2e.chunk.js.map",
-    "index.html": "/tacotab/index.html",
-    "precache-manifest.a7db72223a7296d89940f30acf21592d.js": "/tacotab/precache-manifest.a7db72223a7296d89940f30acf21592d.js",
-    "service-worker.js": "/tacotab/service-worker.js",
-    "static/css/main.697a6715.chunk.css.map": "/tacotab/static/css/main.697a6715.chunk.css.map",
-    "static/js/2.43645a2e.chunk.js.LICENSE.txt": "/tacotab/static/js/2.43645a2e.chunk.js.LICENSE.txt",
-    "static/media/icon-github.svg": "/tacotab/static/media/icon-github.026cb8cd.svg",
-    "static/media/logo.svg": "/tacotab/static/media/logo.15863a1a.svg"
+    "main.css": "./static/css/main.cac548aa.chunk.css",
+    "main.js": "./static/js/main.64afc56f.chunk.js",
+    "main.js.map": "./static/js/main.64afc56f.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.c2d6a2f0.js",
+    "runtime-main.js.map": "./static/js/runtime-main.c2d6a2f0.js.map",
+    "static/js/2.b039e60e.chunk.js": "./static/js/2.b039e60e.chunk.js",
+    "static/js/2.b039e60e.chunk.js.map": "./static/js/2.b039e60e.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.cd8ce37daab8bb85cf0430a2cadcfe74.js": "./precache-manifest.cd8ce37daab8bb85cf0430a2cadcfe74.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.cac548aa.chunk.css.map": "./static/css/main.cac548aa.chunk.css.map",
+    "static/js/2.b039e60e.chunk.js.LICENSE.txt": "./static/js/2.b039e60e.chunk.js.LICENSE.txt",
+    "static/media/icon-github.svg": "./static/media/icon-github.026cb8cd.svg",
+    "static/media/logo.svg": "./static/media/logo.15863a1a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9c0e3cf5.js",
-    "static/js/2.43645a2e.chunk.js",
-    "static/css/main.697a6715.chunk.css",
-    "static/js/main.3aa64167.chunk.js"
+    "static/js/runtime-main.c2d6a2f0.js",
+    "static/js/2.b039e60e.chunk.js",
+    "static/css/main.cac548aa.chunk.css",
+    "static/js/main.64afc56f.chunk.js"
   ]
 }
