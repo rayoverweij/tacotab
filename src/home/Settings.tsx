@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import './Settings.scss';
 import GitHubLogo from '../images/icon-github.svg';
+import pkg from '../../package.json';
 import { Config } from '../types/Config';
 import { importTournament } from '../utils/importTournament';
 import Row from 'react-bootstrap/Row';
@@ -233,7 +234,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                             <section id="section-about">
                                 <h3>About</h3>
                                 <p>
-                                    TacoTab β version 0.4.3<br />
+                                    TacoTab β version {pkg.version}<br />
                                     &copy; {new Date().getFullYear()} Rayo Verweij<br />
                                     <img src={GitHubLogo} alt="GitHub logo" id="logo-github"/>&nbsp;
                                     <a href="https://github.com/rayoverweij/tacotab" rel="noopener noreferrer" target="_blank">
@@ -263,17 +264,9 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
 
                     <Modal.Body>
                         <p>
-                            New in version 0.4.3:
+                            New in version {pkg.version}:
                             <ul>
-                                <li>General: from now on, when a new update to TacoTab is available, a message will tell you and let you reload</li>
-                                <li>General: in text fields, pressing 'Enter' now submits your input rather than entering a newline</li>
-                                <li>General: if a form can't be submitted, for example because you left crucial fields empty, the app will now give you feedback</li>
-                                <li>General: many performance improvements, especially around editing text fields</li>
-                                <li>Teams: when trying to add a team without any speakers, now the app tells you this is impossible, instead of simply crashing</li>
-                                <li>Accessibility: removed transitions and animations when prefers-reduced-motion is set</li>
-                                <li>Accessibility: each interactive element is now properly focusable</li>
-                                <li>Accessibility: each form input should now be properly labeled for screen readers</li>
-                                <li>Minor visual tweaks and bug fixes</li>
+                                <li>Stuff</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>
