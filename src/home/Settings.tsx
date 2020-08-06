@@ -145,7 +145,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                 <div>
                     <h2>Settings</h2>
                     <Row>
-                        <Col lg={8} className="col-settings">
+                        <Col lg={8} className="col-override-padding">
                             <p>Manage your tournament.</p>
                             <section>
                                 <h3>Change tournament name</h3>
@@ -230,7 +230,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                                 </Button>
                             </section>
                         </Col>
-                        <Col lg={4} className="col-settings">
+                        <Col lg={4} className="col-override-padding">
                             <section id="section-about">
                                 <h3>About</h3>
                                 <p>

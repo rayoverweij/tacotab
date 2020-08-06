@@ -1,5 +1,5 @@
 import React from 'react';
-import Welcome from './Welcome';
+import Start from './Start';
 import Settings from './Settings';
 import { Config } from '../types/Config';
 import Tab from 'react-bootstrap/Tab';
@@ -26,7 +26,7 @@ class Home extends React.PureComponent<HomeProps> {
                             <Nav.Item>
                                 <Nav.Link eventKey="welcome" className="sub-nav-link">
                                     <HouseDoorFill className="btn-icon"/>
-                                    Welcome
+                                    Start
                                 </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
@@ -40,7 +40,7 @@ class Home extends React.PureComponent<HomeProps> {
                     <Col md={9} lg={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="welcome">
-                                <Welcome />
+                                <Start />
                             </Tab.Pane>
                             <Tab.Pane eventKey="settings">
                                 <Settings

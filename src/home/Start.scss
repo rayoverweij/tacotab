@@ -1,0 +1,26 @@
+@import '../vars';
+
+.get-started-row {
+    margin-top: 50px;
+}
+
+.card {
+    svg {
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    &.border-primary svg {
+        fill: var(--primary);
+    }
+
+    &.border-secondary svg {
+        fill: var(--secondary);
+    }
+
+    &.border-danger svg {
+        fill: var(--danger);
+    }
+}

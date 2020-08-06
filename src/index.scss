@@ -122,6 +122,10 @@ abbr[title] {
     display: none;
 }
 
+[disabled] {
+    cursor: not-allowed;
+}
+
 
 // General layout styling
 .row {
@@ -130,6 +134,10 @@ abbr[title] {
 
 .col {
     padding: 0;
+}
+
+.col-override-padding {
+    padding-left: 0;
 }
 
 section {
