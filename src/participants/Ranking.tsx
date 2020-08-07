@@ -11,7 +11,8 @@ import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 
 type RankingProps = {
     speakers: Speaker[],
-    teams: Team[]
+    teams: Team[],
+    scoreReplies: boolean
 }
 
 class Ranking extends React.PureComponent<RankingProps> {
@@ -70,18 +71,18 @@ class Ranking extends React.PureComponent<RankingProps> {
 
         const speaker_ranking = speakers_ranked.map((speaker, index) => {
             let team = teams.find(el => el.round1.includes(speaker.speakerID));
-            if (team === undefined) {
-                team = {
-                    teamID: -1,
-                    name: "",
-                    round1: [],
-                    round2: [],
-                    round3: [],
-                    totalPoints: 0,
-                    wins: [],
-                    totalWins: 0
-                }
-            }
+            // if (team === undefined) {
+            //     team = {
+            //         teamID: -1,
+            //         name: "",
+            //         round1: [],
+            //         round2: [],
+            //         round3: [],
+            //         totalPoints: 0,
+            //         wins: [],
+            //         totalWins: 0
+            //     }
+            // }
             return (
                 <tr key={`speaker-rank-${index + 1}`}>
                     <td>{index + 1}</td>
@@ -89,8 +90,8 @@ class Ranking extends React.PureComponent<RankingProps> {
                     <td>{speaker.school}</td>
                     <td>{speaker.scores.reduce((x, y) => x + y, 0)}</td>
                     <td>{speaker.ranks.reduce((x, y) => x + y, 0)}</td>
-                    <td>{team.totalWins}</td>
-                    <td>{team.totalPoints}</td>
+                    <td>{team?.totalWins || 0}</td>
+                    <td>{team?.totalPoints || 0}</td>
                 </tr>
             );
         });

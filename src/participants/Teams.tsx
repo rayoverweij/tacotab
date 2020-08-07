@@ -13,6 +13,7 @@ type TeamsProps = {
     div: number,
     speakers: Speaker[],
     teams: Team[],
+    scoreReplies: boolean,
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeams: (teams: Team[]) => void
 }
@@ -90,7 +91,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
 
         let counter = JSON.parse(localStorage.getItem("teamCounter")!);
 
-        const memberList = [team.speaker1, team.speaker2, team.speaker3] as number[]
+        const memberList = [team.speaker1, team.speaker2, team.speaker3] as [number, number, number]
         const newTeam: Team = {
             teamID: counter++,
             name: team.teamName,
@@ -101,6 +102,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
             wins: [false, false, false],
             totalWins: 0
             };
+        if (this.props.scoreReplies) newTeam.replyScores = [0, 0, 0];
         
         const newTeams = [...this.props.teams, newTeam];
 
@@ -163,6 +165,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
                             div={this.props.div}
                             speakers={this.props.speakers}
                             teams={this.props.teams}
+                            scoreReplies={this.props.scoreReplies}
                             updateSpeakers={this.props.updateSpeakers}
                             updateTeam={this.updateTeam}
                             deleteTeam={this.deleteTeam} />
@@ -243,7 +246,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
                                     value={this.state.addTeamForm.speaker3}
                                     onChange={this.handleAddTeamFormChange}>
                                         <option value="" disabled hidden>-- pick a speaker --</option>
-                                        <option value="avg">[averaged third speaker]</option>
+                                        <option value={-1}>[averaged third speaker]</option>
                                         <SpeakerDropDown speakers={this.props.speakers} />
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">

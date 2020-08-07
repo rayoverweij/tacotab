@@ -192,6 +192,7 @@ class App extends React.Component<AppProps, AppState> {
                         div={1}
                         speakers={this.state.speakersOne}
                         teams={this.state.teamsOne}
+                        scoreReplies={this.state.config.scoreReplies}
                         updateSpeakers={this.updateSpeakersOne}
                         updateTeams={this.updateTeamsOne} />
                 </Tab.Pane>
@@ -214,6 +215,7 @@ class App extends React.Component<AppProps, AppState> {
                             div={1}
                             speakers={this.state.speakersOne}
                             teams={this.state.teamsOne}
+                            scoreReplies={this.state.config.scoreReplies}
                             updateSpeakers={this.updateSpeakersOne}
                             updateTeams={this.updateTeamsOne} />
                     </Tab.Pane>
@@ -222,6 +224,7 @@ class App extends React.Component<AppProps, AppState> {
                             div={2}
                             speakers={this.state.speakersTwo}
                             teams={this.state.teamsTwo}
+                            scoreReplies={this.state.config.scoreReplies}
                             updateSpeakers={this.updateSpeakersTwo}
                             updateTeams={this.updateTeamsTwo} />
                     </Tab.Pane>

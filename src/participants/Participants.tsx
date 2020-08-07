@@ -15,6 +15,7 @@ type ParticipantsProps = {
     div: number,
     speakers: Speaker[],
     teams: Team[],
+    scoreReplies: boolean,
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeams: (teams: Team[]) => void
 }
@@ -59,13 +60,15 @@ class Participants extends React.PureComponent<ParticipantsProps> {
                                     div={this.props.div}
                                     speakers={this.props.speakers}
                                     teams={this.props.teams}
+                                    scoreReplies={this.props.scoreReplies}
                                     updateSpeakers={this.props.updateSpeakers}
                                     updateTeams={this.props.updateTeams} />
                             </Tab.Pane>
                             <Tab.Pane eventKey="ranking">
                                 <Ranking
                                     speakers={this.props.speakers}
-                                    teams={this.props.teams} />
+                                    teams={this.props.teams}
+                                    scoreReplies={this.props.scoreReplies} />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

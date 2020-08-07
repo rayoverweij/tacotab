@@ -10,6 +10,7 @@ type TeamTableProps = {
     div: number,
     speakers: Speaker[],
     teams: Team[],
+    scoreReplies: boolean,
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeam: (team: Team) => void,
     deleteTeam: (team: Team) => void
@@ -40,6 +41,7 @@ class TeamTable extends React.PureComponent<TeamTableProps> {
                                 div={this.props.div}
                                 speakers={this.props.speakers}
                                 teams={this.props.teams}
+                                scoreReplies={this.props.scoreReplies}
                                 updateSpeakers={this.props.updateSpeakers}
                                 updateTeam={this.props.updateTeam}
                                 deleteTeam={this.props.deleteTeam} />;

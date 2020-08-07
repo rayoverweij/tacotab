@@ -18,14 +18,15 @@ type TeamRowProps = {
     div: number,
     speakers: Speaker[],
     teams: Team[],
+    scoreReplies: boolean,
     updateSpeakers: (speakers: Speaker[]) => void,
     updateTeam: (team: Team) => void,
     deleteTeam: (team: Team) => void
 }
 
 type TeamRowState = {
-    speakers: number[],
-    updateTeamForm: Array<number[]>,
+    speakers: (number|null)[],
+    updateTeamForm: Array<[number, number, number]>,
     showModal: boolean,
     showWarning: boolean
 }
@@ -117,6 +118,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
 
 
     render() {
+        const scoreReplies = this.props.scoreReplies;
         const team = this.props.team;
         const speakers = this.state.speakers.map(sp => {
             if(sp === -1) {
@@ -125,7 +127,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                 return this.props.speakers.find(el => el.speakerID === sp)!;
             }
         });
-        
+
         // Calculate average scores
         if(speakers.includes(null)) {
             const index = speakers.indexOf(null);
@@ -293,7 +295,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
         return (
             <tbody>
                 <tr>
-                    <td rowSpan={this.state.speakers.length + 3} className="cell-teamname">
+                    <td rowSpan={this.state.speakers.length + (scoreReplies ? 4 : 3)} className="cell-teamname">
                         <EditText
                             name="name"
                             init={team.name}
@@ -340,6 +342,23 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         Total wins: {team.totalWins}
                     </td>
                 </tr>
+                {scoreReplies ? 
+                <tr>
+                    <td>Reply speeches</td>
+                    <td colSpan={2}>
+
+                    </td>
+                    <td colSpan={2}>
+                        
+                    </td>
+                    <td colSpan={2}>
+                        
+                    </td>
+                    <td colSpan={2}>
+                        Total replies:
+                    </td>
+                </tr>
+                : ""}
 
                 <Modal show={this.state.showModal} size="lg" onHide={this.modalHide}>
                     <Modal.Header closeButton>
