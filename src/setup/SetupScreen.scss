@@ -12,6 +12,11 @@
 
     & > .modal-header {
         border: none;
+
+        #setup-logo {
+            height: 2rem;
+            margin-right: 20px;
+        }
     }
 
     & > .modal-body > .nav-tabs {
@@ -26,29 +31,35 @@
         border-bottom-left-radius: 0.25rem;
         border-bottom-right-radius: 0.25rem;
         overflow: auto;
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        h5 {
+            margin-top: 1.5rem;
+        }
+
+        .collapse, .collapsing {
+            margin-top: 0.5rem;
+        }
+
+        input[type=text] {
+            margin-top: 0.5rem;
+        }
+
+        label {
+            margin-bottom: 0;
+        }
     }
 }
 
-#setup-logo {
-    height: 2rem;
-    margin-right: 20px;
-}
-
-#setup-form-div-h5 {
-    margin-top: 20px;
-}
-
-#setup-form-num-div {
-    margin-bottom: 0;
+.setup-other-options {
+    display: flex;
+    justify-content: space-between;
 }
 
 #setup-form-submit {
-    margin-top: 20px;
     float: right;
-}
-
-#setup-needhelp {
-    text-align: center;
-    width: 70%;
-    margin: 50px auto;
+    margin-top: 1.5rem;
 }
