@@ -344,6 +344,11 @@ form.was-validated {
 
 .editText {
     text-align: left;
+
+    &[name=reply], &[name=score], &[name=rank] {
+        text-align: center;
+        margin-left: -3px;
+    }
 }
 
 

@@ -54,26 +54,41 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
     }
 
 
-    handleTeamUpdate(name: string, value: string, baggage?: [Speaker, number]) {
-        if(name === "score" || "rank") {
+    handleTeamUpdate(name: string, value: string, baggage?: ([Speaker, number] | number)) {
+        if(name === "score" || name === "rank") {
             if(!value || isNaN(Number(value))) {
                 value = "0";
             }
             let numValue = Number(value);
 
             let speakers = [...this.props.speakers];
+            let bag = baggage! as [Speaker, number];
 
             if(name === "score") {
                 speakers
-                    .find(el => el.speakerID === baggage![0].speakerID)!
-                    .scores[baggage![1]] = numValue;
-            } else if(name === "rank") {
+                    .find(el => el.speakerID === bag[0].speakerID)!
+                    .scores[bag[1]] = numValue;
+            } else {
                 speakers
-                    .find(el => el.speakerID === baggage![0].speakerID)!
-                    .ranks[baggage![1]] = numValue;
+                    .find(el => el.speakerID === bag[0].speakerID)!
+                    .ranks[bag[1]] = numValue;
             }
 
             this.props.updateSpeakers(speakers);
+
+        } else if(name === "reply") {
+            if(!value || isNaN(Number(value))) {
+                value = "0";
+            }
+            let numValue = Number(value);
+
+            let round = baggage! as number;
+
+            const team = {...this.props.team};
+            team.replyScores![round - 1] = numValue;
+
+            this.props.updateTeam(team);
+
         } else {
             const team = {...this.props.team, [name]: value};
             this.props.updateTeam(team);
@@ -174,7 +189,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
             if (isInR3) totalRanks += speaker.ranks[2];
 
             return (
-                <tr key={`${speaker.name}-${this.props.div}-row`}>
+                <tr key={`${speaker.speakerID}-${this.props.div}-row`}>
                     <td>{speaker.name}</td>
                     {
                         [isInR1, isInR2, isInR3].map((isInR, r) => {
@@ -344,18 +359,25 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                 </tr>
                 {scoreReplies ? 
                 <tr>
-                    <td>Reply speeches</td>
+                    <td>Reply points</td>
+                    {
+                        [1, 2, 3].map(r => {
+                            return (
+                                <td colSpan={2} className="editable" key={`reply-${team.teamID}-${r}`}>
+                                    <EditText 
+                                        name="reply"
+                                        init={team.replyScores![r - 1].toString()}
+                                        cols={2}
+                                        maxLength={2}
+                                        placeholder="#"
+                                        fn={this.handleTeamUpdate}
+                                        baggage={r} />
+                                </td>
+                            );
+                        })
+                    }
                     <td colSpan={2}>
-
-                    </td>
-                    <td colSpan={2}>
-                        
-                    </td>
-                    <td colSpan={2}>
-                        
-                    </td>
-                    <td colSpan={2}>
-                        Total replies:
+                        Total reply points: {team.replyScores!.reduce((a, b) => a + b)}
                     </td>
                 </tr>
                 : ""}
