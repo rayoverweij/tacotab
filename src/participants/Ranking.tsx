@@ -19,6 +19,7 @@ class Ranking extends React.PureComponent<RankingProps> {
     render() {
         const speakers = this.props.speakers;
         const teams = this.props.teams;
+        const scoreReplies = this.props.scoreReplies;
 
         const speakers_ranked = speakers
                                 .slice(0)
@@ -71,18 +72,6 @@ class Ranking extends React.PureComponent<RankingProps> {
 
         const speaker_ranking = speakers_ranked.map((speaker, index) => {
             let team = teams.find(el => el.round1.includes(speaker.speakerID));
-            // if (team === undefined) {
-            //     team = {
-            //         teamID: -1,
-            //         name: "",
-            //         round1: [],
-            //         round2: [],
-            //         round3: [],
-            //         totalPoints: 0,
-            //         wins: [],
-            //         totalWins: 0
-            //     }
-            // }
             return (
                 <tr key={`speaker-rank-${index + 1}`}>
                     <td>{index + 1}</td>
@@ -107,7 +96,18 @@ class Ranking extends React.PureComponent<RankingProps> {
             } else if(a_wins < b_wins) {
                 return 1;
             } else {
-                // Secondlyly sort on team points
+                // Optionally sort on reply points
+                if(scoreReplies) {
+                    const a_rpoints = a.replyScores!.reduce((a, b) => a + b);
+                    const b_rpoints = b.replyScores!.reduce((a, b) => a + b);
+
+                    if(a_rpoints > b_rpoints) {
+                        return -1;
+                    } else if(a_rpoints < b_rpoints) {
+                        return 1;
+                    }
+                }
+                // Finally sort on team points
                 const a_tpoints = a.totalPoints;
                 const b_tpoints = b.totalPoints;
 
@@ -161,6 +161,11 @@ class Ranking extends React.PureComponent<RankingProps> {
                         </OverlayTrigger>
                     </td>
                     <td>{team.totalWins}</td>
+                    {scoreReplies ?
+                    <td>
+                        {team.replyScores!.reduce((a, b) => (a + b))}
+                    </td>
+                    : ""}
                     <td>{team.totalPoints}</td>
                 </tr>
             );
@@ -248,6 +253,19 @@ class Ranking extends React.PureComponent<RankingProps> {
                                             <abbr title="" tabIndex={0}>ΣTW</abbr>
                                         </OverlayTrigger>
                                     </th>
+                                    {scoreReplies ?
+                                    <th>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={
+                                                <Tooltip id="tooltip-totalreplypoints">
+                                                    Total reply points
+                                                </Tooltip>
+                                            }>
+                                            <abbr title="" tabIndex={0}>ΣRP</abbr>
+                                        </OverlayTrigger>
+                                    </th>
+                                    : ""}
                                     <th>
                                         <OverlayTrigger
                                             placement="top"
