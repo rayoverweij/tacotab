@@ -111,7 +111,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
         data += encodeURIComponent('"teamCounter": ' + localStorage.getItem("teamCounter") + ",");
         data += encodeURIComponent('"judges": ' + localStorage.getItem("judges") + ",");
         data += encodeURIComponent('"judgeCounter": ' + localStorage.getItem("judgeCounter") + ",");
-        data += encodeURIComponent('"draws": ' + localStorage.getItem("draws"));
+        data += encodeURIComponent('"draws": ' + localStorage.getItem("draws") + ",");
+        data += encodeURIComponent('"roomCounter": ' + localStorage.getItem("roomCounter"));
         data += encodeURIComponent("}");
         
         let name = this.props.tournamentName;
@@ -266,7 +267,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
                         <p>
                             New in version {pkg.version}:
                             <ul>
-                                <li>Stuff</li>
+                                <li>General: there is now an option for tournaments to include scores for reply speeches, as an extra tie breaker</li>
+                                <li>Home: a new start screen was added with tips to get started and links to the documentation</li>
                             </ul>
                             For an overview of changes made in previous versions, see <a href="https://github.com/rayoverweij/tacotab/releases" target="_blank" rel="noreferrer noopener">GitHub</a>.
                         </p>

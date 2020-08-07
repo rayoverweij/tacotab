@@ -6,5 +6,6 @@ export type Team = {
     round3: number[],
     totalPoints: number,
     wins: boolean[],
-    totalWins: number
+    totalWins: number,
+    replyScores?: number[]
 }

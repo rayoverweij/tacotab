@@ -13,7 +13,7 @@ import Button from 'react-bootstrap/Button';
 
 type SetupScreenProps = {
     init: boolean,
-    initializeTournament: (tournamentName: string, numDivisions: number, divisionNames: string[]) => void
+    initializeTournament: (tournamentName: string, numDivisions: number, divisionNames: string[], scoreReplies: boolean) => void
 }
 
 type SetupScreenState = {
@@ -22,7 +22,8 @@ type SetupScreenState = {
         numDivisions: number,
         divisionOneName: string,
         divisionTwoName: string,
-        [key: string]: string|number
+        scoreReplies: boolean,
+        [key: string]: string|number|boolean
     },
     setupFormValidated: boolean,
     importFormValidated: boolean
@@ -37,7 +38,8 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                 tournamentName: "",
                 numDivisions: 1,
                 divisionOneName: "",
-                divisionTwoName: ""
+                divisionTwoName: "",
+                scoreReplies: false
             },
             setupFormValidated: false,
             importFormValidated: false
@@ -73,7 +75,7 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
         if(numDivisions === 2 && (divisionNames[0] === "" || divisionNames[1] === "")) return false;
 
         this.setState({setupFormValidated: false});
-        this.props.initializeTournament(this.state.setupForm.tournamentName, numDivisions, divisionNames);
+        this.props.initializeTournament(this.state.setupForm.tournamentName, numDivisions, divisionNames, this.state.setupForm.scoreReplies);
     }
 
     importData(event: FormEvent<HTMLFormElement>) {
@@ -128,7 +130,7 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                         type="text"
                                         required
                                         placeholder="e.g. 'Bard MS-HS 2020'"
-                                        value={this.state.setupForm.name}
+                                        value={this.state.setupForm.tournamentName}
                                         onChange={this.handleSetupFormChange} />
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a name for the tournament.

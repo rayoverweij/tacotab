@@ -1,4 +1,5 @@
 import pkg from '../../package.json';
+import semver from 'semver';
 const s = JSON.stringify;
 
 export const importTournament = (files: FileList) => {
@@ -32,11 +33,12 @@ export const importTournament = (files: FileList) => {
             let importConfig = result.config;
             importConfig.version = pkg.version;
             if(importConfig.divisions === "1") {
-                importConfig.numDivisions = 1
+                importConfig.numDivisions = 1;
             } else {
-                importConfig.numDivisions = 2
+                importConfig.numDivisions = 2;
             }
             delete importConfig.divisions
+            importConfig.scoreReplies = false;
             localStorage.setItem("config", s(importConfig));
 
             let importSpeakersOne = result.speakers_one.map((speaker: any) => {
@@ -135,6 +137,25 @@ export const importTournament = (files: FileList) => {
             });
             localStorage.setItem("draws", s(importDraws));
             localStorage.setItem("roomCounter", s(roomCounter));
+
+        // COMPATIBILITY WITH EXPORTS FROM VERSIONS 0.3.0 < 0.5.0
+        } else if (semver.lt(result.config.version, "0.5.0")) {
+            let importConfig = result.config;
+            importConfig.scoreReplies = false;
+            importConfig.version = pkg.version;
+
+            localStorage.setItem("tournamentName", s(result.tournamentName));
+            localStorage.setItem("config", s(importConfig));
+            localStorage.setItem("speakersOne", s(result.speakersOne));
+            localStorage.setItem("teamsOne", s(result.teamsOne));
+            localStorage.setItem("speakersTwo", s(result.speakersTwo));
+            localStorage.setItem("teamsTwo", s(result.teamsTwo));
+            localStorage.setItem("speakerCounter", s(result.speakerCounter));
+            localStorage.setItem("teamCounter", s(result.teamCounter));
+            localStorage.setItem("judges", s(result.judges));
+            localStorage.setItem("judgeCounter", s(result.judgeCounter));
+            localStorage.setItem("draws", s(result.draws));
+            localStorage.setItem("roomCounter", s(result.roomCounter));
 
         // CURRENT EXPORTS
         } else {

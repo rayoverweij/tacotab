@@ -1,5 +1,6 @@
 export type Config = {
     version: string,
     numDivisions: number,
-    divisionNames?: string[]
+    divisionNames?: string[],
+    scoreReplies: boolean
 }

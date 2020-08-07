@@ -47,7 +47,7 @@ class App extends React.Component<AppProps, AppState> {
             localStorage.setItem("tournamentName", s("New tournament"));
         }
         if(!localStorage.getItem("config")) {
-            localStorage.setItem("config", s({version: pkg.version, numDivisions: 0}));
+            localStorage.setItem("config", s({version: pkg.version, numDivisions: 0, scoreReplies: false}));
         }
         if(!localStorage.getItem("speakersOne")) {
             localStorage.setItem("speakersOne", s([]));
@@ -154,13 +154,15 @@ class App extends React.Component<AppProps, AppState> {
     initializeTournament = (
         tournamentName: string,
         numDivisions: number,
-        divisionNames: string[]) => {
+        divisionNames: string[],
+        scoreReplies: boolean) => {
 
             this.updateTournamentName(tournamentName);
             
             let config: Config = {
                 version: pkg.version,
-                numDivisions: numDivisions
+                numDivisions: numDivisions,
+                scoreReplies: scoreReplies
             }
             if(numDivisions !== 1) {
                 config.divisionNames = [...divisionNames];
