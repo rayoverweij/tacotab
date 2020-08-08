@@ -6,7 +6,7 @@ import { SpeakerDropDown } from './SpeakerDropDown';
 import { EditText } from '../utils/EditText';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
 import { Speaker } from '../types/Speaker';
-import { Team } from '../types/Team';
+import { Team, getTotalTeamWins, getTotalReplyPoints } from '../types/Team';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -354,7 +354,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         <TeamWinSelector team={this.props.team} round={3} updateTeam={this.props.updateTeam} />
                     </td>
                     <td colSpan={2} className="cell-totalwins">
-                        Total wins: {team.totalWins}
+                        Total wins: {getTotalTeamWins(team)}
                     </td>
                 </tr>
                 {scoreReplies ? 
@@ -377,7 +377,7 @@ class TeamRow extends React.PureComponent<TeamRowProps, TeamRowState> {
                         })
                     }
                     <td colSpan={2}>
-                        Total reply points: {team.replyScores!.reduce((a, b) => a + b)}
+                        Total reply points: {getTotalReplyPoints(team)}
                     </td>
                 </tr>
                 : ""}

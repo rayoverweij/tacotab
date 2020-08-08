@@ -30,11 +30,9 @@ class TeamWinSelector extends React.PureComponent<TeamWinSelectorProps, TeamWinS
 
         if(event.target.value === "true") {
             team.wins[this.props.round - 1] = true;
-            team.totalWins += 1;
             this.setState({win: true});
         } else {
             team.wins[this.props.round - 1] = false;
-            team.totalWins -= 1;
             this.setState({win: false});
         }
 

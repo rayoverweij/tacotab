@@ -99,8 +99,7 @@ class Teams extends React.PureComponent<TeamsProps, TeamsState> {
             round2: memberList,
             round3: memberList,
             totalPoints: 0,
-            wins: [false, false, false],
-            totalWins: 0
+            wins: [false, false, false]
             };
         if (this.props.scoreReplies) newTeam.replyScores = [0, 0, 0];
         

@@ -15,6 +15,7 @@ import Modal from 'react-bootstrap/Modal';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { Bullseye, ArrowRepeat, Trash, ArrowsAngleExpand, InfoCircle } from 'react-bootstrap-icons';
+import { sortTeams } from '../utils/sortTeams';
 
 
 type RoundProps = {
@@ -51,6 +52,7 @@ class Round extends React.PureComponent<RoundProps, RoundState> {
 
 
     generateDraw() {
+        const config = this.props.config;
         const round = this.props.round;
         let draws = [...this.props.draws];
 
@@ -93,10 +95,10 @@ class Round extends React.PureComponent<RoundProps, RoundState> {
             alert("Both divisions have an odd number of teams. A team from one division debating a team from the other division is not currently supported. Please add or remove a team to/from both in order to continue.")
             return false;
         } else if(len1 % 2 !== 0) {
-            alert(`There is an odd number of ${this.props.config.numDivisions === 2 ? `${this.props.config.divisionNames![0]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
+            alert(`There is an odd number of ${config.numDivisions === 2 ? `${config.divisionNames![0]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
             return false;
         } else if(len2 % 2 !== 0) {
-            alert(`There is an odd number of ${this.props.config.numDivisions === 2 ? `${this.props.config.divisionNames![1]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
+            alert(`There is an odd number of ${config.numDivisions === 2 ? `${config.divisionNames![1]} ` : ""}teams\u2014add or remove a team to generate the draw.`);
             return false;
         }
 
@@ -150,37 +152,9 @@ class Round extends React.PureComponent<RoundProps, RoundState> {
                 [t2[i], t2[j]] = [t2[j], t2[i]];
             }
         } else {
-            // Generate lists of teams in order of team wins, then total team points
-            t1.sort((a, b) => {
-                if(a.totalWins < b.totalWins) {
-                    return 1;
-                } else if(a.totalWins > b.totalWins) {
-                    return -1;
-                } else {
-                    if(a.totalPoints < b.totalPoints) {
-                        return 1;
-                    } else if(a.totalPoints > b.totalPoints) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                }
-            });
-            t2.sort((a, b) => {
-                if(a.totalWins < b.totalWins) {
-                    return 1;
-                } else if(a.totalWins > b.totalWins) {
-                    return -1;
-                } else {
-                    if(a.totalPoints < b.totalPoints) {
-                        return 1;
-                    } else if(a.totalPoints > b.totalPoints) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                }
-            });
+            // Generate ranked lists of teams
+            t1 = sortTeams(t1, config.scoreReplies);
+            t2 = sortTeams(t2, config.scoreReplies);
         }
 
         // For round 2, make sure everyone is on another side

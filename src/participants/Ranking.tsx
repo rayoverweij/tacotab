@@ -1,12 +1,13 @@
 import React from 'react';
 import { Speaker } from '../types/Speaker';
-import { Team } from '../types/Team';
+import { Team, getTotalTeamWins, getTotalReplyPoints } from '../types/Team';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { getDistinctSpeakers } from '../utils/getDistinctSpeakers';
+import { sortTeams } from '../utils/sortTeams';
 
 
 type RankingProps = {
@@ -46,8 +47,8 @@ class Ranking extends React.PureComponent<RankingProps> {
                     // Thirdly sort on team wins
                     const a_team = teams.find(el => el.round1.includes(a.speakerID));
                     const b_team = teams.find(el => el.round1.includes(b.speakerID));
-                    const a_wins = a_team === undefined ? 0 : a_team.totalWins;
-                    const b_wins = b_team === undefined ? 0 : b_team.totalWins;
+                    const a_wins = a_team === undefined ? 0 : getTotalTeamWins(a_team);
+                    const b_wins = b_team === undefined ? 0 : getTotalTeamWins(b_team);
 
                     if(a_wins > b_wins) {
                         return -1;
@@ -79,47 +80,14 @@ class Ranking extends React.PureComponent<RankingProps> {
                     <td>{speaker.school}</td>
                     <td>{speaker.scores.reduce((x, y) => x + y, 0)}</td>
                     <td>{speaker.ranks.reduce((x, y) => x + y, 0)}</td>
-                    <td>{team?.totalWins || 0}</td>
+                    <td>{team !== undefined ? getTotalTeamWins(team) : 0}</td>
                     <td>{team?.totalPoints || 0}</td>
                 </tr>
             );
         });
 
 
-        const teams_ranked = teams.slice(0).sort((a, b) => {
-            // First sort on team wins
-            const a_wins = a.totalWins;
-            const b_wins = b.totalWins;
-
-            if(a_wins > b_wins) {
-                return -1;
-            } else if(a_wins < b_wins) {
-                return 1;
-            } else {
-                // Optionally sort on reply points
-                if(scoreReplies) {
-                    const a_rpoints = a.replyScores!.reduce((a, b) => a + b);
-                    const b_rpoints = b.replyScores!.reduce((a, b) => a + b);
-
-                    if(a_rpoints > b_rpoints) {
-                        return -1;
-                    } else if(a_rpoints < b_rpoints) {
-                        return 1;
-                    }
-                }
-                // Finally sort on team points
-                const a_tpoints = a.totalPoints;
-                const b_tpoints = b.totalPoints;
-
-                if(a_tpoints > b_tpoints) {
-                    return -1;
-                } else if(a_tpoints < b_tpoints) {
-                    return 1;
-                } else {
-                    return 1;
-                }
-            }
-        });
+        const teams_ranked = sortTeams(teams, scoreReplies);
 
         const team_ranking = teams_ranked.map((team, index) => {
             const speakerIDs = getDistinctSpeakers(team);
@@ -160,10 +128,10 @@ class Ranking extends React.PureComponent<RankingProps> {
                             <abbr title="" tabIndex={0}>{team.name}</abbr>
                         </OverlayTrigger>
                     </td>
-                    <td>{team.totalWins}</td>
+                    <td>{getTotalTeamWins(team)}</td>
                     {scoreReplies ?
                     <td>
-                        {team.replyScores!.reduce((a, b) => (a + b))}
+                        {getTotalReplyPoints(team)}
                     </td>
                     : ""}
                     <td>{team.totalPoints}</td>

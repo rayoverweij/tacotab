@@ -6,6 +6,13 @@ export type Team = {
     round3: [number, number, number],
     totalPoints: number,
     wins: [boolean, boolean, boolean],
-    totalWins: number,
     replyScores?: [number, number, number]
+}
+
+export const getTotalTeamWins = (team: Team) => {
+    return team.wins.filter(x => x).length;
+}
+
+export const getTotalReplyPoints = (team: Team) => {
+    return team.replyScores!.reduce((x, y) => x + y);
 }
