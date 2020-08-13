@@ -171,10 +171,10 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
 
                                 <Collapse in={this.state.setupForm.numDivisions === 2}>
                                     <div>
-                                        <Form.Group controlId="setupFormDivisionNames">
-                                            <Form.Label>Give both divisions a name for easy identification.</Form.Label>
-                                            <Form.Row>
-                                                <Col md={6}>
+                                        <Form.Label>Give both divisions a name for easy identification.</Form.Label>
+                                        <Form.Row>
+                                            <Col md={6}>
+                                                <Form.Group controlId="setupFormDivisionNameOne">
                                                     <Form.Label srOnly>Name for division one</Form.Label>
                                                     <Form.Control
                                                         name="divisionOneName"
@@ -186,8 +186,10 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                                     <Form.Control.Feedback type="invalid">
                                                         Please enter a name.
                                                     </Form.Control.Feedback>
-                                                </Col>
-                                                <Col md={6}>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md={6}>
+                                                <Form.Group controlId="setupFormDivisionNameTwo">
                                                     <Form.Label srOnly>Name for division two</Form.Label>
                                                     <Form.Control
                                                         name="divisionTwoName"
@@ -199,9 +201,9 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                                     <Form.Control.Feedback type="invalid">
                                                         Please enter a name.
                                                     </Form.Control.Feedback>
-                                                </Col>
-                                            </Form.Row>
-                                        </Form.Group>
+                                                </Form.Group>
+                                            </Col>
+                                        </Form.Row>
                                     </div>
                                 </Collapse>
 
