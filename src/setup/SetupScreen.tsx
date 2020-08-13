@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import './SetupScreen.scss';
 import logo from '../images/logo.svg';
-import { Toggle } from "../utils/Toggle";
 import { importTournament } from '../utils/importTournament';
 import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs';
@@ -50,7 +49,6 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
         }
 
         this.handleSetupFormChange = this.handleSetupFormChange.bind(this);
-        this.handleSetupFormToggle = this.handleSetupFormToggle.bind(this);
         this.handleSetupFormSubmit = this.handleSetupFormSubmit.bind(this);
         this.importData = this.importData.bind(this);
     }
@@ -58,17 +56,15 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
 
     handleSetupFormChange(event: ChangeEvent<HTMLInputElement>) {
         const name = event.target.name;
-        let value: string|number|boolean = event.target.value;
-        if(name === "numDivisions") value = Number(value);
+        let value: string|number|boolean;
+
+        if(name === "numDivisions") value = Number(event.target.value);
+        else if(name === "scoreReplies") value = event.target.checked;
+        else value = event.target.value;
+
         let setupFormState = {...this.state.setupForm};
         setupFormState[name] = value;
         this.setState({ setupForm: setupFormState });
-    }
-
-    handleSetupFormToggle(name: string, value: boolean) {
-        const setupForm = {...this.state.setupForm};
-        setupForm[name] = value;
-        this.setState({ setupForm: setupForm });
     }
 
     handleSetupFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -208,27 +204,29 @@ class SetupScreen extends React.Component<SetupScreenProps, SetupScreenState> {
                                 </Collapse>
 
                                 <h5>Options</h5>
-                                <Form.Group controlId="setupFormScoreReplies" className="setup-other-options">
-                                    <Form.Label>
-                                        Score reply speeches
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Popover className="popover-explainer" id="popover-scorerepliesexplanation">
-                                                    <Popover.Content>
-                                                        Selecting this option will enable you to enter a score for each reply speech, which will be used as an extra tie breaker in determining the team ranking.
-                                                    </Popover.Content>
-                                                </Popover>
-                                            }>
-                                            <InfoCircle tabIndex={0} className="icon-info" />
-                                        </OverlayTrigger>
-                                    </Form.Label>
-                                    <Toggle
-                                        id={0}
-                                        name="scoreReplies"
-                                        init={this.state.setupForm.scoreReplies}
-                                        fn={this.handleSetupFormToggle} />
-                                </Form.Group>
+                                <Form.Check custom
+                                    id="setupFormScoreReplies"
+                                    name="scoreReplies"
+                                    type="checkbox"
+                                    checked={this.state.setupForm.scoreReplies}
+                                    onChange={this.handleSetupFormChange}
+                                    label={
+                                        <>
+                                            Score reply speeches
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={
+                                                    <Popover className="popover-explainer" id="popover-scorerepliesexplanation">
+                                                        <Popover.Content>
+                                                            Selecting this option will enable you to enter a score for each reply speech, which will be used as an extra tie breaker in determining the team ranking.
+                                                        </Popover.Content>
+                                                    </Popover>
+                                                }>
+                                                <InfoCircle tabIndex={0} className="icon-info" />
+                                            </OverlayTrigger>
+                                        </>
+                                    }
+                                />
 
                                 <Button variant="primary" type="submit" id="setup-form-submit">
                                     Create the tournament
