@@ -11,6 +11,7 @@ import Table from 'react-bootstrap/Table';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { TrashFill } from 'react-bootstrap-icons';
+import InfoTip from '../utils/InfoTip';
 
 
 type SpeakersProps = {
@@ -114,15 +115,11 @@ class Speakers extends React.PureComponent<SpeakersProps, SpeakersState> {
                             <th>Name</th>
                             <th>School</th>
                             <th>
-                                <OverlayTrigger
-                                    placement="top"
-                                    overlay={
-                                        <Tooltip id="tooltip-disqualify-info">
-                                            Disqualified speakers can still be added to teams and receive scores, but won't be listed in the ranking
-                                        </Tooltip>
-                                    }>
-                                    <abbr title="">Disq</abbr>
-                                </OverlayTrigger>
+                                <InfoTip
+                                    id="tooltip-disqualify-info"
+                                    abbr="Disq">
+                                    Disqualified speakers can still be added to teams and receive scores, but won't be listed in the ranking
+                                </InfoTip>
                             </th>
                             <th className="table-delete">
                                 <TrashFill className="icon" />

@@ -1,4 +1,5 @@
 import React from 'react';
+import InfoTip from '../utils/InfoTip';
 import { Speaker } from '../types/Speaker';
 import { Team, getTotalTeamWins, getTotalReplyPoints } from '../types/Team';
 import Row from 'react-bootstrap/Row';
@@ -118,15 +119,11 @@ class Ranking extends React.PureComponent<RankingProps> {
                 <tr key={`team-rank-${index + 1}`}>
                     <td>{index + 1}</td>
                     <td>
-                        <OverlayTrigger
-                            placement="top"
-                            overlay={
-                                <Tooltip id={`tooltip-rank-teamName-${index + 1}`}>
-                                    {speakerElements}
-                                </Tooltip>
-                            }>
-                            <abbr title="" tabIndex={0}>{team.name}</abbr>
-                        </OverlayTrigger>
+                        <InfoTip
+                            id={`tooltip-rank-teamName-${index + 1}`}
+                            abbr={team.name}>
+                            {speakerElements}
+                        </InfoTip>
                     </td>
                     <td>{getTotalTeamWins(team)}</td>
                     {scoreReplies ?
@@ -153,48 +150,32 @@ class Ranking extends React.PureComponent<RankingProps> {
                                     <th>Name</th>
                                     <th>School</th>
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalspeakerpoints">
-                                                    Total speaker points
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣSP</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalspeakerpoints"
+                                            abbr="ΣSP">
+                                            Total speaker points
+                                        </InfoTip>
                                     </th>
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalspeakerranks">
-                                                    Total speaker ranks<br />(lower is better)
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣSR</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalspeakerranks"
+                                            abbr="ΣSR">
+                                            Total speaker ranks<br />(lower is better)
+                                        </InfoTip>
                                     </th>
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalteamwins">
-                                                    Total team wins
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣTW</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalteamwins-speakers"
+                                            abbr="ΣTW">
+                                            Total team wins
+                                        </InfoTip>
                                     </th>
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalteampoints">
-                                                    Total team points
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣTP</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalteampoints-speakers"
+                                            abbr="ΣTP">
+                                            Total team points
+                                        </InfoTip>
                                     </th>
                                 </tr>
                             </thead>
@@ -211,39 +192,27 @@ class Ranking extends React.PureComponent<RankingProps> {
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalteamwins">
-                                                    Total team wins
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣTW</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalteamwins-teams"
+                                            abbr="ΣTW">
+                                            Total team wins
+                                        </InfoTip>
                                     </th>
                                     {scoreReplies ?
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalreplypoints">
-                                                    Total reply points
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣRP</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalreplypoints"
+                                            abbr="ΣRP">
+                                            Total reply points
+                                        </InfoTip>
                                     </th>
                                     : ""}
                                     <th>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={
-                                                <Tooltip id="tooltip-totalteampoints">
-                                                    Total team points
-                                                </Tooltip>
-                                            }>
-                                            <abbr title="" tabIndex={0}>ΣTP</abbr>
-                                        </OverlayTrigger>
+                                        <InfoTip
+                                            id="tooltip-totalteampoints-teams"
+                                            abbr="ΣTP">
+                                            Total team points
+                                        </InfoTip>
                                     </th>
                                 </tr>
                             </thead>
