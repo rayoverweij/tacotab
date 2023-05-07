@@ -24,7 +24,7 @@
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-icons": "^1.0.3-alpha5",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "semver": "^7.3.2",
     "typescript": "^3.7.5"
   },
